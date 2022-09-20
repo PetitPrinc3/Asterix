@@ -10,11 +10,13 @@ inform "Creating src folder"
 # Download Frontend
 inform "Downloading Frontend Software"
 /usr/bin/git clone https://github.com/G4vr0ch3/Frontend /src/Frontend
+/usr/bin/chmod -R a=r /src/Frontend
 /usr/bin/chmod +x /src/Frontend/setup.sh
 
 # Download Backend
 inform "Downloading Backend Software"
 /usr/bin/git clone https://github.com/G4vr0ch3/Backend /src/Backend
+/usr/bin/chmod -R a=r /src/Backend
 /usr/bin/chmod +x /src/Backend/setup.sh
 
 # Installing Frontend
