@@ -27,13 +27,13 @@ inform "Installing Backend Software"
 
 # Creating shared folder
 inform "Creating docker shared volume"
-/usr/bin/su - docker_runner "/usr/bin/docker volume create --name InputFiles"
+/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"
 
 # Starting containers
 inform "Starting containers"
 /usr/bin/cp boot.sh /opt/docker_runner/boot.sh
 /usr/bin/cp boot.sh /opt/docker_runner/run.sh
-/usr/bin/su - docker_runner "/bin/bash /opt/docker_runner/boot.sh"
+/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"
 
 # SETUP END
 inform "Exhausted"
