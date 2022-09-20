@@ -23,7 +23,7 @@ inform "Installing Frontend Software"
 
 # Installing Backend
 inform "Installing Backend Software"
-/src/Frontend/setup.sh
+/src/Backend/setup.sh
 
 # Creating shared folder
 inform "Creating docker shared volume"
@@ -31,6 +31,8 @@ inform "Creating docker shared volume"
 
 # Starting containers
 inform "Starting containers"
+/usr/bin/cp boot.sh /opt/docker_runner/boot.sh
+/usr/bin/cp boot.sh /opt/docker_runner/run.sh
 /usr/bin/sudo -u docker_runner /bin/bash /opt/docker_runner/boot.sh
 
 # SETUP END
