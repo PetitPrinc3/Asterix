@@ -27,9 +27,10 @@ inform "Installing Frontend Software"
 inform "Installing Backend Software"
 /src/Backend/setup.sh
 
-# Creating shared folder
-inform "Creating docker shared volume"
+# Creating shared folders
+inform "Creating docker shared volumes"
 /usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"
+/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name OutputFiles"
 
 # Starting containers
 inform "Starting containers"
