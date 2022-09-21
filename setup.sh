@@ -31,6 +31,11 @@ inform "Installing Backend Software"
 inform "Creating docker shared volumes"
 /usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"
 /usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name OutputFiles"
+/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name SharedDB"
+
+inform "Creating USB UIDs database."
+/usr/bin/python3 db_create.py
+/usr/bin/mv USB_ID.db /var/lib/docker/volumes/SharedDB/_data
 
 # Starting containers
 inform "Starting containers"
