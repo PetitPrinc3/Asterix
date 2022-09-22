@@ -1,7 +1,7 @@
 #!/bin/bash
 
-docker container kill frontend --force
-docker container kill backend --force
+docker container kill frontend
+docker container kill backend
 
 docker container rm frontend --force
 docker container rm backend --force
