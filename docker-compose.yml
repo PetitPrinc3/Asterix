@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  frontend:
+    build: /src/Frontend
+    volumes:
+      - /dev:/dev:ro 
+      - InputFiles:/mnt/InputFiles
+      - OutputFiles:/mnt/OutputFiles
+  backend: 
+    build: /src/Backend
+    volumes:
+      - /dev:/dev:ro
+      - SharedDB:/mnt/SharedDB:ro
+      - OutputFiles:/mnt/OutputFiles:ro
+
+volumes:
+  InputFiles:
+  OutputFiles:
+  SharedDB:
