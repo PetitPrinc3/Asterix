@@ -8,20 +8,20 @@ success("User docker_runner created.")
 
 with spinner('Installing Docker Engine...'):
     subprocess.call("curl -fsSL https://get.docker.com -o get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    info('Fetched install script.')
+    info('Fetched install script.        ')
     subprocess.call("bash get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    info('Docker installed.')
+    info('Docker installed.              ')
     subprocess.call("rm get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 subprocess.call("docker version", shell=True)
 success('Docker Engine installed.')
 
 with spinner('Installing Docker Compose...'):
-    info('Installing libs...')
+    info('Installing libs...              ')
     subprocess.call("apt-get install libffi-dev libssl-dev", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    info('Installing Python dev...')
+    info('Installing Python dev...        ')
     subprocess.call("apt install python3-dev", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.call("apt-get install -y python3 python3-pip", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    info('Installing docker-compose...')
+    info('Installing docker-compose...    ')
     subprocess.call("pip3 install docker-compose", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 success('Docker Compose installed.')
 
@@ -48,11 +48,11 @@ with spinner('Downloading Backend software...'):
 success('Backend software downloaded.')
 
 with spinner('Collecting Frontend dependencies...'):
-    info('Downloading Pyrate...')
+    info('Downloading Pyrate...                  ')
     subprocess.call("/usr/bin/git clone https://github.com/G4vr0ch3/PyRATE /src/Frontend/PyRATE", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    info('Downloading Pyrate Automation')
+    info('Downloading Pyrate Automation          ')
     subprocess.call("/usr/bin/git clone https://github.com/G4vr0ch3/PyrateAutomation /src/Frontend/PyrateAutomation", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    info('Downloading USB Input Detection...')
+    info('Downloading USB Input Detection...     ')
     subprocess.call("/usr/bin/git clone https://github.com/G4vr0ch3/USBInputDetection /src/Frontend/USBInputDetection", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 success('Done collecting frontend dependencies.')
 
@@ -62,9 +62,9 @@ with spinner('Collecting Backend dependencies...'):
 success('Done collecting Backend dependencies.')
 
 with spinner('Moving files to /opt/docker_runner'):
-    subprocess.call("cp docker-compose.yaml /opt/docker_runner/symphony.yaml", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.call("cp docker-compose.yml /opt/docker_runner/symphony.yml", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 success('Done copying files to /opt/docker_runner')
 
 with spinner('Building containers'):
-    subprocess.call("docker-compose -f /opt/docker_runner/symphony.yaml", shell=True)
+    subprocess.call("su - docker_runner -c 'docker-compose -f /opt/docker_runner/symphony.yml up'", shell=True)
 success('Done')
