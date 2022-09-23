@@ -39,5 +39,3 @@ if __name__ == "__main__":
     print('Please run main.py or read software documentation')
     exit()
 
-else:
-    from .prints import *
