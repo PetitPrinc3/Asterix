@@ -63,8 +63,15 @@ success('Done collecting Backend dependencies.')
 
 with spinner('Moving files to /opt/docker_runner'):
     subprocess.call("cp docker-compose.yml /opt/docker_runner/symphony.yml", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.call("cp run.sh /opt/docker_runner/container_run.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.call("chown docker_runner:docker /opt/docker_runner/symphony.yml", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.call("chown docker_runner:docker /opt/docker_runner/container_run.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 success('Done copying files to /opt/docker_runner')
 
-with spinner('Building containers'):
+with spinner('Building docker images...'):
+    subprocess.call("su - docker_runner -c 'docker-compose -f /opt/docker_runner/symphony.yml build --no-cache'", shell=True)
+success('Done')
+
+with spinner('Runing docker containers...'):
     subprocess.call("su - docker_runner -c 'docker-compose -f /opt/docker_runner/symphony.yml up'", shell=True)
 success('Done')
