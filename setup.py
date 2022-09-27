@@ -1,77 +1,72 @@
+#!/usr/bin/python3
+
 import subprocess
 from spinner import spinner
 from prints import *
 
-with spinner('Creating docker_runner user...'):
-    subprocess.call("useradd -m -d /opt/docker_runner docker_runner", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-success("User docker_runner created.")
+if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode('utf-8').strip() != 'root': fail('This program must be run as root.'); exit()
 
-with spinner('Installing Docker Engine...'):
-    subprocess.call("curl -fsSL https://get.docker.com -o get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    info('Fetched install script.        ')
-    subprocess.call("bash get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    info('Docker installed.              ')
-    subprocess.call("rm get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-subprocess.call("docker version", shell=True)
-success('Docker Engine installed.')
+with spinner('Creating source folders...'):
+    subprocess.call("/usr/bin/mkdir /src", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.call("/usr/bin/mdir /dev/Frontend", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.call("/usr/bin/mdir /dev/Backend", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+success("Source folders created.")
 
-with spinner('Installing Docker Compose...'):
-    info('Installing libs...              ')
-    subprocess.call("apt-get install libffi-dev libssl-dev", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    info('Installing Python dev...        ')
-    subprocess.call("apt install python3-dev", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    subprocess.call("apt-get install -y python3 python3-pip", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    info('Installing docker-compose...    ')
-    subprocess.call("pip3 install docker-compose", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-success('Docker Compose installed.')
 
-with spinner('Enabling docker...'):
-    subprocess.call("systemctl to enable Docker", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-success('Docker is enabled.')
+with spinner('Adding UDEV rules...'):
+    subprocess.call("/usr/bin/cp 00-frontend.rules /etc/udev/rules.d", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.call("/usr/bin/cp 00-backend.rules /etc/udev/rules.d", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    info('Reloading rules...')
+    subprocess.call("udevadm control --reload-rules", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    info('Triggering rules...')
+    subprocess.call("udevadm trigger", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+success("UDEV rules added.")
 
-with spinner('Adding docker_runner to docker group...'):
-    subprocess.call("usermod -aG docker docker_runner", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-success('User docker_runner added to Docker group.')
-
-with spinner('Creating src folder...'):
-    subprocess.call("mkdir /src", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-success('Folder /src created.')
 
 with spinner('Downloading Frontend software...'):
     subprocess.call("/usr/bin/git clone https://github.com/G4vr0ch3/Frontend /src/Frontend", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.call("/usr/bin/chown -R docker_runner:docker /src/Frontend", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-success('Frontend software downloaded.')
+    subprocess.call("/usr/bin/chmod +x /src/Frontend/setup.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+success("Frontend software retrieved.")
+
 
 with spinner('Downloading Backend software...'):
     subprocess.call("/usr/bin/git clone https://github.com/G4vr0ch3/Backend /src/Backend", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.call("/usr/bin/chown -R docker_runner:docker /src/Backend", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-success('Backend software downloaded.')
+    subprocess.call("/usr/bin/chmod +x /src/Backend/setup.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+success("Backend software retrieved.")
 
-with spinner('Collecting Frontend dependencies...'):
-    info('Downloading Pyrate...                  ')
-    subprocess.call("/usr/bin/git clone https://github.com/G4vr0ch3/PyRATE /src/Frontend/PyRATE", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    info('Downloading Pyrate Automation          ')
-    subprocess.call("/usr/bin/git clone https://github.com/G4vr0ch3/PyrateAutomation /src/Frontend/PyrateAutomation", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    info('Downloading USB Input Detection...     ')
-    subprocess.call("/usr/bin/git clone https://github.com/G4vr0ch3/USBInputDetection /src/Frontend/USBInputDetection", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-success('Done collecting frontend dependencies.')
 
-with spinner('Collecting Backend dependencies...'):
-    info('Downloading USB Input Detection...')
-    subprocess.call("/usr/bin/git clone https://github.com/G4vr0ch3/USBInputDetection /src/Backend/USBInputDetection", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-success('Done collecting Backend dependencies.')
+with spinner('Installing Frontend Software, this may take some time...'):
+    subprocess.call("/src/Frontend/setup.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+success("Frontend software installed.")
 
-with spinner('Moving files to /opt/docker_runner'):
-    subprocess.call("cp docker-compose.yml /opt/docker_runner/symphony.yml", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    subprocess.call("cp run.sh /opt/docker_runner/container_run.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    subprocess.call("chown docker_runner:docker /opt/docker_runner/symphony.yml", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    subprocess.call("chown docker_runner:docker /opt/docker_runner/container_run.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-success('Done copying files to /opt/docker_runner')
+with spinner('Installing Backend Software, this may take some time...'):
+    subprocess.call("/src/Backend/setup.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+success("Backend software installed.")
 
-with spinner('Building docker images...'):
-    subprocess.call("su - docker_runner -c 'docker-compose -f /opt/docker_runner/symphony.yml build --no-cache'", shell=True)
-success('Done')
 
-with spinner('Runing docker containers...'):
-    subprocess.call("su - docker_runner -c 'docker-compose -f /opt/docker_runner/symphony.yml up'", shell=True)
-success('Done')
+with spinner('Creating relevant docker volumes...'):
+    subprocess.call('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"', shell=True)
+    info('InputFiles volume created')
+    subprocess.call('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name OutputFiles"', shell=True)
+    info('OutputFiles volume created')
+    subprocess.call('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name SharedDB"', shell=True)
+    info('SharedDB volume created')
+success("All relevant docker volumes created.")
+
+
+with spinner('Creating USB UIDs database...'):
+    subprocess.call("/usr/bin/python3 db_create.py", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.call("/usr/bin/mv USB_ID.db /var/lib/docker/volumes/SharedDB/_data", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+success("USB UIDs database initialized.")
+
+
+with spinner('Starting containers...'):
+    subprocess.call("/usr/bin/cp boot.sh /opt/docker_runner/boot.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.call("/usr/bin/cp boot.sh /opt/docker_runner/run.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.call('/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"', shell=True)
+success("Docker containers started.")
+
+# SETUP END
+success("Exhausted")

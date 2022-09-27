@@ -4,8 +4,21 @@ inform() {
 	/usr/bin/echo -e "$(tput setaf 6)$1$(tput sgr0)"
 }
 
+if [[$(/usr/bin/whoami) != 'root' ]]
+then
+	inform "The software must be run as root. Exiting"
+	exit
+fi
+
 inform "Creating src folder"
 /usr/bin/mkdir /src
+/usr/bin/mdir /dev/Frontend
+/usr/bin/mdir /dev/Backend
+
+inform "Adding udev rules"
+/usr/bin/cp 00-frontend.rules /etc/udev/rules.d
+/usr/bin/cp 00-backend.rules /etc/udev/rules.d
+udevadm control --reload-rules && udevadm trigger
 
 # Download Frontend
 inform "Downloading Frontend Software"
