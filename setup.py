@@ -6,11 +6,30 @@ from prints import *
 
 if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode('utf-8').strip() != 'root': fail('This program must be run as root.'); exit()
 
+def get_docker():
+    with spinner('Installing Docker Engine...'):
+        subprocess.call("curl -fsSL https://get.docker.com -o get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        info('Fetched install script.        ')
+        subprocess.call("bash get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        info('Docker installed.              ')
+        subprocess.call("rm get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.call("docker version", shell=True)
+    success('Docker Engine installed.')
+
+if subprocess.run('docker version', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stderr.decode('utf-8').strip() == '/bin/sh: 1: docker: not found': warning('Oops, docker is not installed. Installing now !'); get_docker()
+
 with spinner('Creating source folders...'):
     subprocess.call("/usr/bin/mkdir /src", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.call("/usr/bin/mdir /dev/Frontend", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.call("/usr/bin/mdir /dev/Backend", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 success("Source folders created.")
+
+
+with spinner('Creating software users'):
+    if subprocess.run('su fdp', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stderr.decode('utf-8').strip() == 'su: user docker_runner does not exist or the user entry does not contain all the required fields':
+        subprocess.call("useradd -m -d /opt/docker_runner docker_runner", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.call("usermod -aG docker docker_runner", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+success('Software users created.')
 
 
 with spinner('Adding UDEV rules...'):
