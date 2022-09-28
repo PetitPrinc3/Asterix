@@ -141,11 +141,11 @@ success('Collected windows UUID.')
 with spinner('Collected windows downloader from UUPdump...'):
     cmd_run('/usr/bin/mkdir tmp')
     cmd_run(f'/usr/bin/wget --no-check-certificate -O "tmp/uupdump.zip" "https://uupdump.net/get.php?id={UUID}&pack={WIN_LANG}&edition=professional&autodl=2"')
-    cmd_run('/usr/bin/unzip -q "tmp/uupdump.zip"')
+    cmd_run('cd tmp && /usr/bin/unzip -q "uupdump.zip"')
 success('Collected windows downloader.')
 
 info('Downloading windows ISO. This will take some time.')
-cmd_run("tmp/uup_download_linux.sh")
+cmd_run("cd tmp && /bin/bash uup_download_linux.sh")
 success('Windows ISO collected.')
 
 
