@@ -1,3 +1,0 @@
-ATTRS{devpath}=="1.3", ENV{DEVTYPE}=="disk", SYMLINK+="Frontend/USBInputDisk", ATTR{authorized}:="1"
-ATTRS{devpath}=="1.3", ENV{DEVTYPE}=="partition", SYMLINK+="Frontend/USBInputPart", ATTR{authorized}:="1"
-ATTRS{devpath}=="1.3", KERNEL!="1-1.3", KERNEL!="sd*", SUBSYSTEM!=bsg, SYMLINK+="Frontend/USBBadInput", RUN+="/bin/bash -c 'echo 0 > /sys/bus/usb/devices/1-1.3/authorized'"
