@@ -4,16 +4,6 @@ import subprocess
 from spinner import spinner
 from prints import *
 
-print("""
-____________________________
-___       ___          
-\  \ \**\ \  \    ##    /**/
- \  \ \**\ \  \  ##   /**/
- /  / /**/ /  /   ##   \**\
-/__/ /**/ /__/   ###    \**\
-____________________________
-
-""")
 
 if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode('utf-8').strip() != 'root': fail('This program must be run as root.'); exit()
 
@@ -27,10 +17,12 @@ def get_docker():
     subprocess.call("docker version", shell=True)
     success('Docker Engine installed.')
 
+
 def cmd_run(cmd):
-    if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).returncode != 0: fail('Process failed. This is critical.'); fail("Exiting now."); exit()
+    if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).returncode != 0: fail('Process failed. This is critical.'); print(cmd); fail("Exiting now."); exit()
 
 if subprocess.run('docker version', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stderr.decode('utf-8').strip() == '/bin/sh: 1: docker: not found': warning('Oops, docker is not installed. Installing now !'); get_docker()
+
 
 with spinner('Creating source folders...'):
     cmd_run("/usr/bin/mkdir /src")
