@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import subprocess
+import os
 from spinner import spinner
 from prints import *
 
@@ -25,7 +26,7 @@ if subprocess.run('docker version', shell=True, stdout=subprocess.PIPE, stderr=s
 
 
 with spinner('Creating source folders...'):
-    cmd_run("/usr/bin/mkdir /src")
+    if not os.path.exists("/src"): cmd_run("/usr/bin/mkdir /src")
     cmd_run("/usr/bin/rm -r /src/*")
     cmd_run("/usr/bin/mdir /dev/Frontend")
     cmd_run("/usr/bin/mdir /dev/Backend")
