@@ -13,3 +13,4 @@ ADD USBInputDetection/* /usr/share/USBInputDetection/
 RUN chmod +x /usr/share/USBInputDetection/main.py
 
 RUN mkdir /mnt/USBOutputDevice
+RUN mkdir /dev/Backend

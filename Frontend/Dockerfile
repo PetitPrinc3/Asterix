@@ -20,3 +20,5 @@ ADD PyrateAutomation /usr/share/PyrateAutomation
 ADD PyRATE /usr/share/PyrateAutomation/Pyrate
 RUN chmod +x /usr/share/PyrateAutomation/Pyrate/pyrate.py
 RUN pip3 install -r /usr/share/PyrateAutomation/Pyrate/requirements.txt --root-user-action=ignore
+
+RUN mkdir /dev/Frontend
