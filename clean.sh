@@ -3,8 +3,11 @@
 docker container kill frontend
 docker container kill backend
 
-docker container rm frontend --force
-docker container rm backend --force
+for i in $(docker ps -a | cut -d " " -f 1 | tail -n +2):
+do
+    docker container kill $i
+    docker container rm $i --force
+done
 
 docker image rm frontend --force
 docker image rm backend --force
