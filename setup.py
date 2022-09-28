@@ -27,7 +27,7 @@ def cmd_run(cmd):
 if subprocess.run('docker version', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stderr.decode('utf-8').strip() == '/bin/sh: 1: docker: not found': warning('Oops, docker is not installed. Installing now !'); get_docker()
 
 
-if subprocess.Popen('qemu-system-aarch64', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0: 
+if subprocess.Popen('qemu-system-aarch64 -machine help', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0: 
     with spinner('Collecting QEMU KVM...'):
         cmd_run("apt install virt-manager libvirt0 qemu-system")
     success('QEMU KVM Installed.')
