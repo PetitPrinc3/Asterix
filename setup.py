@@ -43,8 +43,8 @@ success("Source folders created.")
 
 with spinner('Creating software users'):
     if subprocess.run('su fdp', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stderr.decode('utf-8').strip() == 'su: user docker_runner does not exist or the user entry does not contain all the required fields':
-        cmd_run("/usr/bin/useradd -m -d /opt/docker_runner docker_runner")
-    cmd_run("/usr/bin/usermod -aG docker docker_runner")
+        cmd_run("/usr/sbin/useradd -m -d /opt/docker_runner docker_runner")
+    cmd_run("/usr/sbin/usermod -aG docker docker_runner")
 success('Software users created.')
 
 
