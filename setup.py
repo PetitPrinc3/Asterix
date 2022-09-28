@@ -145,7 +145,7 @@ with spinner('Collected windows downloader from UUPdump...'):
 success('Collected windows downloader.')
 
 info('Downloading windows ISO. This will take some time.')
-cmd_run("cd tmp && /bin/bash uup_download_linux.sh")
+subprocess.run("cd tmp && /bin/bash uup_download_linux.sh", shell=True)
 success('Windows ISO collected.')
 
 
