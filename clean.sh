@@ -3,7 +3,7 @@
 docker container kill frontend
 docker container kill backend
 
-for i in $(docker ps -a | cut -d " " -f 1 | tail -n +2):
+for i in $(docker ps -a | cut -d " " -f 1 | grep -v CONTAINER):
 do
     docker container kill $i
     docker container rm $i --force
