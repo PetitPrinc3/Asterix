@@ -36,8 +36,8 @@ if subprocess.Popen('qemu-system-aarch64', shell=True, stdout=subprocess.PIPE, s
 with spinner('Creating source folders...'):
     if not os.path.exists("/src"): cmd_run("/usr/bin/mkdir /src")
     if len(os.listdir("/src")) != 0: cmd_run("/usr/bin/rm -r /src/*")
-    cmd_run("/usr/bin/mkdir /dev/Frontend")
-    cmd_run("/usr/bin/mkdir /dev/Backend")
+    if not os.path.isdir('/dev/Frontend'): cmd_run("/usr/bin/mkdir /dev/Frontend")
+    if not os.path.isdir('/dev/Backend'): cmd_run("/usr/bin/mkdir /dev/Backend")
 success("Source folders created.")
 
 
