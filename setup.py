@@ -130,7 +130,7 @@ success('64Gb System disk image was initialized.')
 
 
 with spinner('Collecting VirtIO drivers...'):
-    cmd_run("/usr/bin/curl https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.221-1/virtio-win-0.1.221.iso -o /src/win10-VM/virtio_drivers.iso")
+    cmd_run("/usr/bin/curl https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.221-1/virtio-win-0.1.221.iso -o /src/win10_VM/virtio_drivers.iso")
 success('VirtIO drivers collected.')
 
 with spinner('Collecting windows UUID...'):
