@@ -87,12 +87,12 @@ with spinner('Adding UDEV rules...'):
 success("UDEV rules added.")
 
 
-info("Building Frontend container...")
-subprocess.run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t frontend /src/Frontend"', shell=True)
+with spinner("Building Frontend container. This may take some time..."):
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t frontend /src/Frontend"')
 success("Frontend software installed.")
 
-info("Building Backend container...")
-subprocess.run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t backend /src/Backend"', shell=True)
+with spinner("Building Backend container. This may take some time..."):
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t backend /src/Backend"')
 success("Backend software installed.")
 
 
@@ -134,7 +134,7 @@ with spinner('Collecting VirtIO drivers...'):
 success('VirtIO drivers collected.')
 
 with spinner('Collecting windows UUID...'):
-    UUID=cmd_run("""/usr/bin/wget --no-check-certificate -qO- "https://uupdump.net/known.php?q=windows+10+21h2+arm64" | grep 'href="\./selectlang\.php?id=.*"' -o | sed 's/^.*id=//g' | sed 's/"$//g' | head -n1""")
+    UUID=subprocess.Popen("""/usr/bin/wget --no-check-certificate -qO- "https://uupdump.net/known.php?q=windows+10+21h2+arm64" | grep 'href="\./selectlang\.php?id=.*"' -o | sed 's/^.*id=//g' | sed 's/"$//g' | head -n1""", shell=True, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
     WIN_LANG="en-us"
 success('Collected windows UUID.')
 
