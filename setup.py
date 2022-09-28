@@ -88,21 +88,21 @@ success("UDEV rules added.")
 
 
 info("Building Frontend container...")
-cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t frontend /src/Frontend"')
+subprocess.run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t frontend /src/Frontend"', shell=True)
 success("Frontend software installed.")
 
 info("Building Backend container...")
-cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t backend /src/Backend"')
+subprocess.run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t backend /src/Backend"', shell=True)
 success("Backend software installed.")
 
 
 with spinner('Creating relevant docker volumes...'):
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"')
-    info('InputFiles volume created')
+    info('InputFiles volume created.             ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name OutputFiles"')
-    info('OutputFiles volume created')
+    info('OutputFiles volume created.            ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name SharedDB"')
-    info('SharedDB volume created')
+    info('SharedDB volume created.               ')
 success("All relevant docker volumes created.")
 
 
@@ -115,7 +115,7 @@ success("USB UIDs database initialized.")
 with spinner('Starting containers...'):
     cmd_run("/usr/bin/cp boot.sh /opt/docker_runner/boot.sh")
     cmd_run("/usr/bin/cp boot.sh /opt/docker_runner/run.sh")
-    cmd_run('/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"')
+    subprocess.run('/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"', shell=True)
 success("Docker containers started.")
 
 
