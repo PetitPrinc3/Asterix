@@ -118,7 +118,7 @@ with spinner('Starting containers...'):
 success("Docker containers started.")
 
 
-info('Preparing Windows 10 VM Environment...'):
+info('Preparing Windows 10 VM Environment...')
 cmd_run("/usr/bin/mkdir /src/win10_VM")
 cmd_run("/usr/bin/cp /usr/share/AAVMF/AAVMF_CODE.fd /src/win10_VM/AAVMF_CODE.fd")
 cmd_run("/usr/bin/cp /usr/share/AAVMF/AAVMF_VARS.fd /src/win10_VM/AAVMF_VARS.fd")
