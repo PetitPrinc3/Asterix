@@ -98,7 +98,7 @@ success("All relevant docker volumes created.")
 
 with spinner('Creating USB UIDs database...'):
     cmd_run("/usr/bin/python3 Host/db_create.py")
-    cmd_run("/usr/bin/mv Host/USB_ID.db /var/lib/docker/volumes/SharedDB/_data")
+    cmd_run("/usr/bin/mv USB_ID.db /var/lib/docker/volumes/SharedDB/_data")
 success("USB UIDs database initialized.")
 
 
