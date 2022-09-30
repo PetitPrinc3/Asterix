@@ -67,11 +67,6 @@ with spinner('Collecting PyRATE...'):
 success("Pyrate collected.")
 
 
-with spinner('Collecting PyRATE automation wrapper...'):
-    cmd_run("/usr/bin/git clone https://github.com/G4vr0ch3/PyrateAutomation /src/Frontend/PyrateAutomation")
-success("Pyrate automation wrapper collected.")
-
-
 with spinner('Adding UDEV rules...'):
     cmd_run("/usr/bin/cp Host/00-frontend.rules /etc/udev/rules.d")
     cmd_run("/usr/bin/cp Host/00-backend.rules /etc/udev/rules.d")
