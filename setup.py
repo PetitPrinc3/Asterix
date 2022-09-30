@@ -88,12 +88,17 @@ success("Backend software installed.")
 
 
 with spinner('Creating relevant docker volumes...'):
+    
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBInputDevice"')
+    info('/USBInputDevice volume created.        ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"')
     info('InputFiles volume created.             ')
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBOutputDevice"')
+    info('/USBOutputDevice volume created.       ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name OutputFiles"')
     info('OutputFiles volume created.            ')
-    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name SharedDB"')
-    info('DataShare volume created.               ')
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name DataShare"')
+    info('DataShare volume created.              ')
 success("All relevant docker volumes created.")
 
 

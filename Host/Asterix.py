@@ -3,10 +3,6 @@ import subprocess
 from Asterix_libs.prints import *
 
 from Host_libs import usb_detection as ud
-from Host_libs import copy as cp
-from Host_libs import usb_id as uid
-from Host_libs import usb_list as ul
-from Host_libs import usb_format as uf
 
 
 def Frontend():
@@ -16,9 +12,9 @@ def Frontend():
 
     if inp == "/dev/USBBadInput": warning('The USB Input drive was detected as a BAD INPUT. Please contact your admnistrator.'); fail('Process terminated. This incident will be reported'); exit()
 
-    subprocess.run(f'sudo /usr/bin/mount {inp} /mnt/USBInputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(f'sudo /usr/bin/mount {inp} /var/lib/docker/volumes/USBInputDevice/_data', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-    subprocess.run(f'su - docker_runner -c "/usr/bin/docker exec -w /usr/share/USBInputDetection -it -d frontend python3 main.py"', shell=True)
+    subprocess.run(f'su - docker_runner -c "/usr/bin/docker exec -w /usr/share/USBHandler -it frontend python3 main.py"', shell=True)
 
     subprocess.run(f'sudo /usr/bin/umount {inp}', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
