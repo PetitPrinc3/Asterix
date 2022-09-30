@@ -1,0 +1,3 @@
+ATTRS{devpath}=="1.4", ENV{DEVTYPE}=="disk", SYMLINK+="USBOutputDisk", ATTR{authorized}:="1"
+ATTRS{devpath}=="1.4", ENV{DEVTYPE}=="partition", SYMLINK+="USBOutputPart", ATTR{authorized}:="1"
+ATTRS{devpath}=="1.4", ENV{DEVTYPE}!="partition", ENV{DEVTYPE}!="partition", SYMLINK+="USBBadOutput"

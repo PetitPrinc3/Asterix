@@ -70,16 +70,9 @@ with spinner('Collecting PyRATE automation wrapper...'):
 success("Pyrate automation wrapper collected.")
 
 
-with spinner('Collecting USB input detection software...'):
-    cmd_run("/usr/bin/git clone https://github.com/G4vr0ch3/USBInputDetection /src/USBInputDetection")
-    cmd_run("/usr/bin/cp -r /src/USBInputDetection/Frontend/PythonHandler /src/Frontend/USBInputDetection")
-    cmd_run("/usr/bin/cp -r /src/USBInputDetection/Backend/PythonHandler /src/Backend/USBInputDetection")
-success("USB input detection software collected.")
-
-
 with spinner('Adding UDEV rules...'):
-    cmd_run("/usr/bin/cp /src/USBInputDetection/Frontend/00-frontend.rules /etc/udev/rules.d")
-    cmd_run("/usr/bin/cp /src/USBInputDetection/Backend/00-backend.rules /etc/udev/rules.d")
+    cmd_run("/usr/bin/cp Host/00-frontend.rules /etc/udev/rules.d")
+    cmd_run("/usr/bin/cp Host/00-backend.rules /etc/udev/rules.d")
     info('Reloading rules...')
     cmd_run("udevadm control --reload-rules")
     info('Triggering rules...')
