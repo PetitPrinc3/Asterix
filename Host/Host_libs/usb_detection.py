@@ -14,31 +14,30 @@ from Asterix_libs.prints import *
 ################################################################################
 
 
-def inp_wait(path1, path2="$"):
-    while not os.path.exists(path1) and not os.path.exists(path2):
+def inp_wait(path):
+    while True not in [os.path.exists(_) for _ in path]:
         try:
-            infor('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Waiting for Output Device')
+            infor('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Waiting for USB Device')
             time.sleep(1)
         except KeyboardInterrupt:
             print()
             return None
-    success('::: Output device detected :::          ')
-    if os.path.exists(path1): return path1
-    if os.path.exists(path2): return path2
+    success('::: USB device detected :::          ')
+    return path[[os.path.exists(_) for _ in path].index(True)]
 
 
 ################################################################################
 
 
-def rem_wait(path1, path2="$"):
-    while os.path.exists(path1) or os.path.exists(path2):
+def rem_wait(path):
+    while True in [os.path.exists(_) for _ in path]:
         try:
-            infor('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Waiting for Output Device')
+            infor('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Waiting for USB Device')
             time.sleep(1)
         except KeyboardInterrupt:
             print()
             return False
-    fail('::: Output device removed  :::          ')
+    fail('::: USB device removed  :::          ')
     return True
 
 

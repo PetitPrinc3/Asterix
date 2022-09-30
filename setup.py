@@ -93,13 +93,13 @@ with spinner('Creating relevant docker volumes...'):
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name OutputFiles"')
     info('OutputFiles volume created.            ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name SharedDB"')
-    info('SharedDB volume created.               ')
+    info('DataShare volume created.               ')
 success("All relevant docker volumes created.")
 
 
 with spinner('Creating USB UIDs database...'):
     cmd_run("/usr/bin/python3 Host/db_create.py")
-    cmd_run("/usr/bin/mv USB_ID.db /var/lib/docker/volumes/SharedDB/_data")
+    cmd_run("/usr/bin/mv USB_ID.db /var/lib/docker/volumes/DataShare/_data")
 success("USB UIDs database initialized.")
 
 

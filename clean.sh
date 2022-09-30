@@ -19,7 +19,7 @@ docker image rm backend --force
 
 docker volume rm InputFiles --force
 docker volume rm OutputFiles --force
-docker volume rm SharedDB --force
+docker volume rm DataShare --force
 
 rm -r /src
 rm /opt/docker_runner/boot.sh

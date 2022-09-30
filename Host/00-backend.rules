@@ -1,3 +1,4 @@
+ATTRS{devpath}=="1.3", KERNEL=="usb", SYMLINK+="USBOutputDetected"
 ATTRS{devpath}=="1.4", ENV{DEVTYPE}=="disk", SYMLINK+="USBOutputDisk", ATTR{authorized}:="1"
 ATTRS{devpath}=="1.4", ENV{DEVTYPE}=="partition", SYMLINK+="USBOutputPart", ATTR{authorized}:="1"
-ATTRS{devpath}=="1.4", ENV{DEVTYPE}!="partition", ENV{DEVTYPE}!="partition", SYMLINK+="USBBadOutput"
+ATTRS{devpath}=="1.3", KERNEL=="hid*", SYMLINK+="USBBadOutput", RUN+="/bin/bash -c 'echo 0 > /sys/bus/usb/devices/1-1.4/authorized'"

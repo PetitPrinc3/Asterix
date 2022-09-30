@@ -6,7 +6,6 @@
 
 import subprocess
 
-import usb_detection as ud
 import usb_list as ul
 import copy as cp
 
@@ -41,13 +40,8 @@ def tab(f_lst):
 
         print('|' + "_"*((max((ct//10), 2)) + colsize + 5) + '|\n')
 
-def main():
-    inp = ud.inp_wait("/dev/USBInputPart", "/dev/USBInputDisk")
-
-    if inp is None : fail('Input detection failed.'); exit()
-
-    subprocess.run(f'mount {inp} /mnt/USBInputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-
+def frontend_main():
+    
     f_lst = ul.lst('/mnt/USBInputDevice')
 
     info('Fetched ' + str(len(f_lst)) + ' files.')
@@ -79,11 +73,10 @@ def main():
 
     print("\nAvailable Files :")
     tab(f_res)
-
-    subprocess.run(f'umount {inp}', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-
+    
 if __name__ == "__main__":
-    main()
+    
+    frontend_main()
 
 
 ################################################################################

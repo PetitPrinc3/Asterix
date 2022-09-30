@@ -2,7 +2,6 @@
 
 import subprocess
 
-import usb_detection as ud
 import copy as cp
 import usb_id as uid
 import usb_list as ul
@@ -34,20 +33,14 @@ def tab(f_lst):
         print('|' + "_"*((max((ct//10), 2)) + colsize + 5) + '|\n')
 
 
-def main():
+def Backend_ID(path):
     
-    if not uid.db_test("/mnt/SharedDB/USB_ID.db"): exit()
-
-    cp.copy("/mnt/OutputFiles/trt_result.json", "trt_result.json")
-
-    outp = ud.inp_wait("/dev/USBOutputPart", "/dev/USBOutputDisk")
-
-    if outp is None: fail('Output detection failed.'); exit()
+    if not uid.db_test("/mnt/DataShare/USB_ID.db"): exit()
 
     print()
-    Vid, Pid = uid.get_ids(outp)
+    Vid, Pid = uid.get_ids(path)
 
-    val = uid.match_ids("/mnt/SharedDB/USB_ID.db", Vid, Pid)
+    val = uid.match_ids("/mnt/DataShare/USB_ID.db", Vid, Pid)
 
     if not val: 
         fail('Output device not recognized.') 
@@ -58,14 +51,14 @@ def main():
         if ch == 'Y':
             print()
             warning('This operation is definitive. The drive contains the following files :')
-            subprocess.run(f'mount {outp} /mnt/USBOutputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(f'mount {path} /mnt/USBOutputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             tab(ul.lst("/mnt/USBOutputDevice"))
-            subprocess.run(f'umount {outp}', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(f'umount {path}', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             print('Confirm (Y/n)')
             ch = str(input('>>> '))
             if ch == 'Y':
                 print()
-                uf.format(outp)
+                uf.format(path)
             else:
                 fail("USB Identification failed. Exiting.")
                 exit()
@@ -77,7 +70,9 @@ def main():
     else:
         success('Output Device recognized !')
     
-    subprocess.run(f'mount {outp} /mnt/USBOutputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    
+
+    cp.copy("/mnt/DataShare/trt_result.json", "trt_result.json")
 
     f_trt = ul.lst('/mnt/OutputFiles')
 
@@ -89,11 +84,6 @@ def main():
     subprocess.run('umount /mnt/USBOutputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     info('You can now remove the USB output drive.')
-
-    ud.rem_wait(outp)
-
-    success('Done. Thank you for using IMOTEP <3')
-
 
 if __name__ == "__main__":
     main()
