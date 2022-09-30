@@ -9,8 +9,8 @@ RUN python3 -m ensurepip
 RUN python3 -m pip install --upgrade pip
 
 # Adding USB Input disk handler
-ADD USBInputDetection/* /usr/share/USBInputDetection/
-RUN chmod +x /usr/share/USBInputDetection/main.py
+ADD USBHandler/* /usr/share/USBHandler/
+RUN chmod +x /usr/share/USBHandler/main.py
 
 RUN mkdir /mnt/USBOutputDevice
 RUN mkdir /dev/Backend
