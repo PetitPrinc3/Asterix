@@ -9,7 +9,7 @@ This project will be in active development from the 22nd of August 2022 until at
 
 ## The project (Under construction)
 
-| ![](images/arch_and_op.png) |
+| ![](Images/arch_and_op.png) |
 | :-: |
 | System's architecture |
 
@@ -34,7 +34,7 @@ This project will be in active development from the 22nd of August 2022 until at
     - [Start launcher](#)
     - [UDEV Rules](#)
 
-| ![](images/TODOLIST.png) |
+| ![](Images/status.png) |
 | :-: |
 | Project status |
 
