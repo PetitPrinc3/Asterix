@@ -1,1 +1,1 @@
-# IMOTEP
+# Asterix
