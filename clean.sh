@@ -26,4 +26,4 @@ rm /opt/docker_runner/boot.sh
 rm /opt/docker_runner/run.sh
 
 cd ..
-rm -r IMOTEP
+rm -r Asterix
