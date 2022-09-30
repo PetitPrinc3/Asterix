@@ -7,9 +7,9 @@ import copy as cp
 import usb_id as uid
 import usb_list as ul
 import usb_format as uf
-from spinner import spinner
 
-from prints import *
+from Asterix_libs.spinner import spinner
+from Asterix_libs.prints import *
 
 
 def tab(f_lst):

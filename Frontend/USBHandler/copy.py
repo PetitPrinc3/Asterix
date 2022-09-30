@@ -1,10 +1,10 @@
 import subprocess
-import hash
 import json
 import os
 
-from prints import *
-from spinner import spinner
+from Asterix_libs.prints import *
+from Asterix_libs.spinner import spinner
+from Asterix_libs import hash
 
 def copy(f1, f2):
     with spinner(f'Copying {f1} to {f2}...'):

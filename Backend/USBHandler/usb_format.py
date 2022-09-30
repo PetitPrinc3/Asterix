@@ -6,8 +6,8 @@
 
 import os
 
-from prints import *
-from spinner import spinner
+from Asterix_libs.prints import *
+from Asterix_libs.spinner import spinner
 
 
 ################################################################################

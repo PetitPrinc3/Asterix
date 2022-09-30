@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-from prints import *
+from Asterix_libs.prints import *
 
 def db_test(path):
     try:

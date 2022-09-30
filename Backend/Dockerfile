@@ -12,5 +12,9 @@ RUN python3 -m pip install --upgrade pip
 ADD USBHandler/* /usr/share/USBHandler/
 RUN chmod +x /usr/share/USBHandler/main.py
 
+# Adding shared libraries
+ADD Asterix_libs /usr/lib/python3.10/Asterix_libs
+RUN chmod 777 /usr/lib/python3.10
+
 RUN mkdir /mnt/USBOutputDevice
 RUN mkdir /dev/Backend

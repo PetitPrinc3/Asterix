@@ -15,6 +15,10 @@ ADD USBHandler/* /usr/share/USBHandler/
 RUN chmod +x /usr/share/USBHandler/main.py
 RUN mkdir /mnt/USBInputDevice
 
+# Adding shared libraries
+ADD Asterix_libs /usr/lib/python3.10/Asterix_libs
+RUN chmod 777 /usr/lib/python3.10
+
 # Adding Pyrate software and multiple file processing wrapper
 ADD PyrateAutomation /usr/share/PyrateAutomation
 ADD PyRATE /usr/share/PyrateAutomation/Pyrate

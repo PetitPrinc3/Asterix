@@ -6,7 +6,7 @@
 
 import os.path
 import json
-import hash
+from Asterix_libs import hash
 
 
 ################################################################################

@@ -8,7 +8,7 @@ import os
 import time
 
 from datetime import datetime
-from prints import *
+from Asterix_libs.prints import *
 
 
 ################################################################################

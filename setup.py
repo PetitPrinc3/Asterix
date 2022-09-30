@@ -2,8 +2,8 @@
 
 import subprocess
 import os
-from spinner import spinner
-from prints import *
+from Asterix_libs.spinner import spinner
+from Asterix_libs.prints import *
 
 
 if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode('utf-8').strip() != 'root': fail('This program must be run as root.'); exit()
@@ -50,12 +50,14 @@ success('Software users created.')
 
 with spinner('Preparing Frontend software...'):
     cmd_run("/usr/bin/cp -r Frontend /src/Frontend")
+    cmd_run("/usr/bin/cp -r asterix_libs /src/Frontend")
     cmd_run("/usr/bin/chown -R docker_runner:docker /src/Frontend")
 success("Frontend software prepared.")
 
 
 with spinner('Preparing Backend software...'):
     cmd_run("/usr/bin/cp -r Backend /src/Backend")
+    cmd_run("/usr/bin/cp -r asterix_libs /src/Backend")
     cmd_run("/usr/bin/chown -R docker_runner:docker /src/Backend")
 success("Backend software retrieved.")
 
@@ -100,8 +102,8 @@ success("All relevant docker volumes created.")
 
 
 with spinner('Creating USB UIDs database...'):
-    cmd_run("/usr/bin/python3 db_create.py")
-    cmd_run("/usr/bin/mv USB_ID.db /var/lib/docker/volumes/SharedDB/_data")
+    cmd_run("/usr/bin/python3 Host/db_create.py")
+    cmd_run("/usr/bin/mv Host/USB_ID.db /var/lib/docker/volumes/SharedDB/_data")
 success("USB UIDs database initialized.")
 
 
