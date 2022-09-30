@@ -50,14 +50,14 @@ success('Software users created.')
 
 with spinner('Preparing Frontend software...'):
     cmd_run("/usr/bin/cp -r Frontend /src/Frontend")
-    cmd_run("/usr/bin/cp -r asterix_libs /src/Frontend")
+    cmd_run("/usr/bin/cp -r Asterix_libs /src/Frontend")
     cmd_run("/usr/bin/chown -R docker_runner:docker /src/Frontend")
 success("Frontend software prepared.")
 
 
 with spinner('Preparing Backend software...'):
     cmd_run("/usr/bin/cp -r Backend /src/Backend")
-    cmd_run("/usr/bin/cp -r asterix_libs /src/Backend")
+    cmd_run("/usr/bin/cp -r Asterix_libs /src/Backend")
     cmd_run("/usr/bin/chown -R docker_runner:docker /src/Backend")
 success("Backend software retrieved.")
 

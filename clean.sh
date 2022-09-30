@@ -9,6 +9,11 @@ do
     docker container rm $i --force
 done
 
+for i in $(docker ps -a | cut -d " " -f 4):
+do
+    docker image rm $i --force
+done
+
 docker image rm frontend --force
 docker image rm backend --force
 
