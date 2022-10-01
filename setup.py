@@ -29,7 +29,7 @@ if subprocess.run('docker version', shell=True, stdout=subprocess.PIPE, stderr=s
 
 if subprocess.Popen('qemu-system-aarch64 -machine help', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0: 
     with spinner('Collecting QEMU KVM...'):
-        cmd_run("apt install virt-manager libvirt0 qemu-system")
+        cmd_run("apt install virt-manager libvirt0 qemu-system -y")
     success('QEMU KVM Installed.')
 
 
@@ -42,7 +42,7 @@ success("Source folders created.")
 
 
 with spinner('Creating software users'):
-    if subprocess.run('su fdp', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stderr.decode('utf-8').strip() == 'su: user docker_runner does not exist or the user entry does not contain all the required fields':
+    if subprocess.Popen('id docker_runner', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
         cmd_run("/usr/sbin/useradd -m -d /opt/docker_runner docker_runner")
     cmd_run("/usr/sbin/usermod -aG docker docker_runner")
 success('Software users created.')
@@ -115,46 +115,46 @@ with spinner('Starting containers...'):
 success("Docker containers started.")
 
 
-# info('Preparing Windows 10 VM Environment...')
-# cmd_run("/usr/bin/mkdir /src/win10_VM")
-# cmd_run("/usr/bin/cp /usr/share/AAVMF/AAVMF_CODE.fd /src/win10_VM/AAVMF_CODE.fd")
-# cmd_run("/usr/bin/cp /usr/share/AAVMF/AAVMF_VARS.fd /src/win10_VM/AAVMF_VARS.fd")
+info('Preparing Windows 10 VM Environment...')
+cmd_run("/usr/bin/mkdir /src/win10_VM")
+cmd_run("/usr/bin/cp /usr/share/AAVMF/AAVMF_CODE.fd /src/win10_VM/AAVMF_CODE.fd")
+cmd_run("/usr/bin/cp /usr/share/AAVMF/AAVMF_VARS.fd /src/win10_VM/AAVMF_VARS.fd")
 
 
-# with spinner('Creating system disk image...'):
-#     cmd_run("/usr/bin/qemu-img create -f vhdx -o subformat=fixed /src/win10_VM/system.vhdx 64G")
-# success('64Gb System disk image was initialized.')
+with spinner('Creating system disk image...'):
+    cmd_run("/usr/bin/qemu-img create -f vhdx -o subformat=fixed /src/win10_VM/system.vhdx 64G")
+success('64Gb System disk image was initialized.')
 
 
-# with spinner('Collecting VirtIO drivers...'):
-#     cmd_run("/usr/bin/curl https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.221-1/virtio-win-0.1.221.iso -o /src/win10_VM/virtio_drivers.iso")
-# success('VirtIO drivers collected.')
+with spinner('Collecting VirtIO drivers...'):
+    cmd_run("/usr/bin/wget --no-check-certificate -O /src/win10_VM/virtio_drivers.iso https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.221-1/virtio-win-0.1.221.iso")
+success('VirtIO drivers collected.')
 
-# with spinner('Collecting windows UUID...'):
-#     UUID=subprocess.Popen("""/usr/bin/wget --no-check-certificate -qO- "https://uupdump.net/known.php?q=windows+10+21h2+arm64" | grep 'href="\./selectlang\.php?id=.*"' -o | sed 's/^.*id=//g' | sed 's/"$//g' | head -n1""", shell=True, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-#     WIN_LANG="en-us"
-# success('Collected windows UUID.')
-
-
-# with spinner('Collected windows downloader from UUPdump...'):
-#     cmd_run('/usr/bin/mkdir tmp')
-#     cmd_run(f'/usr/bin/wget --no-check-certificate -O "tmp/uupdump.zip" "https://uupdump.net/get.php?id={UUID}&pack={WIN_LANG}&edition=professional&autodl=2"')
-#     cmd_run('cd tmp && /usr/bin/unzip -q "uupdump.zip"')
-# success('Collected windows downloader.')
-
-# info('Downloading windows ISO. This will take some time.')
-# subprocess.run("cd tmp && /bin/bash uup_download_linux.sh", shell=True)
-# success('Windows ISO collected.')
+with spinner('Collecting windows UUID...'):
+    UUID=subprocess.Popen("""/usr/bin/wget --no-check-certificate -qO- "https://uupdump.net/known.php?q=windows+10+21h2+arm64" | grep 'href="\./selectlang\.php?id=.*"' -o | sed 's/^.*id=//g' | sed 's/"$//g' | head -n1""", shell=True, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    WIN_LANG="en-us"
+success('Collected windows UUID.')
 
 
-# with spinner('Finalizing VM environment...'):
-#     cmd_run("/usr/bin/mv tmp/*.ISO /src/win10_VM")
-# success("VM environment finalized")
+with spinner('Collected windows downloader from UUPdump...'):
+    cmd_run('/usr/bin/mkdir tmp')
+    cmd_run(f'/usr/bin/wget --no-check-certificate -O "tmp/uupdump.zip" "https://uupdump.net/get.php?id={UUID}&pack={WIN_LANG}&edition=professional&autodl=2"')
+    cmd_run('cd tmp && /usr/bin/unzip -q "uupdump.zip"')
+success('Collected windows downloader.')
 
-# cmd_run("/usr/bin/rm -r tmp")
+info('Downloading windows ISO. This will take some time.')
+subprocess.run("cd tmp && /bin/bash uup_download_linux.sh", shell=True)
+success('Windows ISO collected.')
 
 
-# info("""When you are ready to setup the VM, execute "bash vm_setup.sh". Follow the instructions provided on the repository's README.""")
+with spinner('Finalizing VM environment...'):
+    cmd_run("/usr/bin/mv tmp/*.ISO /src/win10_VM")
+success("VM environment finalized")
+
+cmd_run("/usr/bin/rm -r tmp")
+
+
+info("""When you are ready to setup the VM, execute "bash vm_setup.sh". Follow the instructions provided on the repository's README.""")
 
 # SETUP END
 success("Exhausted")
