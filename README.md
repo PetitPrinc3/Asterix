@@ -1,5 +1,7 @@
 # Asterix
 
+![](Images/asterix.png)
+
 ## What is this repo ?
 
 This repository will hold the schematics, designs, softwares, scripts etc. of my graduation project.  
