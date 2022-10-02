@@ -1,6 +1,6 @@
 # Asterix
 
-![](Images/asterix.png)
+![](Images/banner.png)
 
 ## What is this repo ?
 
