@@ -126,8 +126,8 @@ with spinner('Creating system disk image...'):
 success('64Gb System disk image was initialized.')
 
 
-with spinner('Collecting VirtIO drivers...'):
-    cmd_run("/usr/bin/wget --no-check-certificate -O /src/win10_VM/virtio_drivers.iso https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.221-1/virtio-win-0.1.221.iso")
+info('Collecting VirtIO drivers...')
+subprocess.Popen("/usr/bin/wget --no-check-certificate -O /src/win10_VM/virtio_drivers.iso https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.221-1/virtio-win-0.1.221.iso", shell=True)
 success('VirtIO drivers collected.')
 
 with spinner('Collecting windows UUID...'):
