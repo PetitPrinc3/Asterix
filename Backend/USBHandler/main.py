@@ -48,8 +48,6 @@ def main():
     if outp is None: fail('Output detection failed.'); exit()
     if outp == "/mnt/DataShare/BadUSBOutput": fail("The output drive is not a valid USB drive."); subprocess.call("rm /mnt/DataShare/BadUSBOutput", shell=True); fail('This incident will be reported.'); exit()
 
-    print("/dev/" + outp.split("/")[-1])
-
     Vid, Pid = uid.get_ids("/dev/" + outp.split("/")[-1])
 
     val = uid.match_ids("/mnt/DataShare/USB_ID.db", Vid, Pid)
@@ -82,9 +80,12 @@ def main():
 
 #    subprocess.run(f'mount {outp} /mnt/USBOutputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+    print()
+
     f_trt = ul.lst('/mnt/OutputFiles')
 
     f_res = cp.xcopy("trt_result.json", f_trt, outp)
+    
     print("\nAvailable Files :")
     tab(f_res)
 #    subprocess.run('umount /mnt/USBOutputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

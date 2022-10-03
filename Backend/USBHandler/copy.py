@@ -19,6 +19,8 @@ def get_hash(inp_data, file):
 def xcopy(js1, f_lst, dst):
     if not os.path.isdir(dst): fail('Destination is not a directory.'); exit()
 
+    if dst[-1] != "/": dst+="/"
+
     try:
         with open(js1, "r") as _:
             inp_data = json.load(_)["ind_results"]
