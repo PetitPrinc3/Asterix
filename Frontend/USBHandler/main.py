@@ -1,13 +1,20 @@
 #!/usr/bin/python3.10
 ################################################################################
 
+
 import subprocess
+import time
+import json
 
 import usb_detection as ud
 import usb_list as ul
 import copy as cp
 
+from datetime import datetime
 from Asterix_libs.prints import *
+from Asterix_libs.spinner import spinner
+from Asterix_libs.hash import sha
+
 
 ################################################################################
 
@@ -35,13 +42,15 @@ def main():
     inp = ud.inp_wait(["/mnt/USBInputDevice/USBInputPart", "/mnt/USBInputDevice/USBInputDisk", "/mnt/DataShare/BadUSBInput"])
 
     if inp is None : fail('Input detection failed.'); exit()
-    if inp == "/mnt/DataShare/BadUSBInput": fail("The input drive is not a valid USB drive."); subprocess.call("rm /mnt/DataShare/BadUSBInput"); fail('This incident will be reported.'); exit()
+    if inp == "/mnt/DataShare/BadUSBInput": fail("The input drive is not a valid USB drive."); subprocess.call("rm /mnt/DataShare/BadUSBInput", shell=True); fail('This incident will be reported.'); exit()
 
     success('::: USB device detected :::          ')
 
-    f_lst = ul.lst(inp)
-
+    with spinner("Collecting input drive content..."):
+        time.sleep(1)
+        f_lst = ul.lst(inp)
     info('Fetched ' + str(len(f_lst)) + ' files.')
+    
     tab(f_lst)
     if f_lst == []: warning("No file available on input drive. Exiting."); exit()
     print("Select files by ID (Separate your choice with ';'. e.g '1;2;3') :")
@@ -60,6 +69,25 @@ def main():
     print("\nSelected Files :")
     tab(f_trt)
     f_res = cp.xcopy("list_result.json", f_trt, "/mnt/InputFiles/")
+
+    with open('/mnt/DataShare/user_inp.json', 'r+') as usr_fl:
+
+        f_data = json.load(usr_fl)
+
+        for file in f_res:
+
+
+            ind_result = {
+                "Date": datetime.now().strftime("%d/%m/%Y-%H:%M:%S"),
+                "FilePath": file,
+                "HASH": sha(file),
+            }
+
+            f_data["ind_results"].append(ind_result)
+
+        usr_fl.seek(0)
+        js = json.dumps(f_data, indent=4)
+        usr_fl.write(js)
 
     print("\nAvailable Files :")
     tab(f_res)
