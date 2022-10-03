@@ -83,7 +83,7 @@ def main():
 
             ind_result = {
                 "Date": datetime.now().strftime("%d/%m/%Y-%H:%M:%S"),
-                "FilePath": file,
+                "FileName": file,
                 "HASH": sha(file),
             }
 

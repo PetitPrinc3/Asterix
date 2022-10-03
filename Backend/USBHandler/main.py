@@ -41,12 +41,14 @@ def main():
 
     if not uid.db_test("/mnt/DataShare/USB_ID.db"): exit()
 
-    cp.copy("/mnt/OutputFiles/trt_result.json", "trt_result.json")
+    cp.copy("/mnt/DataShare/trt_result.json", "trt_result.json")
 
     outp = ud.inp_wait(["/mnt/USBOutputDevice/USBOutputPart", "/mnt/USBOutputDevice/USBOutputDisk", "/mnt/DataShare/BadUSBOutput"])
 
     if outp is None: fail('Output detection failed.'); exit()
     if outp == "/mnt/DataShare/BadUSBOutput": fail("The output drive is not a valid USB drive."); subprocess.call("rm /mnt/DataShare/BadUSBOutput", shell=True); fail('This incident will be reported.'); exit()
+
+    print("/dev/" + outp.split("/")[-1])
 
     Vid, Pid = uid.get_ids("/dev/" + outp.split("/")[-1])
 
