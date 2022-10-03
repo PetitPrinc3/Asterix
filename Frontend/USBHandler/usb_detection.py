@@ -22,7 +22,7 @@ def inp_wait(path):
         except KeyboardInterrupt:
             print()
             return None
-    return path[[os.path.exists(_) for _ in path].index(True)-1]
+    return path[[os.path.exists(_) for _ in path].index(True)]
 
 
 ################################################################################
