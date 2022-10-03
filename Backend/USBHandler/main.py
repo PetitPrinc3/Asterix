@@ -35,19 +35,18 @@ def tab(f_lst):
 
 def main():
 
-    if not uid.db_test("/mnt/SharedDB/USB_ID.db"): exit()
+    if not uid.db_test("/mnt/DataShare/USB_ID.db"): exit()
 
     cp.copy("/mnt/OutputFiles/trt_result.json", "trt_result.json")
 
-    outp = ud.inp_wait(["/dev/USBOutputDevice/USBOutputPart", "/mnt/USBOutputDevice/USBOutputDisk", "/mnt/USBOutputDevice/BadUSBAttempt"])
+    outp = ud.inp_wait(["/mnt/USBOutputDevice/USBOutputPart", "/mnt/USBOutputDevice/USBOutputDisk", "/mnt/DataShare/BadUSBOutput"])
 
     if outp is None: fail('Output detection failed.'); exit()
-    if outp == "/mnt/USBOutputDevice/BadUSBAttempt": subprocess.call("/usr/bin/rm /mnt/USBOutputDevice/BadUSBAttempt", shell=True); fail("The Output drive is not a valid USB drive."); fail('This incident will be reported.'); exit()
+    if outp == "/mnt/DataShare/BadUSBOutput": fail("The output drive is not a valid USB drive."); subprocess.call("rm /mnt/DataShare/BadUSBOutput", shell=True); fail('This incident will be reported.'); exit()
 
-    print()
-    Vid, Pid = uid.get_ids(outp)
+    Vid, Pid = uid.get_ids("/dev/" + outp.split("/")[-1])
 
-    val = uid.match_ids("/mnt/SharedDB/USB_ID.db", Vid, Pid)
+    val = uid.match_ids("/mnt/DataShare/USB_ID.db", Vid, Pid)
 
     if not val: 
         fail('Output device not recognized.') 
@@ -86,7 +85,7 @@ def main():
 
     info('You can now remove the USB output drive.')
 
-    ud.rem_wait(outp)
+    ud.rem_wait([outp])
 
     success('Done. Thank you for using IMOTEP <3')
 
