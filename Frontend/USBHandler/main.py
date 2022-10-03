@@ -21,6 +21,7 @@ from Asterix_libs.hash import sha
 
 def choose():
     return [int(c) for c in str(input(">>> ")).split(";")]
+
 def tab(f_lst):
     if f_lst == []:
         print(" ____________________ ")
