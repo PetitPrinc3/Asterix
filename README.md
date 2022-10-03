@@ -1,13 +1,16 @@
-# Asterix
+# Asterix : Automated Sanitizing Terminal with Embedded Relevant Information eXtraction
 
-![](Images/banner.png)
+![Asterix](Images/banner.png)
 
 ## What is this repo ?
 
-This repository will hold the schematics, designs, softwares, scripts etc. of my graduation project.  
-You should also find (once redacted), the memoir written concerning this project.  
-This work is being realized in pairs under the mentorship of the computer science and cybersecurity department at the University Van Amsterdam (UVA).  
-This project will be in active development from the 22nd of August 2022 until at least the 10th of November 2022.
+This project will be in active development from the 22nd of August 2022 until at least the 10th of November 2022.  
+The ultimate goal is to propose an Open-Source USB malware cleaner kiosk that is portable and offers good functionalities.
+
+This is my graduation project from the French Naval Academy, in collaboration with the Informatic Institute of the University of Amsterdam.
+
+You will find here the pieces of software that make Asterix as well as the report concerning the project one redacted.  
+You will also find functionnalities that have not been implemented but were part of the thinking/designing process.
 
 ## The project (Under construction)
 
@@ -17,22 +20,22 @@ This project will be in active development from the 22nd of August 2022 until at
 
 ### Components
 
-- [Frontend](Frontend) 
+- ✅ [Frontend](Frontend) :
     - [USB Handler](Frontend/USBHandler)
     - [Pyrate](https://github.com/G4vr0ch3/PyRATE)
     - [Pyrate Automation](Frontend/PyrateAutomation/)
-- [Backend](Backend)
+- ❌ [Backend](Backend)
     - [USB Handler / Identification / Format](Backend/USBHandler)
     - [USB to USB transfer](#)
-- [Analysis Center](AC-Center)
+- ❌ [Analysis Center](AC-Center)
     - [Virtual Machine](#)
     - [USB to VM transfer](#)
     - [Anti-Virus Analysis Wrapper PyWAVA](https://github.com/G4vr0ch3/PyWAVA)
     - [Pywava Automation](AC-Center/PywavaAutomation/)
-- [Brain](Brain)
+- ❌ [Brain](Brain)
     - [Reset handler](#)
     - [MAIN](#)
-- [Host](Host)
+- ❌ [Host](Host)
     - [Start launcher](#)
     - [UDEV Rules](#)
 
