@@ -10,6 +10,8 @@ import copy as cp
 from Asterix_libs.prints import *
 
 ################################################################################
+
+
 def choose():
     return [int(c) for c in str(input(">>> ")).split(";")]
 def tab(f_lst):

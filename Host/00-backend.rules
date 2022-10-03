@@ -1,3 +1,7 @@
-ATTRS{devpath}=="1.4", ENV{DEVTYPE}=="disk", SYMLINK+="USBOutputDisk", ATTR{authorized}:="1", RUN+="/bin/mount /dev/%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk"
-ATTRS{devpath}=="1.4", ENV{DEVTYPE}=="partition", SYMLINK+="USBOutputPart", ATTR{authorized}:="1", RUN+="/bin/mount /dev/%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart"
-ATTRS{devpath}=="1.4", KERNEL=="hid*", SYMLINK+="USBBadOutput", RUN+="/bin/bash -c 'echo 0 > /sys/bus/usb/devices/1-1.4/authorized'", RUN+="/usr/bin/touch /var/lib/docker/volumes/USBOutputDevice/_data/BadUSBAttempt"
+ATTRS{devpath}=="1.4", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/USBOutputDevice/_data/USBOutput'"
+ATTRS{devpath}=="1.4", ENV{DEVTYPE}=="disk", SYMLINK+="USBOutputDisk", ATTR{authorized}="1", RUN+="/usr/bin/rm /var/lib/docker/volumes/USBOutputDevice/_data/USBOutput", RUN+="/usr/bin/mkdir -p /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk", RUN+="/bin/mount /dev/%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk"
+ATTRS{devpath}=="1.4", ENV{DEVTYPE}=="partition", SYMLINK+="USBOutputPart", ATTR{authorized}="1", RUN+="/usr/bin/rm /var/lib/docker/volumes/USBOutputDevice/_data/USBOutput", RUN+="/usr/bin/mkdir -p /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart", RUN+="/bin/mount /dev/%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart"
+ATTRS{devpath}=="1.4", KERNEL=="hid*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-1.4/authorized'"
+
+
+ACTION=="remove", ATTRS{devpath}=="1.4", RUN+="/usr/bin/umount /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart 2>/dev/null", RUN+="/usr/bin/rm -r /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart 2>/dev/null" 

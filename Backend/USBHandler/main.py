@@ -1,3 +1,7 @@
+#!/usr/bin/python3.10
+################################################################################
+
+
 import subprocess
 
 import usb_detection as ud
@@ -7,6 +11,11 @@ import usb_list as ul
 import usb_format as uf
 from Asterix_libs.spinner import spinner
 from Asterix_libs.prints import *
+
+
+################################################################################
+
+
 def tab(f_lst):
     if f_lst == []:
         print(" ____________________ ")
@@ -30,9 +39,10 @@ def main():
 
     cp.copy("/mnt/OutputFiles/trt_result.json", "trt_result.json")
 
-    outp = ud.inp_wait(["/dev/USBOutputPart", "/dev/USBOutputDisk", "/dev/USBBadOutput"])
+    outp = ud.inp_wait(["/dev/USBOutputDevice/USBOutputPart", "/mnt/USBOutputDevice/USBOutputDisk", "/mnt/USBOutputDevice/BadUSBAttempt"])
 
     if outp is None: fail('Output detection failed.'); exit()
+    if outp == "/mnt/USBOutputDevice/BadUSBAttempt": subprocess.call("/usr/bin/rm /mnt/USBOutputDevice/BadUSBAttempt", shell=True); fail("The Output drive is not a valid USB drive."); fail('This incident will be reported.'); exit()
 
     print()
     Vid, Pid = uid.get_ids(outp)
@@ -49,7 +59,7 @@ def main():
             print()
             warning('This operation is definitive. The drive contains the following files :')
 #            subprocess.run(f'mount {outp} /mnt/USBOutputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            tab(ul.lst("/mnt/USBOutputDevice"))
+            tab(ul.lst(outp))
 #            subprocess.run(f'umount {outp}', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             print('Confirm (Y/n)')
             ch = str(input('>>> '))
@@ -69,7 +79,7 @@ def main():
 
     f_trt = ul.lst('/mnt/OutputFiles')
 
-    f_res = cp.xcopy("trt_result.json", f_trt, "/mnt/USBOutputDevice/")
+    f_res = cp.xcopy("trt_result.json", f_trt, outp)
     print("\nAvailable Files :")
     tab(f_res)
 #    subprocess.run('umount /mnt/USBOutputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -83,3 +93,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+################################################################################
