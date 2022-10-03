@@ -22,8 +22,7 @@ def inp_wait(path):
         except KeyboardInterrupt:
             print()
             return None
-    success('::: USB device detected :::          ')
-    return path[[os.path.exists(_) for _ in path].index(True)]
+    return path[[os.path.exists(_) for _ in path].index(True)-1]
 
 
 ################################################################################

@@ -32,10 +32,12 @@ def tab(f_lst):
         print('|' + "_"*((max((ct//10), 2)) + colsize + 5) + '|\n')
 
 def main():
-    inp = ud.inp_wait(["/dev/USBInputDevice/USBInputPart", "/mnt/USBInputDevice/USBInputDisk", "/mnt/USBInputDevice/BadUSBAttempt"])
+    inp = ud.inp_wait(["/mnt/USBInputDevice/USBInputPart", "/mnt/USBInputDevice/USBInputDisk", "/mnt/DataShare/BadUSBInput"])
 
     if inp is None : fail('Input detection failed.'); exit()
-    if inp == "/mnt/USBInputDevice/BadUSBAttempt": subprocess.call("/usr/bin/rm /mnt/USBInputDevice/BadUSBAttempt", shell=True); fail("The input drive is not a valid USB drive."); fail('This incident will be reported.'); exit()
+    if inp == "/mnt/DataShare/BadUSBInput": fail("The input drive is not a valid USB drive."); subprocess.call("rm /mnt/DataShare/BadUSBInput"); fail('This incident will be reported.'); exit()
+
+    success('::: USB device detected :::          ')
 
     f_lst = ul.lst(inp)
 
