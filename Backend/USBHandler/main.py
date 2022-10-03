@@ -26,11 +26,15 @@ def tab(f_lst):
     else:
         ct = len(f_lst)
         colsize = min(max([len(path) for path in f_lst]), 200)
-        print(' ' + "_"*((max((ct//10), 2)) + colsize + 5))
-        print('| ID ' + " "*(max((ct//10) - 2, 0)) + "| File " + " "*(colsize - 4) + "|")
+        print(' ' + "_"*(len(str(ct//10)) + colsize + 6) + ' ')
+        print('| ID' + " "*(max(len(str(ct//10)), 0)) + "| File " + " "*(colsize - 4) + "|")
+        print('|'+"_"*(len(str(ct//10)) + 3) + "|" + "_"*(colsize + 2) + "|")
         for f in f_lst:
-            print('| ' + "0"*max(((ct//10) - f_lst.index(f)//10), 1) + str(f_lst.index(f)) + " | " + str(f)[-colsize:] + " "*(colsize - len(f[-colsize:])) + " |")
-        print('|' + "_"*((max((ct//10), 2)) + colsize + 5) + '|\n')
+            if f_lst.index(f) < 10: ifinf=1
+            else: ifinf=0
+            print('| ' + "0"*max(len(str(ct//10)) - len(str(f_lst.index(f)//10)) + ifinf, 0) + str(f_lst.index(f)) + " | " + str(f)[-colsize:] + " "*(colsize - len(f[-colsize:])) + " |")
+
+        print('|'+"_"*(len(str(ct//10)) + 3) + "|" + "_"*(colsize + 2) + "|\n")
 
 
 def main():
