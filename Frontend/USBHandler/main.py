@@ -1,26 +1,18 @@
 #!/usr/bin/python3.10
-
-
 ################################################################################
-
 
 import subprocess
 
+import usb_detection as ud
 import usb_list as ul
 import copy as cp
 
 from Asterix_libs.prints import *
 
-
 ################################################################################
-
-
 def choose():
     return [int(c) for c in str(input(">>> ")).split(";")]
-
-
 def tab(f_lst):
-
     if f_lst == []:
         print(" ____________________ ")
         print("| No File Available. |")
@@ -29,29 +21,26 @@ def tab(f_lst):
     
     else:
         ct = len(f_lst)
-
         colsize = min(max([len(path) for path in f_lst]), 200)
-
         print(' ' + "_"*((max((ct//10), 2)) + colsize + 5))
         print('| ID ' + " "*(max((ct//10) - 2, 0)) + "| File " + " "*(colsize - 4) + "|")
-
         for f in f_lst:
             print('| ' + "0"*max(((ct//10) - f_lst.index(f)//10), 1) + str(f_lst.index(f)) + " | " + str(f)[-colsize:] + " "*(colsize - len(f[-colsize:])) + " |")
 
         print('|' + "_"*((max((ct//10), 2)) + colsize + 5) + '|\n')
 
-def frontend_main():
-    
-    f_lst = ul.lst('/mnt/USBInputDevice')
+def main():
+    inp = ud.inp_wait(["/dev/USBInputDevice/USBInputPart", "/mnt/USBInputDevice/USBInputDisk", "/mnt/USBInputDevice/BadUSBAttempt"])
+
+    if inp is None : fail('Input detection failed.'); exit()
+    if inp == "/mnt/USBInputDevice/BadUSBAttempt": subprocess.call("/usr/bin/rm /mnt/USBInputDevice/BadUSBAttempt", shell=True); fail("The input drive is not a valid USB drive."); fail('This incident will be reported.'); exit()
+
+    f_lst = ul.lst(inp)
 
     info('Fetched ' + str(len(f_lst)) + ' files.')
-
     tab(f_lst)
-
     if f_lst == []: warning("No file available on input drive. Exiting."); exit()
-
     print("Select files by ID (Separate your choice with ';'. e.g '1;2;3') :")
-
     while True:
         try:
             choice = choose()
@@ -61,22 +50,18 @@ def frontend_main():
             exit()
         except:
             fail('Choice failed, try again.')
-
     f_trt = []
     for ind in choice:
         f_trt.append(f_lst[ind])
-
     print("\nSelected Files :")
     tab(f_trt)
-
     f_res = cp.xcopy("list_result.json", f_trt, "/mnt/InputFiles/")
 
     print("\nAvailable Files :")
     tab(f_res)
-    
+
 if __name__ == "__main__":
-    
-    frontend_main()
+    main()
 
 
 ################################################################################

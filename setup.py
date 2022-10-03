@@ -32,6 +32,7 @@ if subprocess.Popen('qemu-system-aarch64 -machine help', shell=True, stdout=subp
         cmd_run("apt install virt-manager libvirt0 qemu-system -y")
     success('QEMU KVM Installed.')
 
+cmd_run('apt install aria2c')
 
 with spinner('Creating source folders...'):
     if not os.path.exists("/src"): cmd_run("/usr/bin/mkdir /src")
