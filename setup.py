@@ -64,6 +64,14 @@ with spinner('Collecting PyRATE...'):
 success("Pyrate collected.")
 
 
+with spinner('Adding mounting service...'):
+    cmd_run('mkdir -p /usr/share/Asterix')
+    cmd_run('/usr/bin/cp Host/mounter.sh /usr/share/Asterix/')
+    cmd_run('/usr/bin/cp Host/mounter@.service /etc/systemd/system/')
+    cmd_run('systemctl daemon-reload')
+success('Created mounting service.')
+
+
 with spinner('Adding UDEV rules...'):
     cmd_run("/usr/bin/cp Host/00-frontend.rules /etc/udev/rules.d")
     cmd_run("/usr/bin/cp Host/00-backend.rules /etc/udev/rules.d")

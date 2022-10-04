@@ -1,6 +1,6 @@
-ATTRS{devpath}=="1.4", ENV{DEVTYPE}=="disk", ATTR{authorized}="1", SYMLINK+="USBOutputDisk", RUN+="/usr/bin/mkdir -p /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk", RUN+="/bin/mount /dev/%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk"
-ATTRS{devpath}=="1.4", ENV{DEVTYPE}=="partition", ATTR{authorized}="1", SYMLINK+="USBOutputPart", RUN+="/usr/bin/mkdir -p /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart", RUN+="/bin/mount /dev/%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart"
-ATTRS{devpath}=="1.4", KERNEL=="hid*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/USBOutputDevice/_data/BadUSBOutput'", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-1.4/authorized'"
+ATTRS{devpath}=="1.4", ACTION=="ADD", ENV{DEVTYPE}=="disk", ATTR{authorized}="1", SYMLINK+="USBOutputDisk", RUN+="/bin/systemctl start mounter@'%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk'.service"
+ATTRS{devpath}=="1.4", ACTION=="ADD", ENV{DEVTYPE}=="partition", ATTR{authorized}="1", SYMLINK+="USBOutputPart",RUN+="/bin/systemctl start mounter@'%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart'.service"
+ATTRS{devpath}=="1.4", KERNEL=="hid*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/DataShare/_data/BadUSBOutput'", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-1.4/authorized'"
 
-
-ACTION=="remove", ATTRS{devpath}=="1.4", RUN+="/usr/bin/umount /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart 2>/dev/null", RUN+="/usr/bin/rm -r /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart 2>/dev/null"
+ATTRS{devpath}=="1.4", ACTION=="ADD", ENV{DEVTYPE}=="disk", ATTR{authorized}="1", RUN+="/bin/systemctl stop mounter@'%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk'.service"
+ATTRS{devpath}=="1.4", ACTION=="ADD", ENV{DEVTYPE}=="partition", ATTR{authorized}="1", RUN+="/bin/systemctl stop mounter@'%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart'.service"

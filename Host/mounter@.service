@@ -1,0 +1,9 @@
+[Unit]
+Description=Mount USB Drive on %i
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+Environment="SCRIPT_ARGS=%I"
+ExecStart=/usr/share/Asterix/usb-mount.sh add $SCRIPT_ARGS
+ExecStop=/usr/share/Asterix/usb-mount.sh remove $SCRIPT_ARGS
