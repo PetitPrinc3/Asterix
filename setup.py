@@ -66,6 +66,7 @@ success("Pyrate collected.")
 
 with spinner('Adding mounting service...'):
     cmd_run('mkdir -p /usr/share/Asterix/Mounters')
+    cmd_run('rm -r /usr/share/Asterix/Mounters/*')
     cmd_run('/usr/bin/cp Host/Mounters/*.sh /usr/share/Asterix/Mounters/')
     cmd_run('/usr/bin/cp Host/Mounters/*.service /etc/systemd/system/')
     cmd_run('systemctl daemon-reload')
