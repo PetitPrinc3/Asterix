@@ -77,6 +77,8 @@ do_unmount()
             fi
         fi
     done
+
+    /usr/bin/rm -r $MNTPOINT
 }
 
 case "${ACTION}" in
