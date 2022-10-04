@@ -99,12 +99,6 @@ with spinner('Creating relevant docker volumes...'):
 success("All relevant docker volumes created.")
 
 
-with spinner('Creating USB UIDs database...'):
-    cmd_run("/usr/bin/python3 Host/Host_libs/db_create.py")
-    cmd_run("/usr/bin/mv USB_ID.db /var/lib/docker/volumes/DataShare/_data")
-success("USB UIDs database initialized.")
-
-
 with spinner('Starting containers...'):
     cmd_run("/usr/bin/cp Host/docker_runner_scripts/boot.sh /opt/docker_runner/boot.sh")
     cmd_run("/usr/bin/cp Host/docker_runner_scripts/run.sh /opt/docker_runner/run.sh")

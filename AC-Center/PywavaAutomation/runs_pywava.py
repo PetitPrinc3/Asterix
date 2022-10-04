@@ -85,8 +85,8 @@ def runs_(f):
 
     for file in f:
         print()
-        subprocess.call(f'cd Pywava && python pywava.py -b -a -f {os.getcwd()}\Pywava\Inputs\{os.path.basename(file[1])}', shell = True)
-        log.log(f'System call : "cd Pywava && python pywava.py -b -a -f {os.getcwd()}\Pywava\Inputs\{os.path.basename(file[1])}"')
+        subprocess.call(f'cd Pywava && python pywava.py -b -cd -f {os.getcwd()}\Pywava\Inputs\{os.path.basename(file[1])}', shell = True)
+        log.log(f'System call : "cd Pywava && python pywava.py -b -cd -f {os.getcwd()}\Pywava\Inputs\{os.path.basename(file[1])}"')
 
 
 ################################################################################
