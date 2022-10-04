@@ -69,6 +69,7 @@ with spinner('Adding mounting service...'):
     subprocess.run('rm -r /usr/share/Asterix', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     cmd_run('mkdir -p /usr/share/Asterix/Mounters')
     cmd_run('/usr/bin/cp Host/Mounters/*.sh /usr/share/Asterix/Mounters/')
+    cmd_run('/usr/bin/chmod 777 /usr/share/Asterix/Mounters/*.sh')
     cmd_run('/usr/bin/cp Host/Mounters/*.service /etc/systemd/system/')
     cmd_run('systemctl daemon-reload')
 success('Created mounting service.')
