@@ -1,6 +1,6 @@
-ATTRS{devpath}=="1.4", ACTION=="ADD", ENV{DEVTYPE}=="disk", ATTR{authorized}="1", SYMLINK+="USBOutputDisk", RUN+="/bin/systemctl start mounter@'%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk'.service"
-ATTRS{devpath}=="1.4", ACTION=="ADD", ENV{DEVTYPE}=="partition", ATTR{authorized}="1", SYMLINK+="USBOutputPart",RUN+="/bin/systemctl start mounter@'%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart'.service"
+ATTRS{devpath}=="1.4", ACTION=="ADD", ENV{DEVTYPE}=="disk", ATTR{authorized}="1", SYMLINK+="USBOutputDisk", RUN+="/bin/systemctl start outpdiskmnt@%k.service"
+ATTRS{devpath}=="1.4", ACTION=="ADD", ENV{DEVTYPE}=="partition", ATTR{authorized}="1", SYMLINK+="USBOutputPart",RUN+="/bin/systemctl start outppartmnt@%k.service"
 ATTRS{devpath}=="1.4", KERNEL=="hid*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/DataShare/_data/BadUSBOutput'", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-1.4/authorized'"
 
-ATTRS{devpath}=="1.4", ACTION=="ADD", ENV{DEVTYPE}=="disk", ATTR{authorized}="1", RUN+="/bin/systemctl stop mounter@'%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk'.service"
-ATTRS{devpath}=="1.4", ACTION=="ADD", ENV{DEVTYPE}=="partition", ATTR{authorized}="1", RUN+="/bin/systemctl stop mounter@'%k /var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart'.service"
+ATTRS{devpath}=="1.4", ACTION=="ADD", ENV{DEVTYPE}=="disk", ATTR{authorized}="1", RUN+="/bin/systemctl stop outpdiskmnt@%k.service"
+ATTRS{devpath}=="1.4", ACTION=="ADD", ENV{DEVTYPE}=="partition", ATTR{authorized}="1", RUN+="/bin/systemctl stop outppartmnt@%k.service"

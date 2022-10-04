@@ -15,7 +15,7 @@ fi
 ACTION=$1
 DEVBASE=$2
 DEVICE="/dev/${DEVBASE}"
-MNTPOINT=$3
+MNTPOINT="/var/lib/docker/volumes/USBOutputDevice/_data/USBOutputDisk"
 
 # See if this drive is already mounted, and if so where
 MOUNTED=$(/bin/mount | /bin/grep ${DEVICE} | /usr/bin/awk '{ print $3 }')

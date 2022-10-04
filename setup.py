@@ -65,9 +65,9 @@ success("Pyrate collected.")
 
 
 with spinner('Adding mounting service...'):
-    cmd_run('mkdir -p /usr/share/Asterix')
-    cmd_run('/usr/bin/cp Host/mounter.sh /usr/share/Asterix/')
-    cmd_run('/usr/bin/cp Host/mounter@.service /etc/systemd/system/')
+    cmd_run('mkdir -p /usr/share/Asterix/Mounters')
+    cmd_run('/usr/bin/cp Host/Mounters/*.sh /usr/share/Asterix/')
+    cmd_run('/usr/bin/cp Host/Mounters/*.service /etc/systemd/system/')
     cmd_run('systemctl daemon-reload')
 success('Created mounting service.')
 
@@ -92,14 +92,13 @@ with spinner("Building Backend container. This may take some time..."):
 success("Backend software installed.")
 
 
-with spinner('Creating relevant docker volumes...'):
-    
+with spinner('Creating relevant docker volumes...'): 
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBInputDevice"')
-    info('/USBInputDevice volume created.        ')
+    info('USBInputDevice volume created.        ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"')
     info('InputFiles volume created.             ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBOutputDevice"')
-    info('/USBOutputDevice volume created.       ')
+    info('USBOutputDevice volume created.       ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name OutputFiles"')
     info('OutputFiles volume created.            ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name DataShare"')
