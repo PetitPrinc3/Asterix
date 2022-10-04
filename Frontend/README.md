@@ -6,9 +6,9 @@
 
 The frontend is one of the 4 components that make Asterix.  
 Its purpose is to handle the input drive and its content :
-- It lists the drives content.
-- It copies the files chosen by the user.
-- It sanitizes the infected files selected by the user.
+- It lists the drives content. ✅
+- It copies the files chosen by the user. ✅
+- It sanitizes the infected files selected by the user. ✅
 
 To better understand the role of the Frontend, refer to [this](../README.md#the-project-under-construction) section.
 

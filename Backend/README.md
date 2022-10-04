@@ -6,9 +6,9 @@
 
 The Backend is one of the 4 components that make Asterix.  
 Its purpose is to handle the output drive and its content :
-- It checks the output drive's Vendor ID and Product ID.
-- It formats drives.
-- It copies the files chosen by the user.
+- It checks the output drive's Vendor ID and Product ID. ✅
+- It formats drives. ❌
+- It copies the files chosen by the user. ✅
 
 To better understand the role of the Backend, refer to [this](../README.md#the-project-under-construction) section.
 

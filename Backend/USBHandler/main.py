@@ -56,39 +56,39 @@ def main():
         fail('Output device not recognized.') 
         print("Vendor ID  : ", Vid)
         print("Product ID : ", Pid)
-        print("Do you want to format the drive and use it anyway ? (Y/n)")
-        ch = str(input('>>> '))
-        if ch == 'Y':
-            print()
-            warning('This operation is definitive. The drive contains the following files :')
-#            subprocess.run(f'mount {outp} /mnt/USBOutputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            tab(ul.lst(outp))
-#            subprocess.run(f'umount {outp}', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            print('Confirm (Y/n)')
-            ch = str(input('>>> '))
-            if ch == 'Y':
-                print()
-                uf.format(outp)
-            else:
-                fail("USB Identification failed. Exiting.")
-                exit()
-        else:
-            fail("USB Identification failed. Exiting.")
-            exit()
+        
+        # print("Do you want to format the drive and use it anyway ? (Y/n)")
+        # ch = str(input('>>> '))
+        # if ch == 'Y':
+        #     print()
+        #     warning('This operation is definitive. The drive contains the following files :')
+        #     tab(ul.lst(outp))
+        #     print('Confirm (Y/n)')
+        #     ch = str(input('>>> '))
+        #     if ch == 'Y':
+        #         print()
+        #         uf.format(outp)
+        #     else:
+        #         fail("USB Identification failed. Exiting.")
+        #         exit()
+        # else:
+        #     fail("USB Identification failed. Exiting.")
+        #     exit()
+
+        fail("USB Identification failed. Exiting.")
+        exit()
+
     else:
         success('Output Device recognized !')
-
-#    subprocess.run(f'mount {outp} /mnt/USBOutputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     print()
 
     f_trt = ul.lst('/mnt/OutputFiles')
 
     f_res = cp.xcopy("trt_result.json", f_trt, outp)
-    
+
     print("\nAvailable Files :")
     tab(f_res)
-#    subprocess.run('umount /mnt/USBOutputDevice', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     info('You can now remove the USB output drive.')
 
