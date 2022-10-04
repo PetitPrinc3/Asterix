@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from re import sub
 import subprocess
 import os
 from Asterix_libs.spinner import spinner
@@ -65,8 +66,8 @@ success("Pyrate collected.")
 
 
 with spinner('Adding mounting service...'):
+    subprocess.run('rm -r /usr/share/Asterix', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     cmd_run('mkdir -p /usr/share/Asterix/Mounters')
-    cmd_run('rm -r /usr/share/Asterix/Mounters/*')
     cmd_run('/usr/bin/cp Host/Mounters/*.sh /usr/share/Asterix/Mounters/')
     cmd_run('/usr/bin/cp Host/Mounters/*.service /etc/systemd/system/')
     cmd_run('systemctl daemon-reload')
