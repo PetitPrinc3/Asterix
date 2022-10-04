@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 # This script is called from our systemd unit file to mount or unmount a USB drive.
 
