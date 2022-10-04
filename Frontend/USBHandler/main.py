@@ -52,6 +52,7 @@ def main():
 
     with spinner("Collecting input drive content..."):
         time.sleep(1)
+        subprocess.call('cp default.json list_result.json')
         f_lst = ul.lst(inp)
     info('Fetched ' + str(len(f_lst)) + ' files.')
     
@@ -73,6 +74,8 @@ def main():
     print("\nSelected Files :")
     tab(f_trt)
     f_res = cp.xcopy("list_result.json", f_trt, "/mnt/InputFiles/")
+
+    subprocess.call("cp default.json /mnt/DataShare/user_inp.json", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     with open('/mnt/DataShare/user_inp.json', 'r+') as usr_fl:
 
