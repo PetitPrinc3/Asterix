@@ -3,6 +3,7 @@
 
 
 import subprocess
+import json
 
 import usb_detection as ud
 import copy as cp
@@ -83,18 +84,13 @@ def main():
 
     print()
 
-    f_trt = ul.lst('/mnt/OutputFiles')
+    with open("trt_result.json", "r") as res:
+        f_trt = [f["FileName"] for f in json.load(res)["ind_results"]]
 
     f_res = cp.xcopy("trt_result.json", f_trt, outp)
 
     print("\nAvailable Files :")
     tab(f_res)
-
-    info('You can now remove the USB output drive.')
-
-    ud.rem_wait([outp])
-
-    success('Done. Thank you for using IMOTEP <3')
 
 
 if __name__ == "__main__":
