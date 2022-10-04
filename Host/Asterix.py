@@ -5,6 +5,13 @@ from Asterix_libs.spinner import spinner
 
 from Host_libs import usb_detection as ud
 
+from Host_libs.db_create import create
+
+subprocess.run('rm -r /var/lib/docker/volumes/InputFiles/_data/* /var/lib/docker/volumes/OutputFiles/_data/* /var/lib/docker/volumes/DataShare/_data/*', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+create()
+
+subprocess.run('cp USB_ID.db /var/lib/docker/volumes/DataShare/_data/', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 subprocess.run("su - docker_runner -c '/usr/bin/docker exec -w /usr/share/USBHandler -it frontend python3 main.py'", shell = True)
 info('You can now remove the USB input drive.')
