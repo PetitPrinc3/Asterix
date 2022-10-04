@@ -52,7 +52,7 @@ def main():
 
     with spinner("Collecting input drive content..."):
         time.sleep(1)
-        subprocess.call('cp default.json list_result.json')
+        subprocess.call('cp default.json list_result.json', shell=True)
         f_lst = ul.lst(inp)
     info('Fetched ' + str(len(f_lst)) + ' files.')
     
