@@ -48,13 +48,13 @@ You will also find functionnalities that have not been implemented but were part
 | :-: | :-: | :-: | :-: |
 | Frontend | :green_circle: | 100% | Done. |
 | Backend | :green_circle: | 100% | Gave up on drive formatting. |
-| AC-Center (ARM) | :yellow_circle: | 90% | SSH Identity. |
-| AC-Center (x64) | :hour_glass: | 0% |  |
-| Brain | :yellow_circle: | 70% | AC-Center Integration. |
-| Host | :yellow_circle: | 50% | Main soft/Hardening/GUI. |
-| Installer | :yellow_circle: | 50% |  |
-| Hardware | :yellow_circle: | 75% | Case. |
-| Website | :yellow_circle: | 30% | Under construction |
+| AC-Center (ARM) | :orange_circle: | 90% | SSH Identity. |
+| AC-Center (x64) | :hourglass: | 0% |  |
+| Brain | :orange_circle: | 70% | AC-Center Integration. |
+| Host | :orange_circle: | 50% | Main soft/Hardening/GUI. |
+| Installer | :orange_circle: | 50% |  |
+| Hardware | :orange_circle: | 75% | Case. |
+| Website | :orange_circle: | 30% | Under construction |
 
 | ![](Images/status.png) |
 | :-: |
