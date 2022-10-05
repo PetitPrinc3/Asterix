@@ -12,13 +12,11 @@ This is my graduation project from the French Naval Academy, in collaboration wi
 You will find here the pieces of software that make Asterix as well as the report concerning the project one redacted.  
 You will also find functionnalities that have not been implemented but were part of the thinking/designing process.
 
-## The project (Under construction)
+## The project
 
-| ![](Images/arch_and_op.png) |
-| :-: |
-| System's architecture |
 
-### Components
+
+#### System Components
 
 - ✅ [Frontend](Frontend) :
     - [USB Handler](Frontend/USBHandler)
@@ -39,9 +37,28 @@ You will also find functionnalities that have not been implemented but were part
     - [Start launcher](#)
     - [UDEV Rules](#)
 
+| ![](Images/arch_and_op.png) |
+| :-: |
+| System's architecture |
+
+
+#### Project Status
+
+| Item | Status | Completion | Comment |
+| :-: | :-: | :-: | :-: |
+| Frontend | :green_circle: | 100% | Done. |
+| Backend | :green_circle: | 100% | Gave up on drive formatting. |
+| AC-Center (ARM) | :yellow_circle: | 90% | SSH Identity. |
+| AC-Center (x64) | :hour_glass: | 0% |  |
+| Brain | :yellow_circle: | 70% | AC-Center Integration. |
+| Host | :yellow_circle: | 50% | Main soft/Hardening/GUI. |
+| Installer | :yellow_circle: | 50% |  |
+| Hardware | :yellow_circle: | 75% | Case. |
+| Website | :yellow_circle: | 30% | Under construction |
+
 | ![](Images/status.png) |
 | :-: |
-| Project status |
+| Detailed status |
 
 ## Contributing to the project
 

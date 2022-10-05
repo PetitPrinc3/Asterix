@@ -70,7 +70,7 @@ body::-webkit-scrollbar {
     opacity: 0.9;
   }
 
-  .front-logo img:hover {
+  .front-logo pshape:hover {
     transform: scale(1.05);
   }
   

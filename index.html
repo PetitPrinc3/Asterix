@@ -12,15 +12,29 @@
       <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
    </head>
    <body>
-      <div class="front-logo">
-         <h1>ASTERIX</h1>
-         <img src="Images/asterix.png" alt="Asterix">
-      </div>
-      
+      <section>
+         <div class="front-logo">
+            <h1>ASTERIX</h1>
+            <img src="Images/asterix.png" alt="Asterix" class="pshape">
+         </div>
+      </section>
+      <script type="text/javascript">
+        document.addEventListener("mousemove", parallax);
+        function parallax(e){
+            this.querySelectorAll('.pshape').forEach(pshape => {
+                const speed = 5
+
+                const x = (window.innerWidth - e.pageX*speed)/100 + 50
+                const y = (window.innerHeight - e.pageY*speed)/100 + 50
+
+                pshape.style.transform = `translateX(${x}px) translateY(${y}px)`
+            })
+        }
+      </script>
       <div class="About" id="About">
-        <div class="about-button">
+         <div class="about-button">
             <a href="#About">Discover</a>
-        </div>
+         </div>
          <h2 id="what-is-this-repo-">What is this repo ?</h2>
          <p>This project will be in active development from the 22nd of August 2022 until at least the 10th of November 2022.<br>The ultimate goal is to propose an Open-Source USB malware cleaner kiosk that is portable and offers good functionalities.</p>
          <p>This is my graduation project from the French Naval Academy, in collaboration with the Informatic Institute of the University of Amsterdam.</p>
@@ -100,6 +114,6 @@
          <p>##</p>
          <p><a href="https://github.com/G4vr0ch3">Gavroche</a></p>
       </div>
-      <script type="text/javascript" src="js/parallax.min.js"></script>
+      <script type="text/javascript" src="js/parallax.js"></script>
    </body>
 </html>
