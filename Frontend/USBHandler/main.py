@@ -63,20 +63,48 @@ def main():
     print("Select files by ID (Separate your choice with ';'. e.g '1;2;3') :")
     
     while True:
+        
         try:
             choice = choose()
             break
+
         except KeyboardInterrupt:
             fail(KeyboardInterrupt)
             exit()
+
         except:
             fail('Choice failed, try again.')
+
     f_trt = []
     for ind in choice:
         f_trt.append(f_lst[ind])
     print("\nSelected Files :")
     tab(f_trt)
     f_res = cp.xcopy("list_result.json", f_trt, "/mnt/InputFiles/")
+
+    print('Do you wish to perform a fast scan or a complete scan ? (f/c) :')
+
+    while True:
+
+        try:
+            choice = str(input('>>> '))[0].lower
+            if choice == 'f':
+                stype = 'FASTSCAN'
+                break
+            elif choice == 'c':
+                stype = 'COMPLETESCAN'
+                break
+            else:
+                fail('Choice failed, try again.')
+
+        except KeyboardInterrupt:
+            fail(KeyboardInterrupt)
+            exit()
+
+        except:
+            fail('Choice failed, try again.')
+
+
 
     subprocess.call("cp default.json /mnt/DataShare/user_inp.json", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
@@ -91,6 +119,7 @@ def main():
                 "Date": datetime.now().strftime("%d/%m/%Y-%H:%M:%S"),
                 "FileName": file,
                 "HASH": sha(file),
+                "SCANTYPE": stype
             }
 
             f_data["ind_results"].append(ind_result)
