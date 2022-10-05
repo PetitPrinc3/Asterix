@@ -82,12 +82,14 @@ def main():
     tab(f_trt)
     f_res = cp.xcopy("list_result.json", f_trt, "/mnt/InputFiles/")
 
+    print()
+
     print('Do you wish to perform a fast scan or a complete scan ? (f/c) :')
 
     while True:
 
         try:
-            choice = str(input('>>> '))[0].lower
+            choice = str(input('>>> '))[0].lower()
             if choice == 'f':
                 stype = 'FASTSCAN'
                 break
@@ -103,8 +105,6 @@ def main():
 
         except:
             fail('Choice failed, try again.')
-
-
 
     subprocess.call("cp default.json /mnt/DataShare/user_inp.json", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
