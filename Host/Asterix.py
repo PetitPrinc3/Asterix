@@ -17,13 +17,13 @@ create()
 subprocess.run('cp USB_ID.db /var/lib/docker/volumes/DataShare/_data/', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 subprocess.run("su - docker_runner -c '/usr/bin/docker exec -w /usr/share/USBHandler -it frontend python3 main.py'", shell = True)
-subprocess.run("umount /var/lib/docker/volumes/USBInputDevice/_data/USBInputPart", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
-subprocess.run("umount /var/lib/docker/volumes/USBInputDevice/_data/USBInputDisk", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+subprocess.run("""systemctl stop inppartmnt@$(udevadm info -q all -a /dev/USBInputPart | grep KERNEL | head -n 1 | cut -d '"' -f 2).service""" , shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+subprocess.run("""systemctl stop inpdiskmnt@$(udevadm info -q all -a /dev/USBInputDisk | grep KERNEL | head -n 1 | cut -d '"' -f 2).service""" , shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 info('You can now remove the USB input drive.')
 
-subprocess.run('cp -r /var/lib/docker/volumes/InputFiles/_data/* /var/lib/docker/volumes/OutputFiles/_data/*', shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+subprocess.run('cp -r /var/lib/docker/volumes/InputFiles/_data/* /var/lib/docker/volumes/OutputFiles/_data/', shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
-subprocess.run('cp ../Brain/default.json /var/lib/docker/volumes/DataShare/_data/trt_result.json')
+subprocess.run('cp default.json /var/lib/docker/volumes/DataShare/_data/trt_result.json', shell = True)
 
 with open("/var/lib/docker/volumes/DataShare/_data/trt_result.json", "r+") as out:
 
@@ -37,7 +37,7 @@ with open("/var/lib/docker/volumes/DataShare/_data/trt_result.json", "r+") as ou
             
             ind_result = {
                 "Date": datetime.now().strftime("%d/%m/%Y-%H:%M:%S"),
-                "FileName": "/mnt/OutFiles/" + js["FileName"].split('/mnt/InputFiles')[-1],
+                "FileName": "/mnt/OutputFiles" + js["FileName"].split('/mnt/InputFiles')[-1],
                 "HASH": js["HASH"]
             }
 
@@ -48,11 +48,10 @@ with open("/var/lib/docker/volumes/DataShare/_data/trt_result.json", "r+") as ou
     out.write(jsfi)
 
 subprocess.run("su - docker_runner -c '/usr/bin/docker exec -w /usr/share/USBHandler -it backend python3 main.py'", shell = True)
-subprocess.run("/var/dev/USBOutputPart", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
-subprocess.run("umount /dev/USBOutputDisk", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 info('You can now remove the USB output drive.')
-
+subprocess.run("""systemctl stop outpartmnt@$(udevadm info -q all -a /dev/USBOutputPart | grep KERNEL | head -n 1 | cut -d '"' -f 2).service""" , shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+subprocess.run("""systemctl stop outdiskmnt@$(udevadm info -q all -a /dev/USBOutputDisk | grep KERNEL | head -n 1 | cut -d '"' -f 2).service""" , shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
 with spinner('Waiting for drive removal...'):
-    ud.rem_wait(["/dev/USBInputDisk", "/dev/USBInputPart"])
-success('Done. Thank you for using IMOTEP <3')
+    ud.rem_wait(["/dev/USBInputDisk", "/dev/USBInputPart", "/dev/USBOutputDisk", "/dev/USBOutputPart"])
+success('Done. Thank you for using Asterix <3')

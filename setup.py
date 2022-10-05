@@ -115,6 +115,8 @@ with spinner('Starting containers...'):
     subprocess.run('/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"', shell=True)
 success("Docker containers started.")
 
+with spinner("Finishing..."):
+    cmd_run('cp -r Asterix_libs Host/')
 
 # info('Preparing Windows 10 VM Environment...')
 # cmd_run("/usr/bin/mkdir /src/win10_VM")

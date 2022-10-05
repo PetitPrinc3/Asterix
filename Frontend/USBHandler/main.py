@@ -57,8 +57,11 @@ def main():
     info('Fetched ' + str(len(f_lst)) + ' files.')
     
     tab(f_lst)
-    if f_lst == []: warning("No file available on input drive. Exiting."); exit()
+    
+    if f_lst == []: warning("No file available on input drive. Exiting."); subprocess.call("cp default.json /mnt/DataShare/user_inp.json", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL); exit()
+    
     print("Select files by ID (Separate your choice with ';'. e.g '1;2;3') :")
+    
     while True:
         try:
             choice = choose()
