@@ -1,143 +1,237 @@
 * {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    scroll-behavior: smooth;
-    max-width: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', sans-serif;
+	scroll-behavior: smooth;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: auto;
-  overflow-y: scroll;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  background-color: #26272b;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: auto;
+	overflow-x: hidden;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	/* IE and Edge */
+	background-color: #26272b;
 }
 
 html::-webkit-scrollbar {
-  display: none;
-  /*Chrome*/
+	display: none;
+	/*Chrome*/
 }
 
 body::-webkit-scrollbar {
-  display: none;
-  /*Chrome*/
+	display: none;
+	/*Chrome*/
 }
 
 /*Logo*/
 /*Front*/
 .front-logo {
-    display: block;
-    text-align: center;
-    height: 100vh;
-    background-image: url(../../Images/background.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow: hidden;
-    /*div:hover {
-      cursor: pointer;
-      transform: scale(1.05);
-    }*/
-  }
-  
-  @media screen and (max-width: 850px) {
-    .front-logo {
-      top: 35%;
-    }
-  }
-  
-  .front-logo h1 {
-    cursor: default;
-    padding-top: 2%;
-    text-align: center;
-    font-size: 25vh;
-    color: white;
-    -webkit-text-stroke: 2px black;
-    font-family: 'Luckiest Guy', cursive;
-  }
-
-  .front-logo img {
-    position: relative;
-    height: 45vh;
-    -webkit-transition: -webkit-transform 0.2s;
-    transition: -webkit-transform 0.2s;
-    transition: transform 0.2s;
-    transition: transform 0.2s, -webkit-transform 0.2s;
-    opacity: 0.9;
-  }
-
-  .front-logo pshape:hover {
+	display: block;
+	text-align: center;
+	height: 100vh;
+	overflow: hidden;
+	/*div:hover {
+    cursor: pointer;
     transform: scale(1.05);
-  }
-  
-  .front-logo div {
-    -webkit-transition: -webkit-transform 0.2s;
-    transition: -webkit-transform 0.2s;
-    transition: transform 0.2s;
-    transition: transform 0.2s, -webkit-transform 0.2s;
-  }
-  
-  .front-logo :hover {
-    cursor: pointer;
-    -webkit-transform: scale(1.05);
-            transform: scale(1.05);
-  }
+  }*/
+}
 
-  .About .about-button {
-    position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    top: -10px;
-    margin: 0;
-    bottom: 0;
-    width: 100%;
-    height: 10px;
-    background: #26272b;
-    -webkit-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-  }
-  
-  .About .about-button a {
-    position: relative;
-    top: -10px;
-    width: 15%;
-    min-width: -webkit-fit-content;
-    min-width: -moz-fit-content;
-    min-width: fit-content;
-    text-decoration: none;
-    height: auto;
-    padding: 5px 15px 5px 15px;
-    border-radius: 15px 15px 0 0;
-    background: #26272b;
-    color: white;
-    text-align: center;
-    cursor: pointer;
-    -webkit-text-stroke: .2px black;
-    -webkit-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-  }
-  
-  .About .about-button:hover {
-    top: -20px;
-    height: 20px;
-  }
-  
-  .About .about-button:hover a {
-    top: -20px;
-    font-size: 120%;
-  }
+.wrapper {
+	overflow: hidden;
+	display: table;
+	height: 100vh;
+	width: 100%;
+	left: 0;
+	top: 0;
+}
+
+#scene {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+}
+
+#scene .layer {
+	position: absolute;
+	display: block;
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	pointer-events: none;
+}
+
+#scene .layer.clickable {
+	pointer-events: all;
+}
+
+#scene .layer h1 {
+  cursor: default;
+  padding-top: 2%;
+  text-align: center;
+  font-size: 25vh;
+  color: white;
+  -webkit-text-stroke: 2px black;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.front-logo .main_logo{
+  transition: 0.5s;
+  margin-top : 50px;
+}
+
+.front-logo .main_logo:hover {
+  cursor: pointer;
+  -webkit-transform: scale(1.15);
+          transform: scale(1.15);
+}
+
+.background {
+	background: url(../../Images/background.png) no-repeat 50% 100%;
+	background-size: cover;
+	position: absolute;
+	bottom: -10px;
+	width: 110%;
+	left: -5%;
+	right: -5%;
+	top: -5%;
+}
+
+/*Logo*/
+/*Front*/
+.front-logo {
+	position: absolute;
+	width: 100%;
+	top: 35%;
+	/*div:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}*/
+}
+
+@media screen and (max-width: 850px) {
+	.front-logo {
+		top: 35%;
+	}
+}
+
+.front-logo img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 28%;
+	height: auto;
+	min-width: 200px;
+	-webkit-transition: -webkit-transform 0.2s;
+	transition: -webkit-transform 0.2s;
+	transition: transform 0.2s;
+	transition: transform 0.2s, -webkit-transform 0.2s;
+	opacity: 0.9;
+}
+
+.front-logo div {
+	-webkit-transition: -webkit-transform 0.2s;
+	transition: -webkit-transform 0.2s;
+	transition: transform 0.2s;
+	transition: transform 0.2s, -webkit-transform 0.2s;
+}
+
+.front-logo h1 {
+	cursor: default;
+	padding-top: 2%;
+	text-align: center;
+	font-size: 25vh;
+	color: white;
+	-webkit-text-stroke: 2px black;
+	font-family: 'Luckiest Guy', cursive;
+}
+
+@media screen and (max-width: 1200px) {
+	.front-logo h1 {
+		font-size: 12rem;
+	}
+}
+
+.front-logo h2 {
+	font-size: 6rem;
+	font-weight: bold;
+	font-style: normal;
+	position: relative;
+	top: -1.5rem;
+	padding: 0;
+	margin: 0;
+}
+
+@media screen and (max-width: 1200px) {
+	.front-logo h2 {
+		font-size: 5rem;
+	}
+}
+
+
+.About .about-button {
+	position: relative;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	top: -10px;
+	margin: 0;
+	bottom: 0;
+	width: 100%;
+	height: 10px;
+	background: #26272b;
+	-webkit-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+.About .about-button a {
+	position: relative;
+	font-family: 'Luckiest Guy', cursive;
+	top: -10px;
+	width: 15%;
+	min-width: -webkit-fit-content;
+	min-width: -moz-fit-content;
+	min-width: fit-content;
+	text-decoration: none;
+	height: auto;
+	padding: 5px 15px 5px 15px;
+	border-radius: 15px 15px 0 0;
+	background: #26272b;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+	-webkit-text-stroke: .2px black;
+	-webkit-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+.About .about-button:hover {
+	top: -20px;
+	height: 20px;
+}
+
+.About .about-button:hover a {
+	top: -20px;
+	font-size: 120%;
+}

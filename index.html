@@ -12,25 +12,21 @@
       <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
    </head>
    <body>
-      <section>
-         <div class="front-logo">
-            <h1>ASTERIX</h1>
-            <img src="Images/asterix.png" alt="Asterix" class="pshape">
-         </div>
-      </section>
-      <script type="text/javascript">
-        document.addEventListener("mousemove", parallax);
-        function parallax(e){
-            this.querySelectorAll('.pshape').forEach(pshape => {
-                const speed = 5
-
-                const x = (window.innerWidth - e.pageX*speed)/100 + 50
-                const y = (window.innerHeight - e.pageY*speed)/100 + 50
-
-                pshape.style.transform = `translateX(${x}px) translateY(${y}px)`
-            })
-        }
-      </script>
+    <div class="wrapper">
+      <ul id="scene" data-pointer-events="true">
+         <li data-depth="0.1" class="layer">
+            <div class="background"></div>
+         </li>
+         <li data-depth="0.1" class="layer">
+            <h1 style="z-index: 0">ASTERIX</h1>
+         </li>
+         <li data-depth="0.4" class="layer clickable">
+            <div class="front-logo">
+                <img src="Images/asterix.png" alt="Asterix !" class="main_logo">
+            </div>
+         </li>
+      </ul>
+      </div>
       <div class="About" id="About">
          <div class="about-button">
             <a href="#About">Discover</a>
@@ -114,6 +110,8 @@
          <p>##</p>
          <p><a href="https://github.com/G4vr0ch3">Gavroche</a></p>
       </div>
-      <script type="text/javascript" src="js/parallax.js"></script>
+      <script type="text/javascript" src="Styles/js/jquery-3.6.0.min.js"></script>
+      <script type="text/javascript" src="Styles/js/parallax.min.js"></script>
+      <script src="Styles/js/index.js"></script>
    </body>
 </html>
