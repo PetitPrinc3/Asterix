@@ -8,7 +8,8 @@ import json
 
 import usb_detection as ud
 import usb_list as ul
-import copy as cp
+
+import Asterix_libs.copy as cp
 
 from datetime import datetime
 from Asterix_libs.prints import *
