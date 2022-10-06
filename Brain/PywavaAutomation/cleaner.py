@@ -4,15 +4,14 @@
 ################################################################################
 
 
-import os
+import paramiko
 
 
 ################################################################################
 
 
-def clean_fold(path):
-    for f in os.listdir(path):
-        os.popen(f'del {path}\{f}')
+def clean_fold(channel, path):
+    channel.exec_command(f'python -c "import os; for f in os.listdir({path}): os.popen("del {path}\\" + f)') 
 
 
 ################################################################################

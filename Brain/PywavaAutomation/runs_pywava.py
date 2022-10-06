@@ -5,7 +5,7 @@
 
 
 import json
-import subprocess
+import paramiko
 
 import os
 
@@ -81,11 +81,16 @@ def move(f, folder_out):
 ################################################################################
 
 
-def runs_(f):
+def runs_(channel, json):
 
-    for file in f:
+    files = json.load(json)["ind_results"]
+
+    for file in files:
         print()
-        subprocess.call(f'cd Pywava && python pywava.py -b -cd -f {os.getcwd()}\Pywava\Inputs\{os.path.basename(file[1])}', shell = True)
+
+        if file["SCANTYPE"] == "FASTSCAN": channel.exec_command(f'cd C:\\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA && python pywava.py -b -d -f C:\\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA\\Inputs\\{os.path.basename(file["FileName"])}')
+        if file["SCANTYPE"] == "COMPLETESCAN": channel.exec_command(f'cd C:\\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA && python pywava.py -b -cd -f C:\\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA\\Inputs\\{os.path.basename(file["FileName"])}')
+
         log.log(f'System call : "cd Pywava && python pywava.py -b -cd -f {os.getcwd()}\Pywava\Inputs\{os.path.basename(file[1])}"')
 
 

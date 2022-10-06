@@ -15,7 +15,7 @@ client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 with spinner('Establishing connection with AC-Center...'):
 
     client.connect(target, port=10022, username=username, password=password)
-    transport = client.get_transport()
+    
 
     if transport.is_active():
         try:
