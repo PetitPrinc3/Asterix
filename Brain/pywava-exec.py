@@ -25,6 +25,7 @@ with spinner('Establishing connection with AC-Center...'):
             sys.exit(1)
     else:
         fail('SSH Connection failed.')
+        
 success('Connected to AC-Center.')
 
 

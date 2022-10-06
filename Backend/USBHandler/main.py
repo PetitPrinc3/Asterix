@@ -6,10 +6,11 @@ import subprocess
 import json
 
 import usb_detection as ud
-import copy as cp
 import usb_id as uid
 import usb_list as ul
 import usb_format as uf
+import Asterix_libs.copy as cp
+
 from Asterix_libs.spinner import spinner
 from Asterix_libs.prints import *
 
