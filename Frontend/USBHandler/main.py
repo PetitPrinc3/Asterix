@@ -4,6 +4,7 @@
 
 import subprocess
 import time
+import os
 import json
 
 import usb_detection as ud
@@ -51,10 +52,20 @@ def main():
 
     success('::: USB device detected :::          ')
 
+    tmout = 0
+
+    subprocess.call('cp default.json list_result.json', shell=True)
+
     with spinner("Collecting input drive content..."):
-        time.sleep(1)
-        subprocess.call('cp default.json list_result.json', shell=True)
-        f_lst = ul.lst(inp)
+        while True:
+            if tmout > 7 or len(os.listdir(inp))>0:
+                f_lst = ul.lst(inp)
+                break
+            else:
+                sleep(1)
+                tmout += 1
+
+
     info('Fetched ' + str(len(f_lst)) + ' files.')
     
     tab(f_lst)
@@ -79,8 +90,11 @@ def main():
     f_trt = []
     for ind in choice:
         f_trt.append(f_lst[ind])
+    
     print("\nSelected Files :")
+    
     tab(f_trt)
+    
     f_res = cp.xcopy("list_result.json", f_trt, "/mnt/InputFiles/")
 
     print()
@@ -114,7 +128,6 @@ def main():
         f_data = json.load(usr_fl)
 
         for file in f_res:
-
 
             ind_result = {
                 "Date": datetime.now().strftime("%d/%m/%Y-%H:%M:%S"),

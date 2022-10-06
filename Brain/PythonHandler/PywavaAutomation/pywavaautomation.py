@@ -30,7 +30,7 @@ username = 'ac-center'
 password = 'ac-center'
 
 
-def main():
+def ac_run():
 
     start = datetime.now()
 
@@ -146,6 +146,12 @@ def main():
 
     print()
     
+    # Get results
+    info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Fetching results')
+
+    sftp.get('\\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\scan_results.json', 'scan_results.json')
+
+    res = fr.get_stats('scan_results.json')
 
     end = datetime.now()
 
@@ -161,6 +167,8 @@ def main():
         pass
 
     log.log('END OF ANALYSIS PROCESS.')
+
+    return res
 
 
 ################################################################################
