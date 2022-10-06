@@ -60,6 +60,13 @@ with spinner('Preparing Backend software...'):
 success("Backend software retrieved.")
 
 
+with spinner('Preparing Brain software...'):
+    cmd_run("/usr/bin/cp -r Brain /src/Brain")
+    cmd_run("/usr/bin/cp -r Asterix_libs /src/Brain")
+    cmd_run("/usr/bin/chown -R docker_runner:docker /src/Brain")
+success("Brain software retrieved.")
+
+
 with spinner('Collecting PyRATE...'):
     cmd_run("/usr/bin/git clone https://github.com/G4vr0ch3/PyRATE /src/Frontend/PyRATE")
 success("Pyrate collected.")
@@ -93,6 +100,11 @@ success("Frontend software installed.")
 with spinner("Building Backend container. This may take some time..."):
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t backend /src/Backend"')
 success("Backend software installed.")
+
+
+with spinner("Building Brain container. This may take some time..."):
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t brain /src/Brain"')
+success("Brain software installed.")
 
 
 with spinner('Creating relevant docker volumes...'): 

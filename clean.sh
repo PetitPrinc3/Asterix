@@ -2,10 +2,12 @@
 
 docker container rm frontend --force
 docker container rm backend --force
+docker container rm brain --force
 
 
 docker image rm frontend --force
 docker image rm backend --force
+docker image rm brain --force
 
 
 docker volume prune
