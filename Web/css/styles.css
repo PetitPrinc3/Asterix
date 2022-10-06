@@ -29,6 +29,13 @@ body::-webkit-scrollbar {
 	/*Chrome*/
 }
 
+p {
+	color: white;
+	text-align: center;
+	font-size: 2.5ch;
+	margin: 0 auto;
+  }
+
 /*Logo*/
 /*Front*/
 .front-logo {
@@ -84,6 +91,19 @@ body::-webkit-scrollbar {
   color: white;
   -webkit-text-stroke: 2px black;
   font-family: 'Luckiest Guy', cursive;
+}
+
+.descriptor {
+	display: grid;
+	padding-top: 90vh;
+	font-family: 'Roboto';
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.descriptor b {
+	color: white;
+	transition: 0.4s;
 }
 
 .front-logo .main_logo{
