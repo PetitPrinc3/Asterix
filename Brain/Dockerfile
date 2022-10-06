@@ -15,4 +15,4 @@ ADD Asterix_libs /usr/lib/python3.10/Asterix_libs
 RUN chmod 777 /usr/lib/python3.10
 
 # Adding Python softwares
-ADD PywavaAutomation /usr/share/PywavaAutomation
+ADD PythonHandler /usr/share/PythonHandler

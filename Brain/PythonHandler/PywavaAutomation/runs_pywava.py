@@ -4,11 +4,12 @@
 ################################################################################
 
 
+import os
 import sys
 import json
 import paramiko
+import subprocess
 
-import os
 
 from Asterix_libs import hash
 from Asterix_libs import log
