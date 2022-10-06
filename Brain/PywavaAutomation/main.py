@@ -11,10 +11,9 @@ import paramiko
 import subprocess
 
 
-import cleaner as cl
-import init_json as ij
 import runs_pywava as rp
 import fetch_results as fr
+
 
 from Asterix_libs import log
 from datetime import datetime
@@ -45,6 +44,8 @@ with spinner('Establishing connection with AC-Center...'):
 
     client.connect(target, port=10022, username=username, password=password)
     transport = client.get_transport()
+    c, r = os.get_terminal_size(0)
+
 
     if transport.is_active():
         try:
@@ -58,36 +59,21 @@ with spinner('Establishing connection with AC-Center...'):
 success('Connected to AC-Center.')
 
 
-with spinner('Establishing SFTP connection with AC-Center...'):
-
-    sftp = client.open_sftp()
-        
-success('SFTP Session opened.')
-
-
-with spinner('Establishing RCE channel with AC-Center...'):
-
-    transport = client.get_transport()
-    channel = transport.open_session()
-    c, r = os.get_terminal_size(0)
-    channel.get_pty(width=int(c))
-        
-success('RCE channel opened.')
-
-
 print()
 
 
 # Initialize environment
 info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Initializing environment.')
-ij.init_res(sftp, '\\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\scan_results.json')
-
+sftp = client.open_sftp()
+sftp.put("default.json", '\\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\scan_results.json')
 
 print()
 
 
 info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Cleaning Pywava folders.')
-cl.clean_fold(channel, '\\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\Inputs')
+channel = transport.open_session()
+channel.get_pty(width=int(c))
+channel.exec_command('python \\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\clean_inputs_fold.py')
 log.log('Cleaned Pywava\Inputs')
 
 
@@ -96,20 +82,24 @@ print()
 
 subprocess.run("/bin/cp /mnt/DataShare/user_inp.json user_inp.json", shell = True)
 
+
 with open("user_inp.json", "r") as inp:
     js_data = json.load(inp)["ind_results"]
 
-info('Begining file transfer to AC-Center.')
+
+info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Begining file transfer to AC-Center.')
 fail = False
 ind_results = []
 
 for file in js_data:
 
     inp = file["FileName"]
-    outp = f'/Users/ac-center/Desktop/PywavaAutomation/PyWAVA/Inputs/{os.path.basename(inp)}'
+    outp = f'\\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA\\Inputs\\{os.path.basename(inp)}'
 
     with spinner(f'Sending file {inp} to AC-Center'):
         try:
+
+            sftp = client.open_sftp()
             sftp.put(inp, outp)
 
             ind_results.append(file)
@@ -145,22 +135,32 @@ print()
 # Run Pyrate
 info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Attempting analyses.')
 
-channel.shutdown_write()
-
-rp.runs_(channel, "inputs.json")
+rp.runs_(transport, "inputs.json", c)
 
 print()
 
 # Get results
 info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Fetching results')
 
-ij.init_res('clean.json')
 
-res = fr.get_stats('Pywava\scan_results.json')
+ctnt = {
+                'ind_results': []
+            }
+
+
+with open("clean.json", "w") as results:
+
+    results.seek(0)
+
+    js = json.dumps(ctnt, indent=4)
+
+    results.write(js)
+
+sftp.get('\\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\scan_results.json', 'scan_results.json')
+
+res = fr.get_stats('scan_results.json')
 
 with open('clean.json', 'r+') as outp:
-
-    log.log('Opened clean.json')
 
     files = []
 

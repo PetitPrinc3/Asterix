@@ -23,18 +23,13 @@ def init_res(channel, path):
 
     with open(fname, "w") as results:
 
-        log.log(f'Opened {fname}.')
-
         results.seek(0)
 
         js = json.dumps(ctnt, indent=4)
 
         results.write(js)
-        log.log(f'Reset {path}.')
 
-    log.log(f'Closed {path}.')
-
-    channel.put(fname, path)
+    print(fname, path, channel.put(fname, path))
 
 
 ################################################################################

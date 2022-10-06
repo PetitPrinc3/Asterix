@@ -4,6 +4,7 @@
 ################################################################################
 
 
+import sys
 import json
 import paramiko
 
@@ -81,17 +82,41 @@ def move(f, folder_out):
 ################################################################################
 
 
-def runs_(channel, json):
+def runs_(transport, jsonfile, c):
 
-    files = json.load(json)["ind_results"]
+    with open(jsonfile, "r") as inst:
+        files = json.load(inst)["ind_results"]
 
     for file in files:
         print()
 
-        if file["SCANTYPE"] == "FASTSCAN": channel.exec_command(f'cd C:\\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA && python pywava.py -b -d -f C:\\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA\\Inputs\\{os.path.basename(file["FileName"])}')
-        if file["SCANTYPE"] == "COMPLETESCAN": channel.exec_command(f'cd C:\\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA && python pywava.py -b -cd -f C:\\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA\\Inputs\\{os.path.basename(file["FileName"])}')
+        channel = transport.open_session()
+        channel.get_pty(width=int(c))
 
-        log.log(f'System call : "cd Pywava && python pywava.py -b -cd -f {os.getcwd()}\Pywava\Inputs\{os.path.basename(file[1])}"')
+        if file["SCANTYPE"] == "FASTSCAN":
+            channel.exec_command(f'cd \\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA && python pywava.py -b -d -f \\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA\\Inputs\\{os.path.basename(file["FileName"])}')
+        if file["SCANTYPE"] == "COMPLETESCAN": 
+            channel.exec_command(f'cd \\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA && python pywava.py -b -cd -f \\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA\\Inputs\\{os.path.basename(file["FileName"])}')
+
+        while not channel.recv_ready():
+            pass
+
+        channel.recv(10).decode('utf-8')
+
+        while True:
+
+            try:
+
+                if channel.recv_ready():
+                    sys.stdout.write(channel.recv(4096).decode('utf-8'))
+
+                if channel.exit_status_ready():
+                    sys.stdout.write(channel.recv(4096).decode('utf-8'))
+                    break
+
+            except KeyboardInterrupt:
+                fail('Operation terminated by user Keyboard Interrupt.')
+                break
 
 
 ################################################################################
