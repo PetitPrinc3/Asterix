@@ -4,7 +4,7 @@
       <meta name="viewport" content="with=device-width, initial-scale=1.0">
       <link rel="icon" href="images/icon.png">
       <meta charSet="utf-8"/>
-      <link rel="stylesheet" href="Styles/css/styles.css" />
+      <link rel="stylesheet" href="Web/css/styles.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,900;1,100&display=swap" rel="stylesheet">
@@ -18,11 +18,34 @@
             <div class="background"></div>
          </li>
          <li data-depth="0.1" class="layer">
+            <div class="back-hexa hexa-left">
+              <img
+                src="Images/en.png"
+                alt="UVA"
+                style="opacity: 0"
+              />
+              <img src="Images/left-grid.png" alt="UVA" />
+            </div>
+         </li>
+         <li data-depth="0.1" class="layer">
+            <h1 style="z-index: 0">ASTERIX</h1>
+         </li>
+         <li data-depth="0.1" class="layer">
+            <div class="back-hexa hexa-right">
+              <img
+                src="Images/uva.png"
+                alt="UVA"
+                style="opacity: 0"
+              />
+              <img src="Images/right-grid.png" alt="UVA" />
+            </div>
+         </li>
+         <li data-depth="0.1" class="layer">
             <h1 style="z-index: 0">ASTERIX</h1>
          </li>
          <li data-depth="0.4" class="layer clickable">
             <div class="front-logo">
-                <img src="Images/asterix.png" alt="Asterix !" class="main_logo">
+                <img src="Images/asterix.png" alt="Asterix !" class="main_logo" onclick="location.href ='#About'">
             </div>
          </li>
       </ul>
@@ -31,6 +54,15 @@
          <div class="about-button">
             <a href="#About">Discover</a>
          </div>
+         <nav>
+            <ul class="menuItems">
+               <li><a href='' data-item='Home'>Home</a></li>
+               <li><a href='#About' data-item='About'>About</a></li>
+               <li><a href='#' data-item='Status'>Status</a></li>
+               <li><a href='#' data-item='Downloads'>Downloads</a></li>
+               <li><a href='#' data-item='Contact'>Contact</a></li>
+             </ul>
+         </nav>
          <h2 id="what-is-this-repo-">What is this repo ?</h2>
          <p>This project will be in active development from the 22nd of August 2022 until at least the 10th of November 2022.<br>The ultimate goal is to propose an Open-Source USB malware cleaner kiosk that is portable and offers good functionalities.</p>
          <p>This is my graduation project from the French Naval Academy, in collaboration with the Informatic Institute of the University of Amsterdam.</p>
@@ -110,8 +142,9 @@
          <p>##</p>
          <p><a href="https://github.com/G4vr0ch3">Gavroche</a></p>
       </div>
-      <script type="text/javascript" src="Styles/js/jquery-3.6.0.min.js"></script>
-      <script type="text/javascript" src="Styles/js/parallax.min.js"></script>
-      <script src="Styles/js/index.js"></script>
+      <script type="text/javascript" src="Web/js/jquery-3.6.0.min.js"></script>
+      <script type="text/javascript" src="Web/js/gsap.min.js"></script>
+      <script type="text/javascript" src="Web/js/parallax.min.js"></script>
+      <script src="Web/js/index.js"></script>
    </body>
 </html>
