@@ -1,69 +1,59 @@
-from PywavaAutomation import main
+import json
+import subprocess
 
-main.main()
+from Asterix_libs.prints import *
 
+from PywavaAutomation import pywavaautomation
 
+subprocess.call("/usr/bin/rm dirty.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
+ac_res = pywavaautomation.ac_run()
 
-# # Get results
-#     info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Fetching results')
+subprocess.call("/bin/cp default.json clean.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
+with open('clean.json', 'r+') as outp:
 
-#     ctnt = {
-#                     'ind_results': []
-#                 }
+    files = []
 
+    for suc in ac_res[0]:
+        success(f'File {suc["PATH"]} is clean.')
+        files.append(suc)
 
-#     with open("clean.json", "w") as results:
+    js = json.load(outp)
 
-#         results.seek(0)
+    js['ind_results'] = files
 
-#         js = json.dumps(ctnt, indent=4)
+    outp.seek(0)
 
-#         results.write(js)
+    js = json.dumps(js, indent = 4)
 
-#     sftp.get('\\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\scan_results.json', 'scan_results.json')
+    outp.write(js)
 
-#     res = fr.get_stats('scan_results.json')
+print()
 
-#     with open('clean.json', 'r+') as outp:
+if len(ac_res[1]) > 0:
 
-#         files = []
+    subprocess.call("/bin/cp default.json dirty.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
-#         for suc in res[0]:
-#             success(f'File {suc["PATH"]} is clean.')
-#             files.append(suc)
+    for fai in ac_res[1]:
+        fail(f'File {fai["PATH"]} were flagged as malicious.')
 
-#         js = json.load(outp)
+    print()
+    print("Do you wish to try and sanitize the files ? (Y/n)")
 
-#         js['ind_results'] = files
+    while True:
+        choice = str(input('>>> '))[0].lower()
 
-#         outp.seek(0)
+        if choice == 'y':
+            san = True
+            break
 
-#         js = json.dumps(js, indent = 4)
+        elif choice == 'n':
+            san = False
+            break
 
-#         outp.write(js)
+        else:
+            fail('Choice failed, try again.')
 
-#     print()
+subprocess.call("/bin/cp clean.json /mnt/DataShare/trt_results.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
-#     if len(res[1]) > 0:
-
-#         for fai in res[1]:
-#             fail(f'File {fai["PATH"]} were flagged as malicious.')
-
-#         print()
-#         print("Do you wish to try and sanitize the files ? (Y/n)")
-
-#         while True:
-#             choice = str(input('>>> '))[0].lower()
-
-#             if choice == 'y':
-#                 san = True
-#                 break
-
-#             elif choice == 'n':
-#                 san = False
-#                 break
-
-#             else:
-#                 fail('Choice failed, try again.')
