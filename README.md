@@ -54,7 +54,7 @@ You will also find functionnalities that have not been implemented but were part
 | Host | :orange_circle: | 50% | Main soft/Hardening/GUI. |
 | Installer | :orange_circle: | 60% |  |
 | Hardware | :orange_circle: | 75% | Case. |
-| [Website](https://g4vr0ch3/Asterix) | :orange_circle: | 15% | Under construction |
+| [Website](https://g4vr0ch3.github.io/Asterix) | :orange_circle: | 15% | Under construction |
 
 | ![](Images/status.png) |
 | :-: |
