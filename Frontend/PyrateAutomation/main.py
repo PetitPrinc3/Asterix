@@ -5,7 +5,7 @@
 
 
 import json
-import log
+import subprocess
 
 import init_json as ij
 import runs_pyrate as rp
@@ -13,11 +13,19 @@ import fetch_results as fr
 import cleaner as cl
 
 from Asterix_libs.prints import *
+from Asterix_libs import log
 from datetime import datetime
 
 
 ################################################################################
 
+
+subprocess.call("/bin/cp /mnt/DataShare/dirty.json inputs.json")
+
+with open("inputs.json", "r") as inp:
+    js = json.load(inp)
+    if len(js["ind_results"]) == 0:
+        exit()
 
 start = datetime.now()
 

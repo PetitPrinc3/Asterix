@@ -5,8 +5,6 @@ from Asterix_libs.prints import *
 
 from PywavaAutomation import pywavaautomation
 
-subprocess.call("/usr/bin/rm dirty.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
-
 ac_res = pywavaautomation.ac_run()
 
 subprocess.call("/bin/cp default.json clean.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
@@ -30,6 +28,8 @@ with open('clean.json', 'r+') as outp:
     outp.write(js)
 
 print()
+
+san = False
 
 if len(ac_res[1]) > 0:
 
@@ -55,5 +55,28 @@ if len(ac_res[1]) > 0:
         else:
             fail('Choice failed, try again.')
 
-subprocess.call("/bin/cp clean.json /mnt/DataShare/trt_results.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
+subprocess.call("/bin/cp default.json dirty.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+
+if san:
+
+
+    with open('dirty.json', 'r+') as outp:
+        files = []
+
+        for suc in ac_res[1]:
+            files.append(suc)
+
+        js = json.load(outp)
+
+        js['ind_results'] = files
+
+        outp.seek(0)
+
+        js = json.dumps(js, indent = 4)
+
+        outp.write(js)
+
+
+subprocess.call("/bin/cp dirty.json /mnt/DataShare/dirty.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+subprocess.call("/bin/cp clean.json /mnt/DataShare/clean.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
