@@ -62,7 +62,7 @@ def main():
                 f_lst = ul.lst(inp)
                 break
             else:
-                sleep(1)
+                time.sleep(1)
                 tmout += 1
 
 

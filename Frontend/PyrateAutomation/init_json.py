@@ -5,7 +5,7 @@
 
 
 import json
-import log
+from Asterix_libs import log
 
 
 ################################################################################
