@@ -4,6 +4,9 @@
       <meta name="viewport" content="with=device-width, initial-scale=1.0">
       <link rel="icon" href="images/icon.png">
       <meta charSet="utf-8"/>
+      <link rel="stylesheet" href="Web/css/status.css" />
+      <link rel="stylesheet" href="Web/css/navigation.css" />
+      <link rel="stylesheet" href="Web/css/welcome.css" />
       <link rel="stylesheet" href="Web/css/styles.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,7 +48,7 @@
          </li>
          <li data-depth="0.4" class="layer clickable">
             <div class="front-logo">
-                <img src="Images/asterix.png" alt="Asterix !" class="main_logo" onclick="location.href ='#About'">
+                <img src="Images/asterix.png" alt="Asterix !" class="main_logo" onclick="location.href ='#Status'">
             </div>
          </li>
          <li data-depth="0.1" class="layer">
@@ -55,98 +58,122 @@
          </li>
       </ul>
       </div>
-      <div class="About" id="About">
+      <div class="navigation" id="navigation">
          <div class="about-button">
-            <a href="#About">Discover</a>
+            <a href="#Status">Discover</a>
          </div>
          <nav>
-            <ul class="menuItems">
+            <ul class="menuItems" id="menuItems">
                <li><a href='' data-item='Home'>Home</a></li>
                <li><a href='#About' data-item='About'>About</a></li>
-               <li><a href='#' data-item='Status'>Status</a></li>
-               <li><a href='#' data-item='Downloads'>Downloads</a></li>
+               <li><a href='#' data-item='Docs'>Docs</a></li>
+               <li><a href='#' data-item='Installation'>Installation</a></li>
                <li><a href='#' data-item='Contact'>Contact</a></li>
              </ul>
          </nav>
-         <h2 id="what-is-this-repo-">What is this repo ?</h2>
-         <p>This project will be in active development from the 22nd of August 2022 until at least the 10th of November 2022.<br>The ultimate goal is to propose an Open-Source USB malware cleaner kiosk that is portable and offers good functionalities.</p>
-         <p>This is my graduation project from the French Naval Academy, in collaboration with the Informatic Institute of the University of Amsterdam.</p>
-         <p>You will find here the pieces of software that make Asterix as well as the report concerning the project one redacted.<br>You will also find functionnalities that have not been implemented but were part of the thinking/designing process.</p>
-         <h2 id="the-project-under-construction-">The project (Under construction)</h2>
-         <table>
-            <thead>
-               <tr>
-                  <th style="text-align:center"><img src="Images/arch_and_op.png" alt=""></th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td style="text-align:center">System&#39;s architecture</td>
-               </tr>
-            </tbody>
-         </table>
-         <h3 id="components">Components</h3>
-         <ul>
-            <li>
-               ✅ <a href="Frontend">Frontend</a> :
-               <ul>
-                  <li><a href="Frontend/USBHandler">USB Handler</a></li>
-                  <li><a href="https://github.com/G4vr0ch3/PyRATE">Pyrate</a></li>
-                  <li><a href="Frontend/PyrateAutomation/">Pyrate Automation</a></li>
-               </ul>
-            </li>
-            <li>
-               ❌ <a href="Backend">Backend</a>
-               <ul>
-                  <li><a href="Backend/USBHandler">USB Handler / Identification / Format</a></li>
-                  <li><a href="#">USB to USB transfer</a></li>
-               </ul>
-            </li>
-            <li>
-               ❌ <a href="AC-Center">Analysis Center</a>
-               <ul>
-                  <li><a href="#">Virtual Machine</a></li>
-                  <li><a href="#">USB to VM transfer</a></li>
-                  <li><a href="https://github.com/G4vr0ch3/PyWAVA">Anti-Virus Analysis Wrapper PyWAVA</a></li>
-                  <li><a href="AC-Center/PywavaAutomation/">Pywava Automation</a></li>
-               </ul>
-            </li>
-            <li>
-               ❌ <a href="Brain">Brain</a>
-               <ul>
-                  <li><a href="#">Reset handler</a></li>
-                  <li><a href="#">MAIN</a></li>
-               </ul>
-            </li>
-            <li>
-               ❌ <a href="Host">Host</a>
-               <ul>
-                  <li><a href="#">Start launcher</a></li>
-                  <li><a href="#">UDEV Rules</a></li>
-               </ul>
-            </li>
-         </ul>
-         <table>
-            <thead>
-               <tr>
-                  <th style="text-align:center"><img src="Images/status.png" alt=""></th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td style="text-align:center">Project status</td>
-               </tr>
-            </tbody>
-         </table>
-         <h2 id="contributing-to-the-project">Contributing to the project</h2>
-         <p>We will gladly accept any valuable input !<br>Should you have any remarks, advice or whatever you deem useful to us, please contact me either via:</p>
-         <blockquote>
-            <p><a href="mailto:gavrochebackups@gmail.com">e-mail</a><br><a href="https://discordapp.com/users/Gavroche#2871">Discord</a><br><a href="https://twitter.com/Gvrch3">Twitter</a></p>
-         </blockquote>
-         <p>Many thanks !</p>
-         <p>##</p>
-         <p><a href="https://github.com/G4vr0ch3">Gavroche</a></p>
       </div>
+      <div class="Status" id="Status">
+         <h1>Project status :</h1>
+         <div class="container">
+            <div class="box">
+               <div class="percent">
+                 <svg>
+                   <circle cx="70" cy="70" r="70"></circle>
+                   <circle cx="70" cy="70" r="70"></circle>
+                 </svg>
+                 <div class="num">
+                   <h2>100<span>%</span></h2>
+                 </div>
+               </div>
+               <h2 class="text">Frontend</h2>
+             </div>
+             <div class="box">
+               <div class="percent">
+                 <svg>
+                   <circle cx="70" cy="70" r="70"></circle>
+                   <circle cx="70" cy="70" r="70"></circle>
+                 </svg>
+                 <div class="num">
+                   <h2>100<span>%</span></h2>
+                 </div>
+               </div>
+               <h2 class="text">Backend</h2>
+             </div>
+             <div class="box">
+               <div class="percent">
+                 <svg>
+                   <circle cx="70" cy="70" r="70"></circle>
+                   <circle cx="70" cy="70" r="70"></circle>
+                 </svg>
+                 <div class="num">
+                   <h2>90<span>%</span></h2>
+                 </div>
+               </div>
+               <h2 class="text">AC-Center</h2>
+             </div>
+             <div class="box">
+               <div class="percent">
+                 <svg>
+                   <circle cx="70" cy="70" r="70"></circle>
+                   <circle cx="70" cy="70" r="70"></circle>
+                 </svg>
+                 <div class="num">
+                   <h2>70<span>%</span></h2>
+                 </div>
+               </div>
+               <h2 class="text">Brain</h2>
+             </div>
+             <div class="box">
+               <div class="percent">
+                 <svg>
+                   <circle cx="70" cy="70" r="70"></circle>
+                   <circle cx="70" cy="70" r="70"></circle>
+                 </svg>
+                 <div class="num">
+                   <h2>50<span>%</span></h2>
+                 </div>
+               </div>
+               <h2 class="text">Host</h2>
+             </div>
+             <div class="box">
+               <div class="percent">
+                 <svg>
+                   <circle cx="70" cy="70" r="70"></circle>
+                   <circle cx="70" cy="70" r="70"></circle>
+                 </svg>
+                 <div class="num">
+                   <h2>60<span>%</span></h2>
+                 </div>
+               </div>
+               <h2 class="text">Installer</h2>
+             </div>
+             <div class="box">
+               <div class="percent">
+                 <svg>
+                   <circle cx="70" cy="70" r="70"></circle>
+                   <circle cx="70" cy="70" r="70"></circle>
+                 </svg>
+                 <div class="num">
+                   <h2>75<span>%</span></h2>
+                 </div>
+               </div>
+               <h2 class="text">Hardware</h2>
+             </div>
+             <div class="box">
+               <div class="percent">
+                 <svg>
+                   <circle cx="70" cy="70" r="70"></circle>
+                   <circle cx="70" cy="70" r="70"></circle>
+                 </svg>
+                 <div class="num">
+                   <h2>15<span>%</span></h2>
+                 </div>
+               </div>
+               <h2 class="text">Website</h2>
+             </div>
+         </div>
+      </div>
+      
       <script type="text/javascript" src="Web/js/jquery-3.6.0.min.js"></script>
       <script type="text/javascript" src="Web/js/gsap.min.js"></script>
       <script type="text/javascript" src="Web/js/parallax.min.js"></script>
