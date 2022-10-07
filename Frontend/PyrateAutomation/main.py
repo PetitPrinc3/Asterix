@@ -20,7 +20,7 @@ from datetime import datetime
 ################################################################################
 
 
-subprocess.call("/bin/cp /mnt/DataShare/dirty.json inputs.json")
+subprocess.call("/bin/cp /mnt/DataShare/dirty.json inputs.json", shell = True)
 
 with open("inputs.json", "r") as inp:
     js = json.load(inp)
