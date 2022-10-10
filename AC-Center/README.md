@@ -13,6 +13,8 @@ To better understand the role of the Analysis Center, refer to [this](../README.
 
 # Installation Instructions
 
+This section gives instructions on how to install and setup the AC-Center manually.
+
 ## AC-Center for ARM devices
 
 ### Windows 10 ARM Virtual Machine (QEMU - Raspberry Pi 4B)
