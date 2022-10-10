@@ -63,19 +63,20 @@
 }
 
 .box .percent {
-    width: 10vh;
-    height: 10vh;
+    width: 80%;
+    height: 80%;
     position: relative;
 }
 
 .box .percent svg {
-    width: 8vh;
-    height: 8vh;
-    position: relative;
+    width: 15vw;
+    height: 25vh;
+    position: absolute;
+    transform: translateX(-40%);
 }
 
 .box .percent svg circle {
-    width: 6vh;
+    width: 100%;
     height: auto;
     fill: none;
     stroke-width: 10;
