@@ -80,13 +80,13 @@ with open('san_clean.json', 'r+') as outp:
 
         for suc in res[0]:
 
-            subprocess.call(f'/bin/cp Pyrate/{suc["OUTPATH"]} /mnt/Sanitized/{suc["FileName"]}')
+            subprocess.call(f'/bin/cp Pyrate/{suc["OUTPATH"]} /mnt/Sanitized/{suc["FileName"]}', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
             success(f'File {suc["FileName"]} was sanitized succesfully.')
             
             file_ = {
                 "Date": suc["Date"],
-                "FileName": f'/mnt/Sanatized/{suc["FileName"]}',
+                "FileName": f'/mnt/Sanitized/{suc["FileName"]}',
                 "HASH": suc["HASH"]
             }
 
