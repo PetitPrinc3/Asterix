@@ -1,39 +1,46 @@
 import json
 import subprocess
 
+from ffh import ffh
+
 from Asterix_libs.prints import *
 
 from PywavaAutomation import pywavaautomation
+
+subprocess.call("/bin/cp /mnt/DataShare/user_inp.json user_inp.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
 ac_res = pywavaautomation.ac_run()
 
 subprocess.call("/bin/cp default.json clean.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
-with open('clean.json', 'r+') as outp:
+if len(ac_res[0] > 1):
 
-    files = []
+    with open('clean.json', 'r+') as outp:
 
-    for suc in ac_res[0]:
-        success(f'File {suc["PATH"]} is clean.')
-        files.append(suc)
+        files = []
 
-    js = json.load(outp)
+        for suc in ac_res[0]:
+            success(f'File {suc["PATH"]} is clean.')
+            
+            file = ffh("user_inp.json", suc["HASH"])
+            
+            files.append(file)
 
-    js['ind_results'] = files
+        js = json.load(outp)
 
-    outp.seek(0)
+        js['ind_results'] = files
 
-    js = json.dumps(js, indent = 4)
+        outp.seek(0)
 
-    outp.write(js)
+        js = json.dumps(js, indent = 4)
+
+        outp.write(js)
 
 print()
 
 san = False
 
 if len(ac_res[1]) > 0:
-
-    subprocess.call("/bin/cp default.json dirty.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
     for fai in ac_res[1]:
         fail(f'File {fai["PATH"]} were flagged as malicious.')
@@ -64,8 +71,10 @@ if san:
     with open('dirty.json', 'r+') as outp:
         files = []
 
-        for suc in ac_res[1]:
-            files.append(suc)
+        for fai in ac_res[1]:
+            file = ffh("user_inp.json", fai["HASH"])
+            
+            files.append(file)
 
         js = json.load(outp)
 
