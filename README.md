@@ -25,7 +25,7 @@ You will also find functionnalities that have not been implemented but were part
 - ✅ [Backend](Backend)
     - [USB Handler / Identification](Backend/USBHandler)
     - [USB to USB transfer](#)
-- ❌ [Analysis Center](AC-Center)
+- ✅ [Analysis Center](AC-Center)
     - [Virtual Machine](#)
     - [USB to VM transfer](#)
     - [Anti-Virus Analysis Wrapper PyWAVA](https://github.com/G4vr0ch3/PyWAVA)
@@ -50,9 +50,9 @@ You will also find functionnalities that have not been implemented but were part
 | Backend | :green_circle: | 100% | Gave up on drive formatting. |
 | AC-Center (ARM) | :yellow_circle: | 99% | SSH Identity. |
 | AC-Center (x64) | :hourglass: | 0% |  |
-| Brain | :yellow_circle: | 85% | Pyrate |
+| Brain | :green_circle: | 100% | Implementing ssh interraction with other containers ? |
 | Host | :orange_circle: | 50% | Main soft/Hardening/GUI. |
-| Installer | :orange_circle: | 60% |  |
+| Installer | :orange_circle: | 70% |  |
 | Hardware | :orange_circle: | 75% | Case. |
 | [Website](https://g4vr0ch3.github.io/Asterix) | :orange_circle: | 15% | Under construction |
 
