@@ -4,6 +4,7 @@
 ################################################################################
 
 
+import os
 import json
 import subprocess
 from Asterix_libs import hash
@@ -24,10 +25,10 @@ def getlist(json_file):
         log.log(f'Opened {json_file}')
         js = json.load(targets)
 
-        for target in js['files']:
+        for target in js['ind_results']:
 
-            f_name = target['FileName']
-            f_path = target['FilePath']
+            f_path = target['FileName']
+            f_name = os.path.basename(f_path)
             f_hash = target['HASH']
 
             while f_name.split(".")[0] in [_[0] for _ in f]:
