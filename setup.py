@@ -173,5 +173,7 @@ with spinner("Finishing..."):
 
 # info("""When you are ready to setup the VM, execute "bash vm_setup.sh". Follow the instructions provided on the repository's README.""")
 
+warning("AC-Center needs to be configured manually, check https://github.com/G4vr0ch3/Asterix/AC-Center/README.md")
+
 # SETUP END
 success("Exhausted")
