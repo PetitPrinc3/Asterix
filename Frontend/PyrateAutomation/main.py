@@ -80,9 +80,17 @@ with open('san_clean.json', 'r+') as outp:
 
         for suc in res[0]:
 
-            success(f'File {suc["FileName"]} was sanatized succesfully.')
-                       
-            files.append(suc)
+            subprocess.call(f'/bin/cp Pyrate/{suc["OUTPATH"]} /mnt/Sanitized/{suc["FileName"]}')
+
+            success(f'File {suc["FileName"]} was sanitized succesfully.')
+            
+            file_ = {
+                "Date": suc["Date"],
+                "FileName": f'/mnt/Sanatized/{suc["FileName"]}',
+                "HASH": suc["HASH"]
+            }
+
+            files.append(file_)
 
         js = json.load(outp)
 

@@ -112,6 +112,8 @@ with spinner('Creating relevant docker volumes...'):
     info('USBInputDevice volume created.        ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"')
     info('InputFiles volume created.             ')
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name Sanitized"')
+    info('Sanitized volume created.        ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBOutputDevice"')
     info('USBOutputDevice volume created.       ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name OutputFiles"')
