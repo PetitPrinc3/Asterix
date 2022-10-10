@@ -75,19 +75,29 @@ with open('san_clean.json', 'r+') as outp:
 
     files = []
 
-    for suc in res[0]:
-        success(f'File {suc["FileName"]} was sanatized succesfully.')
-        files.append(suc)
+    if len(res[0]) > 0:
 
-    js = json.load(outp)
+        for suc in res[0]:
+            subprocess.call(f'/bin/cp {suc["out_path"]} /mnt/OutFiles/{suc["FileName"]}', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            success(f'File {suc["FileName"]} was sanatized succesfully.')
+            
+            f_ = {
+                "Date": suc["Date"],
+                "FileName": f'/mnt/OutFiles/{suc["FileName"]}',
+                "HASH": suc["HASH"]
+            }
+            
+            files.append(f_)
 
-    js['ind_results'] = files
+        js = json.load(outp)
 
-    outp.seek(0)
+        js['ind_results'] = files
 
-    js = json.dumps(js, indent = 4)
+        outp.seek(0)
 
-    outp.write(js)
+        js = json.dumps(js, indent = 4)
+
+        outp.write(js)
 
 log.log('Closed san_clean.json')
 
