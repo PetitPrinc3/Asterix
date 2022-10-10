@@ -11,14 +11,15 @@ It is a Windows powered virtual machine.
 
 To better understand the role of the Analysis Center, refer to [this](../README.md#the-project-under-construction) section.
 
-## Installation and Configuration (ARM)
+# Installation Instructions
 
+## AC-Center for ARM devices
 
 ### Windows 10 ARM Virtual Machine (QEMU - Raspberry Pi 4B)
 
 > :information_source: The VM was created under /src/win10_VM
 
-#### :round_pushpin: Download Windows
+### :round_pushpin: Download Windows
 
 > Refer : [https://uupdump.net](https://uupdump.net)
 
@@ -46,7 +47,7 @@ mv *.ISO ../winarm.iso
 
 ```
 
-#### :round_pushpin: Get VirtIO drivers from Fedora
+### :round_pushpin: Get VirtIO drivers from Fedora
 
 > Refer : [https://fedorapeople.org/groups/virt/virtio-win](https://fedorapeople.org/groups/virt/virtio-win)
 
@@ -61,7 +62,7 @@ In our use-case, we used the following :
 ```
 
 
-#### :round_pushpin: Copy the UEFI Firmware
+### :round_pushpin: Copy the UEFI Firmware
 
 Copy the UEFI Firmware from your linux installation :
 - /usr/share/AAVMF/AAVMF_CODE.fd
@@ -76,7 +77,7 @@ Or do it from the command line with :
 
 ```
 
-#### :round_pushpin: Create Filesystem VHX disk
+### :round_pushpin: Create Filesystem VHX disk
 
 Create a filesystem virtual disk for the VM using qemu-img (We decided to use a 64Gb disk) :
 
@@ -84,7 +85,7 @@ Create a filesystem virtual disk for the VM using qemu-img (We decided to use a 
 /usr/bin/qemu-img create -f vhdx -o subformat=fixed /src/win10_VM/system.vhdx 64G
 ```
 
-#### :round_pushpin: Setup Windows
+### :round_pushpin: Setup Windows
 
 Run [vm_setup.sh](vm_setup.sh) to run the VM and install windows as you would for a regular VM.
 
@@ -102,7 +103,7 @@ For our use case, we created a "ac-center" user.
 
 ### Configuring the environment
 
-#### :round_pushpin: Start the VM
+### :round_pushpin: Start the VM
 
 To run the VM, use [vm_run.sh](vm_run.sh).
 
@@ -118,7 +119,7 @@ qemu-system-aarch64 -cpu host -M virt,accel=kvm -smp 3 -m 4096 \
 (After the setup, add the "-display none" flag to the previous script to run the VM in the background.)
 
 
-#### :round_pushpin: Install SSH
+### :round_pushpin: Install SSH
 
 > Refer : [Microsoft - Install OpenSSH](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=gui)
 
@@ -149,21 +150,21 @@ Back to the PowerShell window, execute ```.\FixHostFilePermissions```. You may n
 
 You can now start the OpenSSH Server service from Window's Service manager and automatically start it at reboot.
 
-#### :round_pushpin: Install Python
+### :round_pushpin: Install Python
 
 > Refer : [Python](https://www.python.org/)
 
 Get a copy from Python ARM64 Installer for Windows on [Python's website](https://www.python.org/downloads/windows/) and install it as you would on a regular machine. Make sure you add Python to the System's path.
 
 
-#### :round_pushpin: Install ClamAV
+### :round_pushpin: Install ClamAV
 
 > Refer : [ClamAV Documentation](https://docs.clamav.net/)
 
 Get a copy from the last Win-32bit msi installer on [ClamAV's Website](https://www.clamav.net/downloads) and follow the instructions given in the documentation to install and configure ClamAV.
 
 
-#### :round_pushpin: Install PyWAVA
+### :round_pushpin: Install PyWAVA
 
 > Refer : [PyWAVA](https://github.com/G4vr0ch3/PyWAVA)
 
