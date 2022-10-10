@@ -67,7 +67,7 @@ ij.init_res('clean.json')
 
 res = fr.get_stats('Pyrate/san_results.json')
 
-subprocess.call('/bin/cp default.json san_clean.json')
+subprocess.call('/bin/cp default.json san_clean.json', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 with open('san_clean.json', 'r+') as outp:
 
@@ -100,7 +100,7 @@ end = datetime.now()
 
 elapsed = end-start
 
-subprocess.call('/bin/cp san_clean.json /mnt/DataShare/san_clean.json')
+subprocess.call('/bin/cp san_clean.json /mnt/DataShare/san_clean.json', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 print()
 

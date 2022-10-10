@@ -54,7 +54,9 @@ def main():
 
         out.seek(0)
 
-        out.write(js_out)
+        js_dump = json.dumps(js_out, indent=4)
+
+        out.write(js_dump)
     
     if not uid.db_test("/mnt/DataShare/USB_ID.db"): exit()
 

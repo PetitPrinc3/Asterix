@@ -27,9 +27,9 @@ subprocess.run("su - docker_runner -c '/usr/bin/docker exec -w /usr/share/Python
 subprocess.run("su - docker_runner -c '/usr/bin/docker exec -w /usr/share/PyrateAutomation -it frontend python3 main.py'", shell = True)
 
 subprocess.run("su - docker_runner -c '/usr/bin/docker exec -w /usr/share/USBHandler -it backend python3 main.py'", shell = True)
-info('You can now remove the USB output drive.')
 subprocess.run("""systemctl stop outpartmnt@$(udevadm info -q all -a /dev/USBOutputPart | grep KERNEL | head -n 1 | cut -d '"' -f 2).service""" , shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 subprocess.run("""systemctl stop outdiskmnt@$(udevadm info -q all -a /dev/USBOutputDisk | grep KERNEL | head -n 1 | cut -d '"' -f 2).service""" , shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+info('You can now remove the USB output drive.')
 
 with spinner('Waiting for drive removal...'):
     ud.rem_wait(["/dev/USBInputDisk", "/dev/USBInputPart", "/dev/USBOutputDisk", "/dev/USBOutputPart"])
