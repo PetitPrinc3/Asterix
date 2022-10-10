@@ -50,7 +50,7 @@ You will also find functionnalities that have not been implemented but were part
 | Backend | :green_circle: | 100% | Gave up on drive formatting. |
 | AC-Center (ARM) | :yellow_circle: | 99% | SSH Identity. |
 | AC-Center (x64) | :hourglass: | 0% |  |
-| Brain | :orange_circle: | 70% | DIALOG |
+| Brain | :yellow_circle: | 85% | Pyrate |
 | Host | :orange_circle: | 50% | Main soft/Hardening/GUI. |
 | Installer | :orange_circle: | 60% |  |
 | Hardware | :orange_circle: | 75% | Case. |
