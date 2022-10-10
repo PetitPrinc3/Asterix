@@ -13,7 +13,9 @@ ac_res = pywavaautomation.ac_run()
 
 subprocess.call("/bin/cp default.json clean.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
-if len(ac_res[0] > 1):
+print(ac_res)
+
+if len(ac_res[0]) > 0:
 
     with open('clean.json', 'r+') as outp:
 
