@@ -25,6 +25,7 @@ subprocess.call("/bin/cp /mnt/DataShare/dirty.json inputs.json", shell = True)
 with open("inputs.json", "r") as inp:
     js = json.load(inp)
     if len(js["ind_results"]) == 0:
+        subprocess.call('/bin/cp default.json /mnt/DataShare/san_clean.json', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         exit()
 
 start = datetime.now()
@@ -78,16 +79,10 @@ with open('san_clean.json', 'r+') as outp:
     if len(res[0]) > 0:
 
         for suc in res[0]:
-            subprocess.call(f'/bin/cp {suc["out_path"]} /mnt/OutFiles/{suc["FileName"]}', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
             success(f'File {suc["FileName"]} was sanatized succesfully.')
-            
-            f_ = {
-                "Date": suc["Date"],
-                "FileName": f'/mnt/OutFiles/{suc["FileName"]}',
-                "HASH": suc["HASH"]
-            }
-            
-            files.append(f_)
+                       
+            files.append(suc)
 
         js = json.load(outp)
 

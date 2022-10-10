@@ -41,23 +41,8 @@ def tab(f_lst):
 
 def main():
 
-    clean = json.load(open("/mnt/DataShare/clean.json", "r"))["ind_results"]
-    saned = json.load(open("/mnt/DataShare/san_clean.json", "r"))["ind_results"]
+    subprocess.call('/bin/cp /mnt/DataShare/trt_result.json trt_result.json', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-    with open("trt_result.json", "r+") as out:
-
-        js_out = json.load(out)
-
-        fls = clean + saned
-
-        js_out["ind_results"] = fls
-
-        out.seek(0)
-
-        js_dump = json.dumps(js_out, indent=4)
-
-        out.write(js_dump)
-    
     if not uid.db_test("/mnt/DataShare/USB_ID.db"): exit()
 
     outp = ud.inp_wait(["/mnt/USBOutputDevice/USBOutputPart", "/mnt/USBOutputDevice/USBOutputDisk", "/mnt/DataShare/BadUSBOutput"])
