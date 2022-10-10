@@ -67,6 +67,8 @@ ij.init_res('clean.json')
 
 res = fr.get_stats('Pyrate/san_results.json')
 
+subprocess.call('/bin/cp default.json san_clean.json')
+
 with open('san_clean.json', 'r+') as outp:
 
     log.log('Opened san_clean.json')
