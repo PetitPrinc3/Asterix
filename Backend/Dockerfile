@@ -10,7 +10,6 @@ RUN python3 -m pip install --upgrade pip
 
 # Adding USB Input disk handler
 ADD USBHandler/* /usr/share/USBHandler/
-RUN chown -R asterix:asterix /usr/share/USBHandler
 RUN chmod +x /usr/share/USBHandler/main.py
 
 # Adding shared libraries
