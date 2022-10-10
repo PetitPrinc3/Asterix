@@ -13,10 +13,10 @@ RUN python3 -m pip install --upgrade pip
 
 # Create limited user
 RUN addgroup -S asterix && adduser -S asterix -G asterix
-USER asterix
 
 # Adding USB Input disk handler
 ADD USBHandler/* /usr/share/USBHandler/
+RUN chown -R asterix:asterix /usr/share/USBHandler
 RUN chmod +x /usr/share/USBHandler/main.py
 
 # Adding shared libraries
@@ -26,7 +26,11 @@ RUN chmod 777 /usr/lib/python3.10
 # Adding Pyrate software and multiple file processing wrapper
 ADD PyrateAutomation /usr/share/PyrateAutomation
 ADD PyRATE /usr/share/PyrateAutomation/Pyrate
+RUN chown -R asterix:asterix /usr/share/PyrateAutomation
 RUN chmod +x /usr/share/PyrateAutomation/Pyrate/pyrate.py
-RUN pip3 install -r /usr/share/PyrateAutomation/Pyrate/requirements.txt --root-user-action=ignore
 
 RUN mkdir /dev/Frontend
+
+USER asterix
+
+RUN pip3 install -r /usr/share/PyrateAutomation/Pyrate/requirements.txt --root-user-action=ignore
