@@ -67,9 +67,9 @@ ij.init_res('clean.json')
 
 res = fr.get_stats('Pyrate/san_results.json')
 
-with open('clean.json', 'r+') as outp:
+with open('san_clean.json', 'r+') as outp:
 
-    log.log('Opened clean.json')
+    log.log('Opened san_clean.json')
 
     files = []
 
@@ -87,7 +87,7 @@ with open('clean.json', 'r+') as outp:
 
     outp.write(js)
 
-log.log('Closed clean.json')
+log.log('Closed san_clean.json')
 
 print()
 
@@ -97,6 +97,8 @@ for fai in res[1]:
 end = datetime.now()
 
 elapsed = end-start
+
+subprocess.call('/bin/cp san_clean.json /mnt/DataShare/san_clean.json')
 
 print()
 

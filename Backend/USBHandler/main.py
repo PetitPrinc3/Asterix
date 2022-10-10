@@ -41,9 +41,22 @@ def tab(f_lst):
 
 def main():
 
-    if not uid.db_test("/mnt/DataShare/USB_ID.db"): exit()
+    clean = json.load(open("/mnt/DataShare/clean.json", "r"))["ind_results"]
+    saned = json.load(open("/mnt/DataShare/san_clean.json", "r"))["ind_results"]
 
-    cp.copy("/mnt/DataShare/trt_result.json", "trt_result.json")
+    with open("trt_result.json", "r+") as out:
+
+        js_out = json.load(out)
+
+        fls = clean + saned
+
+        js_out["ind_results"] = fls
+
+        out.seek(0)
+
+        out.write(js_out)
+    
+    if not uid.db_test("/mnt/DataShare/USB_ID.db"): exit()
 
     outp = ud.inp_wait(["/mnt/USBOutputDevice/USBOutputPart", "/mnt/USBOutputDevice/USBOutputDisk", "/mnt/DataShare/BadUSBOutput"])
 
