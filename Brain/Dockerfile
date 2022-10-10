@@ -14,5 +14,11 @@ RUN pip install paramiko
 ADD Asterix_libs /usr/lib/python3.10/Asterix_libs
 RUN chmod 777 /usr/lib/python3.10
 
+# Create limited user
+RUN addgroup -S asterix && adduser -S asterix -G asterix
+
 # Adding Python softwares
 ADD PythonHandler /usr/share/PythonHandler
+RUN chown -R asterix:asterix /usr/share/PythonHandler
+
+USER asterix
