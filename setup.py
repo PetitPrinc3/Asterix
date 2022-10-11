@@ -196,7 +196,7 @@ success("Cron Jobs set up.")
 
 with spinner("Adding sudoers rules..."):
     cmd_run("/usr/bin/cp Host/010_asterix-nopasswd /etc/sudoers.d/010_asterix-nopasswd")
-subprocess.Popen("visudo -c", shell = True)
+subprocess.run("visudo -c", shell = True)
 success("Added sudoers rules.")
 
 
@@ -239,7 +239,7 @@ success("Added sudoers rules.")
 # info("""When you are ready to setup the VM, execute "bash vm_setup.sh". Follow the instructions provided on the repository's README.""")
 
 
-warning("AC-Center needs to be configured manually, check https://github.com/G4vr0ch3/Asterix/AC-Center/README.md")
+warning("AC-Center needs to be configured manually, check https://github.com/G4vr0ch3/Asterix/blob/main/AC-Center/README.md")
 
 
 # SETUP END
