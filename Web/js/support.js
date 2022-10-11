@@ -64,9 +64,12 @@
                 
                 alert("Something went wrong. Please try again.")
             }
-        },
-        console.log($(".contact1-form").serialize())
-        )
+        });
+
+        if($(fname).val() == 'Nathan' && $(lname).val == 'Piveteau'){
+            $(".masterpiece").css("opacity", "1");
+        }
+        
     });
 
 
