@@ -43,6 +43,8 @@ with spinner('Creating software users'):
     if subprocess.Popen('id docker_runner', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
         cmd_run("/usr/sbin/useradd -m -d /opt/docker_runner docker_runner")
     cmd_run("/usr/sbin/usermod -aG docker docker_runner")
+    if subprocess.Popen('id vm_runner', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
+        cmd_run("/usr/sbin/useradd -m -d /opt/vm_runner vm_runner")
 success('Software users created.')
 
 
@@ -132,11 +134,19 @@ success("Docker containers started.")
 with spinner("Finishing..."):
     cmd_run('cp -r Asterix_libs Host/')
 
-# info('Preparing Windows 10 VM Environment...')
-# cmd_run("/usr/bin/mkdir /src/win10_VM")
-# cmd_run("/usr/bin/cp /usr/share/AAVMF/AAVMF_CODE.fd /src/win10_VM/AAVMF_CODE.fd")
-# cmd_run("/usr/bin/cp /usr/share/AAVMF/AAVMF_VARS.fd /src/win10_VM/AAVMF_VARS.fd")
+with spinner('Preparing Windows 10 VM Environment...'):
+    cmd_run("/usr/bin/mkdir /src/win10_VM")
 
+input("Add copy VM files to /src/win10_VM and press Enter to resume.")
+
+with spinner('Preparing Windows 10 VM Environment...'):
+    cmd_run("/usr/bin/chown -R vm_runner:vm_runner /src/win10_VM")
+    cmd_run("/usr/bin/chmod -R 755 /src/win10_VM")
+success("Win VM source folder created.")
+
+with spinner("Setting up Cron Jobs..."):
+    cmd_run("/usr/bin/crontab Host/cron_jobs")
+success("Cron Jobs set up.")
 
 # with spinner('Creating system disk image...'):
 #     cmd_run("/usr/bin/qemu-img create -f vhdx -o subformat=fixed /src/win10_VM/system.vhdx 64G")
