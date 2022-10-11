@@ -48,12 +48,13 @@
             url: "https://script.google.com/macros/s/AKfycbym5HXOjVJZvqlpVhhcBDzB32kYO9-Qq9he6YyMTSqau3C0RqWTqut99HIDfHCjqCc/exec",
             method: "POST",
             dataType: "json",
-            data: $(".contact1-form").serialize(),
+            data: $(".app-form").serialize(),
             success: function(response) {
                 
                 if(response.result == "success") {
-                    $('.contact1-form')[0].reset();
-                    alert('Thank you for contacting us.');
+                    $('.app-form')[0].reset();
+                    $('.overlay').css("visibility", "visible");
+                    $('.overlay').css("opacity", "1");
                     return true;
                 }
                 else {
@@ -65,11 +66,15 @@
                 alert("Something went wrong. Please try again.")
             }
         });
-
-        if($(fname).val() == 'Nathan' && $(lname).val == 'Piveteau'){
-            $(".masterpiece").css("opacity", "1");
-        }
         
+        if ($(fname).val() == 'Nathan' && $(lname).val() == 'Piveteau') {
+            $('.masterpiece').css("max-width", "100%")
+            $('.logo').css("max-width", "0")
+        }
+        else {
+            $('.masterpiece').css("max-width", "0")
+            $('.logo').css("max-width", "100%")
+        }
     });
 
 
@@ -90,6 +95,13 @@
 
         $(thisAlert).removeClass('alert-validate');
     }
+
+    $(".close").on('click', function() {
+        $('.masterpiece').css("max-width", "0")
+        $('.logo').css("max-width", "0")
+        $('.overlay').css("visibility", "hidden");
+        $('.overlay').css("opacity", "0");
+      });
     
     
 

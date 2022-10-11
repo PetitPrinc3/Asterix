@@ -3,8 +3,8 @@
 	padding: 0;
 	font-family: 'Roboto', sans-serif;
 	scroll-behavior: smooth;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body {
@@ -16,7 +16,7 @@ body {
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 	/* IE and Edge */
-	background: linear-gradient(90deg, rgba(154,201,221,1) 0%, rgba(38,39,43,1) 50%, rgba(204,161,154,1) 100%);
+	background: linear-gradient(90deg, rgba(154, 201, 221, 1) 0%, rgba(38, 39, 43, 1) 50%, rgba(204, 161, 154, 1) 100%);
 }
 
 html::-webkit-scrollbar {
@@ -34,4 +34,4 @@ p {
 	text-align: center;
 	font-size: 2.5ch;
 	margin: 0 auto;
-  }
+}
