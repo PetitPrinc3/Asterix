@@ -19,3 +19,11 @@ def create():
                 print('Database connection closed\n')
         except sqlite3.Error as error:
                 print('Database initialization failed')
+
+if __name__ == "__main__":
+
+        create()
+
+        import subprocess
+
+        subprocess.run('/usr/bin/cp USB_ID.db /var/lib/docker/volumes/DataShare/_data/')

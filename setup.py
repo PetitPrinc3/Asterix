@@ -107,6 +107,8 @@ success("Pyrate collected.")
 info('Preparing Host software...')
 cmd_run('/usr/bin/mkdir -p /src/Host')
 cmd_run('/usr/bin/cp Host/eject_devices.sh /src/Host/eject_devices.sh')
+cmd_run('/usr/bin/cp Host/db_create.py /src/Host/db_create.py')
+cmd_run('/usr/bin/chmod -R 600 /src/Host')
 
 
 with spinner('Adding mounting service...'):

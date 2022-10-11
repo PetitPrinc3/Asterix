@@ -18,7 +18,7 @@ subprocess.run('rm -r /var/lib/docker/volumes/InputFiles/_data/* /var/lib/docker
 
 create()
 
-subprocess.run('cp USB_ID.db /var/lib/docker/volumes/DataShare/_data/', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+subprocess.run('/usr/bin/sudo -u root /usr/bin/python /src/Host/db_create.py', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/USBHandler -it frontend python3 main.py", shell = True)
 
@@ -30,7 +30,7 @@ subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/shar
 
 subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/USBHandler -it backend python3 main.py", shell = True)
 
-subprocess.run("/usr/bin/sudo -u root /bin/bash /src/Host/eject_devices.sh")
+subprocess.run("/usr/bin/sudo -u root /bin/bash /src/Host/eject_devices.sh", shell = True)
 
 info('You can now remove both USB drives.')
 
