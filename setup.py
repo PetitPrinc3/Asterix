@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 
-from re import sub
 import subprocess
+import sys
 import os
-from Asterix_libs.spinner import spinner
+
+from re import sub
 from Asterix_libs.prints import *
+from Asterix_libs.spinner import spinner
 
 
 if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode('utf-8').strip() != 'root': fail('This program must be run as root.'); exit()
@@ -45,6 +47,9 @@ with spinner('Creating software users'):
     cmd_run("/usr/sbin/usermod -aG docker docker_runner")
     if subprocess.Popen('id vm_runner', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
         cmd_run("/usr/sbin/useradd -m -d /opt/vm_runner vm_runner")
+        cmd_run("/usr/sbin/usermod -G kvm vm_runner")
+    if subprocess.Popen('id asterix', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
+        cmd_run("/usr/sbin/useradd -m -d /opt/asterix asterix")
 success('Software users created.')
 
 
@@ -132,8 +137,17 @@ with spinner('Starting containers...'):
 success("Docker containers started.")
 
 
+with spinner("Fixing user permissions..."):
+    cmd_run("/usr/bin/cp Host/Asterix.py /opt/asterix/Asterix.py")
+    cmd_run("/usr/bin/chown -R asterix:asterix /opt/asterix")
+    cmd_run("/usr/bin/chmod -R 755 /opt/asterix")
+    cmd_run("/usr/bin/chown -R docker_runner:docker_runner /opt/docker_runner")
+    cmd_run("/usr/bin/chmod -R 755 /opt/docker_runner")
+
+
 with spinner("Finishing..."):
-    cmd_run('cp -r Asterix_libs Host/')
+    cmd_run(f'cp -r Host/Host_libs {sys.path[2]}')
+    cmd_run(f'cp -r Asterix_libs {sys.path[2]}')
 
 
 with spinner('Preparing Windows 10 VM Environment...'):
@@ -152,6 +166,26 @@ success("Win VM source folder created.")
 with spinner("Setting up Cron Jobs..."):
     cmd_run("/usr/bin/crontab Host/cron_jobs")
 success("Cron Jobs set up.")
+
+with spinner("Adding sudoers rules..."):
+    with open("Host/sudoers", "r") as newrules:
+        with open("/etc/sudoers", "r+") as rules:
+
+            existingrules = rules.readlines()
+
+            while True:
+                newrule = newrules.readline()
+                
+                if not newrule:
+                    break
+
+                if newrule not in existingrules:
+                    rules.write(newrule)
+                    warning('Rule already exists !')
+                
+                if newrule != "\n":
+                    print("RULE: " + newrule)
+
 
 
 # with spinner('Creating system disk image...'):

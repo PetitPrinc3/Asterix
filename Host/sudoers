@@ -1,0 +1,10 @@
+asterix ALL:NOPASSWD /usr/bin/su - docker_runner -c '/usr/bin/docker exec -w /usr/share/USBHandler -it frontend python3 main.py'
+asterix ALL:NOPASSWD /usr/bin/su - docker_runner -c '/usr/bin/docker exec -w /usr/share/PythonHandler -it brain python3 main.py'
+asterix ALL:NOPASSWD /usr/bin/su - docker_runner -c '/usr/bin/docker exec -w /usr/share/PyrateAutomation -it frontend python3 main.py'
+asterix ALL:NOPASSWD /usr/bin/su - docker_runner -c '/usr/bin/docker exec -w /usr/share/PythonHandler -it brain python3 gen_res.py'
+asterix ALL:NOPASSWD /usr/bin/su - docker_runner -c '/usr/bin/docker exec -w /usr/share/USBHandler -it backend python3 main.py'
+
+asterix ALL:NOPASSWD /usr/bin/su - root -c '/usr/bin/systemctl stop inppartmnt@$(udevadm info -q all -a /dev/USBInputPart | grep KERNEL | head -n 1 | cut -d '"' -f 2).service'
+asterix ALL:NOPASSWD /usr/bin/su - root -c '/usr/bin/systemctl stop inpdiskmnt@$(udevadm info -q all -a /dev/USBInputDisk | grep KERNEL | head -n 1 | cut -d '"' -f 2).service'
+asterix ALL:NOPASSWD /usr/bin/su - root -c '/usr/bin/systemctl stop outpartmnt@$(udevadm info -q all -a /dev/USBOutputPart | grep KERNEL | head -n 1 | cut -d '"' -f 2).service'
+asterix ALL:NOPASSWD /usr/bin/su - root -c '/usr/bin/systemctl stop outdiskmnt@$(udevadm info -q all -a /dev/USBOutputDisk | grep KERNEL | head -n 1 | cut -d '"' -f 2).service'
