@@ -62,6 +62,7 @@ if subprocess.Popen('qemu-system-aarch64 -machine help', shell=True, stdout=subp
 with spinner('Creating source folders...'):
     if not os.path.exists("/src"): cmd_run("/usr/bin/mkdir /src")
     if len(os.listdir("/src")) != 0: cmd_run("/usr/bin/rm -r /src/*")
+    cmd_run('/usr/bin/mkdir /src/win10_VM')
 success("Source folders created.")
 
 
