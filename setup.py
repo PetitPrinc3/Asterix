@@ -8,6 +8,7 @@ from re import sub
 from Asterix_libs.prints import *
 from Asterix_libs.spinner import spinner
 
+
 def libimport():
     try:
         import getch
@@ -16,16 +17,20 @@ def libimport():
     except:
         return False
 
+
 if not libimport():
     with spinner("Collecting Python libraries..."):
         cmd_run('pip install getch pyfiglet')
         cmd_run(f'cp -r Host/Host_libs {sys.path[2]}')
         cmd_run(f'cp -r Asterix_libs {sys.path[2]}')
-        libimport()
     success('Python libraries collected.')
 
 
-print(pfg('AsterixINSTALLER'))
+import getch
+from pyfiglet import figlet_format as pfg
+
+
+print(pfg('AsterixSETUP'))
 
 
 if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode('utf-8').strip() != 'root': fail('This program must be run as root.'); exit()
