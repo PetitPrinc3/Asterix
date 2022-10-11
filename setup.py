@@ -9,6 +9,10 @@ from Asterix_libs.prints import *
 from Asterix_libs.spinner import spinner
 
 
+def cmd_run(cmd):
+    if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0: fail('Process failed. This is critical.'); print(cmd); fail("Exiting now."); exit()
+
+
 def libimport():
     try:
         import getch
@@ -45,10 +49,6 @@ def get_docker():
         subprocess.call("rm get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.call("docker version", shell=True)
     success('Docker Engine installed.')
-
-
-def cmd_run(cmd):
-    if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0: fail('Process failed. This is critical.'); print(cmd); fail("Exiting now."); exit()
 
 
 if subprocess.run('docker version', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stderr.decode('utf-8').strip() == '/bin/sh: 1: docker: not found': warning('Oops, docker is not installed. Installing now !'); get_docker()
