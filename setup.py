@@ -154,7 +154,7 @@ with spinner('Preparing Windows 10 VM Environment...'):
     cmd_run("/usr/bin/mkdir /src/win10_VM")
 
 
-input("Add copy VM files to /src/win10_VM and press Enter to resume.")
+input("Copy VM files to /src/win10_VM and press Enter to resume.")
 
 
 with spinner('Preparing Windows 10 VM Environment...'):
