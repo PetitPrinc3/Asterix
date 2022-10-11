@@ -7,7 +7,6 @@ from Asterix_libs.prints import *
 from Asterix_libs.spinner import spinner
 
 from Host_libs import usb_detection as ud
-from Host_libs.db_create import create
 
 from pyfiglet import figlet_format as pfg
 
@@ -15,8 +14,6 @@ from pyfiglet import figlet_format as pfg
 print(pfg('Asterix'))
 
 subprocess.run('rm -r /var/lib/docker/volumes/InputFiles/_data/* /var/lib/docker/volumes/OutputFiles/_data/* /var/lib/docker/volumes/DataShare/_data/*', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-
-create()
 
 subprocess.run('/usr/bin/sudo -u root /usr/bin/python /src/Host/db_create.py', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
