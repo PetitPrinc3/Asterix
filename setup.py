@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import subprocess
+import getch
 import sys
 import os
 
@@ -167,25 +168,11 @@ with spinner("Setting up Cron Jobs..."):
     cmd_run("/usr/bin/crontab Host/cron_jobs")
 success("Cron Jobs set up.")
 
+
 with spinner("Adding sudoers rules..."):
-    with open("Host/sudoers", "r") as newrules:
-        with open("/etc/sudoers", "r+") as rules:
-
-            existingrules = rules.readlines()
-
-            while True:
-                newrule = newrules.readline()
-                
-                if not newrule:
-                    break
-
-                if newrule not in existingrules:
-                    rules.write(newrule)
-                    warning('Rule already exists !')
-                
-                if newrule != "\n":
-                    print("RULE: " + newrule)
-
+    cmd_run("/usr/bin/cp Host/010_asterix-nopasswd /etc/sudoers.d/010_asterix-nopasswd")
+subprocess.Popen("visudo -c", shell = True)
+success("Added sudoers rules.")
 
 
 # with spinner('Creating system disk image...'):

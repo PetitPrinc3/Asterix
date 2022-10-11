@@ -1,4 +1,4 @@
-@reboot vm_runner /src/win10/run.sh
+@reboot vm_runner /src/win10/run.sh &
 
 @reboot docker_runner /usr/bin/docker start frontend
 @reboot docker_runner /usr/bin/docker start backend
