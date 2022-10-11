@@ -7,8 +7,12 @@ from Asterix_libs.prints import *
 from Asterix_libs.spinner import spinner
 
 from Host_libs import usb_detection as ud
-
 from Host_libs.db_create import create
+
+from pyfiglet import figlet_format as pfg
+
+
+print(pfg('Asterix'))
 
 subprocess.run('rm -r /var/lib/docker/volumes/InputFiles/_data/* /var/lib/docker/volumes/OutputFiles/_data/* /var/lib/docker/volumes/DataShare/_data/*', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
@@ -16,22 +20,19 @@ create()
 
 subprocess.run('cp USB_ID.db /var/lib/docker/volumes/DataShare/_data/', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-subprocess.run("/usr/bin/su - docker_runner -c '/usr/bin/docker exec -w /usr/share/USBHandler -it frontend python3 main.py'", shell = True)
-subprocess.run("""/usr/bin/su - root -c '/usr/bin/systemctl stop inppartmnt@$(udevadm info -q all -a /dev/USBInputPart | grep KERNEL | head -n 1 | cut -d '"' -f 2).service'""" , shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
-subprocess.run("""/usr/bin/su - root -c '/usr/bin/systemctl stop inpdiskmnt@$(udevadm info -q all -a /dev/USBInputDisk | grep KERNEL | head -n 1 | cut -d '"' -f 2).service'""" , shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
-info('You can now remove the USB input drive.')
+subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/USBHandler -it frontend python3 main.py", shell = True)
 
+subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/PythonHandler -it brain python3 main.py", shell = True)
 
-subprocess.run("/usr/bin/su - docker_runner -c '/usr/bin/docker exec -w /usr/share/PythonHandler -it brain python3 main.py'", shell = True)
+subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/PyrateAutomation -it frontend python3 main.py", shell = True)
 
-subprocess.run("/usr/bin/su - docker_runner -c '/usr/bin/docker exec -w /usr/share/PyrateAutomation -it frontend python3 main.py'", shell = True)
+subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/PythonHandler -it brain python3 gen_res.py", shell = True)
 
-subprocess.run("/usr/bin/su - docker_runner -c '/usr/bin/docker exec -w /usr/share/PythonHandler -it brain python3 gen_res.py'", shell = True)
+subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/USBHandler -it backend python3 main.py", shell = True)
 
-subprocess.run("/usr/bin/su - docker_runner -c '/usr/bin/docker exec -w /usr/share/USBHandler -it backend python3 main.py'", shell = True)
-subprocess.run("""/usr/bin/su - root -c '/usr/bin/systemctl stop outpartmnt@$(udevadm info -q all -a /dev/USBOutputPart | grep KERNEL | head -n 1 | cut -d '"' -f 2).service'""" , shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
-subprocess.run("""/usr/bin/su - root -c '/usr/bin/systemctl stop outdiskmnt@$(udevadm info -q all -a /dev/USBOutputDisk | grep KERNEL | head -n 1 | cut -d '"' -f 2).service'""" , shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
-info('You can now remove the USB output drive.')
+subprocess.run("/usr/bin/sudo -u root /bin/bash /src/Host/eject_devices.sh")
+
+info('You can now remove both USB drives.')
 
 with spinner('Waiting for drive removal...'):
     ud.rem_wait(["/dev/USBInputDisk", "/dev/USBInputPart", "/dev/USBOutputDisk", "/dev/USBOutputPart"])

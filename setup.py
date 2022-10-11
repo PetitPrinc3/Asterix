@@ -8,6 +8,25 @@ from re import sub
 from Asterix_libs.prints import *
 from Asterix_libs.spinner import spinner
 
+def libimport():
+    try:
+        import getch
+        from pyfiglet import figlet_format as pfg
+        return True
+    except:
+        return False
+
+if not libimport():
+    with spinner("Collecting Python libraries..."):
+        cmd_run('pip install getch pyfiglet')
+        cmd_run(f'cp -r Host/Host_libs {sys.path[2]}')
+        cmd_run(f'cp -r Asterix_libs {sys.path[2]}')
+        libimport()
+    success('Python libraries collected.')
+
+
+print(pfg('AsterixINSTALLER'))
+
 
 if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode('utf-8').strip() != 'root': fail('This program must be run as root.'); exit()
 
@@ -29,9 +48,6 @@ def cmd_run(cmd):
 
 if subprocess.run('docker version', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stderr.decode('utf-8').strip() == '/bin/sh: 1: docker: not found': warning('Oops, docker is not installed. Installing now !'); get_docker()
 
-cmd_run('pip install getch')
-
-import getch
 
 if subprocess.Popen('qemu-system-aarch64 -machine help', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0: 
     with spinner('Collecting QEMU KVM...'):
@@ -82,6 +98,11 @@ with spinner('Collecting PyRATE...'):
 success("Pyrate collected.")
 
 
+info('Preparing Host software...')
+cmd_run('/usr/bin/mkdir -p /src/Host')
+cmd_run('/usr/bin/cp Host/eject_devices.sh /src/Host/eject_devices.sh')
+
+
 with spinner('Adding mounting service...'):
     subprocess.run('rm -r /usr/share/Asterix', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     cmd_run('mkdir -p /usr/share/Asterix/Mounters')
@@ -100,6 +121,9 @@ with spinner('Adding UDEV rules...'):
     info('Triggering rules...     ')
     cmd_run("udevadm trigger")
 success("UDEV rules added.")
+
+
+success('Host software retrieved')
 
 
 with spinner("Building Frontend container. This may take some time..."):
@@ -148,14 +172,7 @@ with spinner("Fixing user permissions..."):
     cmd_run("/usr/bin/chmod -R 755 /opt/docker_runner")
 
 
-with spinner("Finishing..."):
-    cmd_run(f'cp -r Host/Host_libs {sys.path[2]}')
-    cmd_run(f'cp -r Asterix_libs {sys.path[2]}')
-
-
-with spinner('Preparing Windows 10 VM Environment...'):
-    cmd_run("/usr/bin/mkdir /src/win10_VM")
-
+info("Seting up AC-Center environment...")
 
 print("Copy VM files to /src/win10_VM and press any key to resume.")
 getch.getch()
