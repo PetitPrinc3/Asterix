@@ -26,4 +26,4 @@ if __name__ == "__main__":
 
         import subprocess
 
-        subprocess.run('/usr/bin/cp USB_ID.db /var/lib/docker/volumes/DataShare/_data/')
+        subprocess.run('/usr/bin/cp USB_ID.db /var/lib/docker/volumes/DataShare/_data/', shell = True)

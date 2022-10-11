@@ -59,6 +59,7 @@ if len(ac_res[1]) > 0:
 
         elif choice == 'n':
             san = False
+            print()
             break
 
         else:
