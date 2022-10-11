@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import subprocess
-import getch
 import sys
 import os
 
@@ -30,6 +29,9 @@ def cmd_run(cmd):
 
 if subprocess.run('docker version', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stderr.decode('utf-8').strip() == '/bin/sh: 1: docker: not found': warning('Oops, docker is not installed. Installing now !'); get_docker()
 
+cmd_run('pip install getch')
+
+import getch
 
 if subprocess.Popen('qemu-system-aarch64 -machine help', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0: 
     with spinner('Collecting QEMU KVM...'):
@@ -155,8 +157,8 @@ with spinner('Preparing Windows 10 VM Environment...'):
     cmd_run("/usr/bin/mkdir /src/win10_VM")
 
 
-input("Copy VM files to /src/win10_VM and press Enter to resume.")
-
+print("Copy VM files to /src/win10_VM and press any key to resume.")
+getch.getch()
 
 with spinner('Preparing Windows 10 VM Environment...'):
     cmd_run("/usr/bin/chown -R vm_runner:vm_runner /src/win10_VM")
