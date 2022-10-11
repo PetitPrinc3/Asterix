@@ -66,6 +66,7 @@ do_unmount()
         echo "Warning: ${DEVICE} is not mounted"
     else
         /bin/umount -l ${DEVICE}
+        /bin/umount $MNTPOINT
         echo "**** Unmounted ${DEVICE}"
     fi
     
