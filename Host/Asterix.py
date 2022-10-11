@@ -5,6 +5,7 @@ from datetime import datetime
 
 from Asterix_libs.prints import *
 from Asterix_libs.spinner import spinner
+from Asterix_libs.log import log
 
 from Host_libs import usb_detection as ud
 

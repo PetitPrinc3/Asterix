@@ -10,7 +10,15 @@ from datetime import datetime
 ################################################################################
 
 
-def log(data):
+def init_log():
+
+    time = datetime.now().strftime("%d-%m-%Y_%H:%M:%S")
+    name = f'[{time}]-logfile.txt'
+
+    with open(name, "w") as logfile:
+        logfile.write(f'[{time}]Initialized log file.')
+
+def log(data):  
 
     time = datetime.now().strftime("%d/%m/%Y-%H:%M:%S")
 
