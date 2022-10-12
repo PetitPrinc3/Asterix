@@ -1,0 +1,37 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', sans-serif;
+	scroll-behavior: smooth;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: auto;
+	overflow-x: hidden;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	/* IE and Edge */
+	background: linear-gradient(90deg, rgba(154, 201, 221, 1) 0%, rgba(38, 39, 43, 1) 50%, rgba(204, 161, 154, 1) 100%);
+}
+
+html::-webkit-scrollbar {
+	display: none;
+	/*Chrome*/
+}
+
+body::-webkit-scrollbar {
+	display: none;
+	/*Chrome*/
+}
+
+p {
+	color: white;
+	text-align: center;
+	font-size: 2.5ch;
+	margin: 0 auto;
+}

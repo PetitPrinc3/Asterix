@@ -1,0 +1,211 @@
+/*Logo*/
+/*Front*/
+.front-logo {
+	display: block;
+	text-align: center;
+	height: 100vh;
+	overflow: hidden;
+	/*div:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+  }*/
+}
+
+.wrapper {
+	overflow: hidden;
+	display: table;
+	height: 100vh;
+	width: 100%;
+	left: 0;
+	top: 0;
+}
+
+#scene {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+}
+
+#scene .layer {
+	position: absolute;
+	display: block;
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	pointer-events: none;
+}
+
+#scene .layer.clickable {
+	pointer-events: all;
+}
+
+#scene .layer h1 {
+	cursor: default;
+  	padding-top: 2%;
+  	text-align: center;
+  	font-size: 15vw;
+  	color: white;
+  	-webkit-text-stroke: 2px black;
+  	font-family: 'Luckiest Guy', cursive;
+}
+
+.descriptor {
+	display: grid;
+	padding-top: 90vh;
+	font-family: 'Roboto';
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.descriptor b {
+	color: white;
+	transition: 0.4s;
+}
+
+.front-logo .main_logo{
+  transition: 0.5s;
+  margin-top : 50px;
+}
+
+.front-logo .main_logo:hover {
+  cursor: pointer;
+  -webkit-transform: scale(1.15);
+          transform: scale(1.15);
+}
+
+.background {
+	background-image: url("https://g4vr0ch3.github.io/Asterix/Images/background.png");
+	background-size: cover;
+	position: absolute;
+	bottom: -10px;
+	width: 110%;
+	left: -5%;
+	right: -5%;
+	top: -5%;
+}
+
+/*Logo*/
+/*Front*/
+.front-logo {
+	position: absolute;
+	width: 100%;
+	top: 35%;
+	/*div:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}*/
+}
+
+@media screen and (max-width: 850px) {
+	.front-logo {
+		top: 35%;
+	}
+}
+
+.front-logo img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 28%;
+	height: auto;
+	min-width: 200px;
+	-webkit-transition: -webkit-transform 0.2s;
+	transition: -webkit-transform 0.2s;
+	transition: transform 0.2s;
+	transition: transform 0.2s, -webkit-transform 0.2s;
+	opacity: 0.9;
+}
+
+.front-logo div {
+	-webkit-transition: -webkit-transform 0.2s;
+	transition: -webkit-transform 0.2s;
+	transition: transform 0.2s;
+	transition: transform 0.2s, -webkit-transform 0.2s;
+}
+
+.front-logo h1 {
+	cursor: default;
+	padding-top: 2%;
+	text-align: center;
+	font-size: 25vh;
+	color: white;
+	-webkit-text-stroke: 2px black;
+	font-family: 'Luckiest Guy', cursive;
+}
+
+@media screen and (max-width: 1200px) {
+	.front-logo h1 {
+		font-size: 12rem;
+	}
+}
+
+.front-logo h2 {
+	font-size: 6rem;
+	font-weight: bold;
+	font-style: normal;
+	position: relative;
+	top: -1.5rem;
+	padding: 0;
+	margin: 0;
+}
+
+@media screen and (max-width: 1200px) {
+	.front-logo h2 {
+		font-size: 5rem;
+	}
+}
+
+/*Hexgrid*/
+.back-hexa {
+	opacity: 0.7;
+	position: absolute;
+	top: 13%;
+	width: 45%;
+	height: auto;
+	z-index: auto;
+  }
+  
+  @media screen and (max-width: 850px) {
+	.back-hexa {
+	  display: none;
+	}
+  }
+  
+  .back-hexa p {
+	top: -3em;
+	width: 100%;
+	position: absolute;
+	margin: 1em auto;
+	padding: 0 10px;
+  }
+  
+  @media screen and (max-width: 1200px) {
+	.back-hexa p {
+	  font-size: 1.2rem;
+	}
+  }
+  
+  .back-hexa img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: auto;
+	-webkit-transition: opacity 1s ease-in-out;
+	transition: opacity 1s ease-in-out;
+  }
+  
+  .hexa-left {
+	left: 0;
+  }
+  
+  .hexa-right {
+	right: 0;
+  }
+  
