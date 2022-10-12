@@ -52,15 +52,13 @@ def log(data, file="log.txt"):
 def log_from_log(local_log, global_log):
 
     local_log_entries = open(local_log, "r").read()
+    global_log_entries = open(global_log, "r").read()
 
-    with open(global_log, "r+") as gl:
+    with open(global_log, "w") as gl:
 
-        existing = gl.read()
-
-        entries = existing + local_log_entries
+        entries = global_log_entries + '\n' + local_log_entries
 
         gl.write(entries)
-
 
 
 def export_log(fpath):
