@@ -20,7 +20,6 @@ def init_log(path=""):
 
     with open(name, "w") as logfile:
         logfile.write(f'[{time}] - Initialized log file.')
-        print(f'[{time}] - Initialized log file.')
 
     return name
 

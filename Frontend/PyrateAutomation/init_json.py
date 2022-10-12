@@ -5,7 +5,7 @@
 
 
 import json
-from Asterix_libs import log
+from Asterix_libs.log import *
 
 
 ################################################################################
@@ -19,16 +19,16 @@ def init_res(path):
 
     with open(path, "w") as results:
 
-        log.log(f'Opened {path}.')
+        log(f'Opened {path}.', "frontPYRATElog.txt")
 
         results.seek(0)
 
         js = json.dumps(ctnt, indent=4)
 
         results.write(js)
-        log.log(f'Reset {path}.')
+        log(f'Reset {path}.', "frontPYRATElog.txt")
 
-    log.log(f'Closed {path}.')
+    log(f'Closed {path}.', "frontPYRATElog.txt")
 
 
 ################################################################################

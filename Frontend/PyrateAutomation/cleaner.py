@@ -9,6 +9,7 @@ import os
 
 ################################################################################
 
+
 def clean_fold(path):
     for f in os.listdir(path):
         os.system(f'rm {path}/{f}')

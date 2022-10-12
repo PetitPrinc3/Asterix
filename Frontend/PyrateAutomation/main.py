@@ -13,12 +13,14 @@ import fetch_results as fr
 import cleaner as cl
 
 from Asterix_libs.prints import *
-from Asterix_libs import log
+from Asterix_libs.log import *
 from datetime import datetime
 
 
 ################################################################################
 
+
+reset_log("frontPYRATElog.txt")
 
 subprocess.call("/bin/cp /mnt/DataShare/dirty.json inputs.json", shell = True)
 
@@ -30,7 +32,7 @@ with open("inputs.json", "r") as inp:
 
 start = datetime.now()
 
-log.log('BEGINING OF SANITIZING PROCESS.')
+log('BEGINING OF SANITIZING PROCESS.', "frontPYRATElog.txt")
 
 print()
 
@@ -42,10 +44,9 @@ print()
 
 info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Cleaning Pyrate folders.')
 cl.clean_fold('Pyrate/Inputs')
-log.log('Cleaned Pyrate/Inputs')
+log('Cleaned Pyrate/Inputs', "frontPYRATElog.txt")
 cl.clean_fold('Pyrate/Outputs')
-log.log('Cleaned Pyrate/Outputs')
-
+log('Cleaned Pyrate/Outputs', "frontPYRATElog.txt")
 
 print()
 
@@ -72,7 +73,7 @@ subprocess.call('/bin/cp default.json san_clean.json', shell=True, stdout=subpro
 
 with open('san_clean.json', 'r+') as outp:
 
-    log.log('Opened san_clean.json')
+    log('Opened san_clean.json', "frontPYRATElog.txt")
 
     files = []
 
@@ -83,6 +84,7 @@ with open('san_clean.json', 'r+') as outp:
             subprocess.call(f'/bin/cp Pyrate/{suc["OUTPATH"]} /mnt/Sanitized/{suc["FileName"]}', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
             success(f'File {suc["FileName"]} was sanitized succesfully.')
+            log(f'File {suc["FileName"]} was sanitized succesfully.', "frontPYRATElog.txt")
             
             file_ = {
                 "Date": suc["Date"],
@@ -102,7 +104,7 @@ with open('san_clean.json', 'r+') as outp:
 
         outp.write(js)
 
-log.log('Closed san_clean.json')
+log('Closed san_clean.json', "frontPYRATElog.txt")
 
 print()
 
@@ -118,7 +120,9 @@ subprocess.call('/bin/cp san_clean.json /mnt/DataShare/san_clean.json', shell=Tr
 print()
 
 info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Exhausted in ' + str(elapsed))
-log.log('END OF SANITIZING PROCESS.')
+log('END OF SANITIZING PROCESS.', "frontPYRATElog.txt")
+
+export_log("frontPYRATElog.txt")
 
 
 ################################################################################

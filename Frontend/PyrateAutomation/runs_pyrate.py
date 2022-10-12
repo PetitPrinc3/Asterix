@@ -8,7 +8,7 @@ import os
 import json
 import subprocess
 from Asterix_libs import hash
-from Asterix_libs import log
+from Asterix_libs.log import *
 
 from Asterix_libs.prints import *
 
@@ -22,7 +22,7 @@ def getlist(json_file):
 
     with open(json_file, 'r') as targets:
 
-        log.log(f'Opened {json_file}')
+        log(f'Opened {json_file}', "frontPYRATElog.txt")
         js = json.load(targets)
 
         for target in js['ind_results']:
@@ -37,8 +37,8 @@ def getlist(json_file):
 
             _.append([f_name, f_path, f_hash])
 
-    log.log(f'Closed {json_file}')
-    log.log(f'Retrieved file lst : {_}')
+    log(f'Closed {json_file}', "frontPYRATElog.txt")
+    log(f'Retrieved file lst : {_}', "frontPYRATElog.txt")
 
     return _
 
@@ -52,7 +52,7 @@ def move(f, folder_out):
 
     for file in f:
         subprocess.call(f'cp {file[1]} {folder_out}/{file[0]}', shell = True)
-        log.log(f'System call : "cp {file[1]} {folder_out}/{file[0]}"')
+        log(f'System call : "cp {file[1]} {folder_out}/{file[0]}"', "frontPYRATElog.txt")
         file[1] = f'{folder_out}/{file[0]}'
 
     for file in f:
@@ -70,7 +70,7 @@ def move(f, folder_out):
 
         if stat[res] == True: f_.append(f[res])
 
-    log.log(f'Got {f_}')
+    log(f'Got {f_}', "frontPYRATElog.txt")
 
     return f_
 
@@ -82,7 +82,7 @@ def runs_(f):
 
     for file in f:
         subprocess.call(f'cd Pyrate; ./pyrate.py -b -f {file[1].split("Pyrate/")[-1]}', shell = True)
-        log.log(f'System call : "cd Pyrate; ./pyrate.py -b -f {file[1].split("Pyrate/")[-1]}"')
+        log(f'System call : "cd Pyrate; ./pyrate.py -b -f {file[1].split("Pyrate/")[-1]}"', "frontPYRATElog.txt")
 
 
 ################################################################################
