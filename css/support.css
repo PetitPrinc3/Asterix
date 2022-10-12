@@ -1,12 +1,15 @@
+body {
+  position: absolute;
+	height: 110vh;
+  overflow: scroll;
+}
+
 .support {
   background-image: url("../assets/images/background.png");
   background-size: cover;
-	position: absolute;
-	bottom: -10px;
-	width: 110%;
-	left: -5%;
-	right: -5%;
-	top: -5%;
+  background-repeat: no-repeat;
+	max-height: 100vh;
+  overflow: scroll;
 }
 
 .overlay {
