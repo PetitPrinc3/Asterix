@@ -13,13 +13,14 @@ from datetime import datetime
 
 def init_log(path=""):
 
-    if path[-1] != "/": path += "/"
+    if len(path) > 0 and path[-1] != "/": path += "/"
 
     time = datetime.now().strftime("%d-%m-%Y_%H:%M:%S")
     name = path + f'[{time}]-logfile.txt'
 
     with open(name, "w") as logfile:
         logfile.write(f'[{time}] - Initialized log file.')
+        print(f'[{time}] - Initialized log file.')
 
     return name
 
@@ -40,7 +41,7 @@ def log(data, file="log.txt"):
 
         logs = l_file.read()
 
-        logs = line + '\n' + logs
+        logs = logs + '\n' + line
 
         l_file.seek(0)
 
@@ -61,6 +62,7 @@ def log_from_log(local_log, global_log):
 
 
 def export_log(fpath):
-    subprocess.call(f'mv {fpath} /mnt/DataShare/', shell=True)
+    subprocess.call(f'/usr/bin/mv {fpath} /mnt/DataShare/', shell=True)
+    subprocess.call(f'/usr/bin/chmod a+r /mnt/DataShare/{fpath.split("/")[-1]}', shell=True)
 
 ################################################################################

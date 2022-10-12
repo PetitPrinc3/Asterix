@@ -1,7 +1,4 @@
 import subprocess
-import json
-
-from datetime import datetime
 
 from Asterix_libs.prints import *
 from Asterix_libs.spinner import spinner
@@ -11,9 +8,9 @@ from Host_libs import usb_detection as ud
 
 from pyfiglet import figlet_format as pfg
 
-logfile = init_log()
-
 print(pfg('Asterix'))
+
+logfile = init_log()
 
 log("Asterix started.", logfile)
 

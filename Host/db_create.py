@@ -3,7 +3,7 @@ import sqlite3
 from Asterix_libs.log import *
 
 def create():
-        dblogfile = init_log()
+        dblogfile = reset_log("dblog.txt")
         try:
                 conn=sqlite3.connect('USB_ID.db')
                 cur= conn.cursor()
@@ -29,7 +29,6 @@ def create():
                 print('Database initialization failed')
                 log('Database initialization failed with error : ' + str(error), dblogfile)
 
-        return dblogfile
 
 if __name__ == "__main__":
 
@@ -39,4 +38,4 @@ if __name__ == "__main__":
 
         subprocess.run('/usr/bin/cp USB_ID.db /var/lib/docker/volumes/DataShare/_data/', shell = True)
 
-        subprocess.run(f'/usr/bin/mv {dblogfile} /opt/asterix/dblog.txt && chown asterix:asterix /opt/asterix/dblog.txt && chmod 600 /opt/asterix/dblog.txt', shell = True)
+        subprocess.run(f'/usr/bin/chown asterix:asterix /opt/asterix/dblog.txt && /usr/bin/chmod 600 /opt/asterix/dblog.txt', shell = True)
