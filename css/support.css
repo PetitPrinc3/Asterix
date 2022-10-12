@@ -2,11 +2,11 @@
   background-image: url("../assets/images/background.png");
   background-size: cover;
 	position: absolute;
-	bottom: -10px;
+	bottom: -10vh;
 	width: 110%;
 	left: -5%;
 	right: -5%;
-	top: -5%;
+	top: 10vh;
 }
 
 .overlay {
