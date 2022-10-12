@@ -16,7 +16,6 @@ body {
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 	/* IE and Edge */
-	background: linear-gradient(90deg, rgba(154, 201, 221, 1) 0%, rgba(38, 39, 43, 1) 50%, rgba(204, 161, 154, 1) 100%);
 }
 
 html::-webkit-scrollbar {
