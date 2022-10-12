@@ -29,6 +29,7 @@ def reset_log(file="log.txt"):
     time = datetime.now().strftime("%d-%m-%Y_%H:%M:%S")
     with open(file, "w") as logfile:
         logfile.write(f'[{time}] - Initialized log file.')
+    return file
 
 
 def log(data, file="log.txt"):  
@@ -50,19 +51,16 @@ def log(data, file="log.txt"):
 
 def log_from_log(local_log, global_log):
 
-    local_log_entries = open(local_log, "r").readlines()
+    local_log_entries = open(local_log, "r").read()
 
     with open(global_log, "r+") as gl:
 
-        global_log_entries = gl.readlines() + local_log_entries
-
-        gl.seek(0)
-
-        gl.writelines(global_log_entries)
+        gl.write(local_log_entries)
 
 
 def export_log(fpath):
     subprocess.call(f'/usr/bin/mv {fpath} /mnt/DataShare/', shell=True)
-    subprocess.call(f'/usr/bin/chmod a+r /mnt/DataShare/{fpath.split("/")[-1]}', shell=True)
+    subprocess.call(f'/usr/bin/chmod +r /mnt/DataShare/{fpath.split("/")[-1]}', shell=True)
+
 
 ################################################################################

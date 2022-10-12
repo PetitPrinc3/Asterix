@@ -178,6 +178,15 @@ with spinner("Fixing user permissions..."):
     cmd_run("/usr/bin/chmod -R 755 /opt/asterix")
     cmd_run("/usr/bin/chown -R docker_runner:docker_runner /opt/docker_runner")
     cmd_run("/usr/bin/chmod -R 755 /opt/docker_runner")
+    cmd_run("/usr/bin/chmod -R +r /var/lib/docker/volumes/DataShare/_data")
+    cmd_run("chown root:asterix /var/lib/docker")
+    cmd_run("chown root:asterix /var/lib/docker/volumes")
+    cmd_run("chown root:asterix /var/lib/docker/volumes/DataShare")
+    cmd_run("chown root:asterix /var/lib/docker/volumes/DataShare/_data")
+    cmd_run("/usr/bin/chmod g=rx /var/lib/docker")
+    cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes")
+    cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/DataShare")
+    cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/DataShare/_data")
 
 
 info("Seting up AC-Center environment...")

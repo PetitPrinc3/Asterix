@@ -18,7 +18,7 @@ subprocess.run('rm -r /var/lib/docker/volumes/InputFiles/_data/* /var/lib/docker
 
 log("Cleaned shared folders.", logfile)
 
-subprocess.run('/usr/bin/sudo -u root /usr/bin/python /src/Host/db_create.py', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+subprocess.run('/usr/bin/sudo -u root /usr/bin/python /src/Host/db_create.py', shell=True)
 
 log_from_log('/opt/asterix/dblog.txt', logfile)
 
