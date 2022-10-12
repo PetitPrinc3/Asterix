@@ -4,14 +4,19 @@ import subprocess
 from ffh import ffh
 
 from Asterix_libs.prints import *
+from Asterix_libs.log import *
 
 from PywavaAutomation import pywavaautomation
+
+reset_log("brainMAINlog.txt")
 
 subprocess.call("/bin/cp /mnt/DataShare/user_inp.json user_inp.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
 ac_res = pywavaautomation.ac_run()
 
 subprocess.call("/bin/cp default.json clean.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+
+log_from_log("PywavaAutomation/pywavalog.txt", "brainMAINlog.txt")
 
 print()
 
@@ -23,7 +28,7 @@ if len(ac_res[0]) > 0:
 
         for suc in ac_res[0]:
             success(f'File {suc["PATH"]} is clean.')
-            
+            log(f'File {suc["PATH"]} is clean.', "brainMAINlog.txt")
             file = ffh("user_inp.json", suc["HASH"])
             
             files.append(file)
@@ -46,6 +51,7 @@ if len(ac_res[1]) > 0:
 
     for fai in ac_res[1]:
         fail(f'File {fai["PATH"]} were flagged as malicious.')
+        log(f'File {fai["PATH"]} were flagged as malicious.', "brainMAINlog.txt")
 
     print()
     print("Do you wish to try and sanitize the files ? (Y/n)")
@@ -55,10 +61,12 @@ if len(ac_res[1]) > 0:
 
         if choice == 'y':
             san = True
+            log(f'Chose PYRATE Sanitization', "brainMAINlog.txt")
             break
 
         elif choice == 'n':
             san = False
+            log(f'Chose NO Sanitization', "brainMAINlog.txt")
             print()
             break
 
@@ -92,3 +100,5 @@ if san:
 
 subprocess.call("/bin/cp dirty.json /mnt/DataShare/dirty.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 subprocess.call("/bin/cp clean.json /mnt/DataShare/clean.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+
+export_log("brainMAINlog.txt")

@@ -16,6 +16,7 @@ from datetime import datetime
 from Asterix_libs.prints import *
 from Asterix_libs.spinner import spinner
 from Asterix_libs.hash import sha
+from Asterix_libs.log import *
 
 
 ################################################################################
@@ -45,12 +46,19 @@ def tab(f_lst):
         print('|'+"_"*(len(str(ct//10)) + 3) + "|" + "_"*(colsize + 2) + "|\n")
 
 def main():
+
+    reset_log("frontMAINlog.txt")
+
     inp = ud.inp_wait(["/mnt/USBInputDevice/USBInputPart", "/mnt/USBInputDevice/USBInputDisk", "/mnt/DataShare/BadUSBInput"])
 
+    log("USB Input detected.","frontMAINlog.txt")
+
     if inp is None : fail('Input detection failed.'); exit()
-    if inp == "/mnt/DataShare/BadUSBInput": fail("The input drive is not a valid USB drive."); subprocess.call("rm /mnt/DataShare/BadUSBInput", shell=True); fail('This incident will be reported.'); exit()
+    if inp == "/mnt/DataShare/BadUSBInput": fail("The input drive is not a valid USB drive."); subprocess.call("rm /mnt/DataShare/BadUSBInput", shell=True); fail('This incident will be reported.'); log("BAD USB INPUT IDENTIFIED.","frontMAINlog.txt"); export_log("frontMAINlog.txt"); exit()
 
     success('::: USB device detected :::          ')
+
+    log("Mass storage unit detected.","frontMAINlog.txt")
 
     tmout = 0
 
@@ -70,7 +78,9 @@ def main():
     
     tab(f_lst)
     
-    if f_lst == []: warning("No file available on input drive. Exiting."); subprocess.call("cp default.json /mnt/DataShare/user_inp.json", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL); exit()
+    log("The following files were found : " + str(f_lst),"frontMAINlog.txt")
+
+    if f_lst == []: warning("No file available on input drive. Exiting."); subprocess.call("cp default.json /mnt/DataShare/user_inp.json", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL); export_log("frontMAINlog.txt"); exit()
     
     print("Select files by ID (Separate your choice with ';'. e.g '1;2;3') :")
     
@@ -82,6 +92,7 @@ def main():
 
         except KeyboardInterrupt:
             fail(KeyboardInterrupt)
+            export_log("frontMAINlog.txt")
             exit()
 
         except:
@@ -97,6 +108,9 @@ def main():
     
     f_res = cp.xcopy("list_result.json", f_trt, "/mnt/InputFiles/")
 
+    log("The following files were selected : " + str(f_trt), "frontMAINlog.txt")
+    log("Validated files : " + str(f_res), "frontMAINlog.txt")
+
     print()
 
     print('Do you wish to perform a fast scan or a complete scan ? (f/c) :')
@@ -107,9 +121,11 @@ def main():
             choice = str(input('>>> '))[0].lower()
             if choice == 'f':
                 stype = 'FASTSCAN'
+                log("Scan type chosen : FAST", "frontMAINlog.txt")
                 break
             elif choice == 'c':
                 stype = 'COMPLETESCAN'
+                log("Scan type chosen : COMPLETE", "frontMAINlog.txt")
                 break
             else:
                 fail('Choice failed, try again.')
@@ -137,13 +153,18 @@ def main():
             }
 
             f_data["ind_results"].append(ind_result)
+    
+            log("File " + str(file) + " : " + str(ind_result), "frontMAINlog.txt")
 
         usr_fl.seek(0)
         js = json.dumps(f_data, indent=4)
         usr_fl.write(js)
 
+
     print("\nAvailable Files :")
     tab(f_res)
+
+    
 
 if __name__ == "__main__":
     main()

@@ -15,7 +15,7 @@ import PywavaAutomation.runs_pywava as rp
 import PywavaAutomation.fetch_results as fr
 
 
-from Asterix_libs import log
+from Asterix_libs.log import *
 from datetime import datetime
 from Asterix_libs.prints import *
 from Asterix_libs.spinner import spinner
@@ -32,14 +32,15 @@ password = 'ac-center'
 
 def ac_run():
 
-    start = datetime.now()
+    reset_log("pywalvalog.txt")
 
+    start = datetime.now()
 
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
 
-    log.log('BEGINING OF ANALYSIS PROCESS.')
+    log('BEGINING OF ANALYSIS PROCESS.', "pywavalog.txt")
 
 
     with spinner('Establishing connection with AC-Center...'):
@@ -54,11 +55,16 @@ def ac_run():
                 transport.send_ignore()
             except Exception as _e:
                 fail('SSH Connection failed.')
+                log('SSH Connection with AC-CENTER failed.', "pywavalog.txt")
                 sys.exit(1)
         else:
             fail('SSH Connection failed.')
+            log('SSH Connection with AC-CENTER failed.', "pywavalog.txt")
+            sys.exit(1)
+
             
     success('Connected to AC-Center.')
+    log('SSH Connection with AC-CENTER established.', "pywavalog.txt")
 
 
     print()
@@ -67,6 +73,7 @@ def ac_run():
     # Initialize environment
     info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Initializing environment.')
     sftp = client.open_sftp()
+    log('SFTP Connection with AC-CENTER established. (SCANRESULTSINIT)', "pywavalog.txt")
     sftp.put("default.json", '\\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\scan_results.json')
 
     print()
@@ -75,6 +82,7 @@ def ac_run():
     info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Cleaning Pywava folders.')
 
     channel = transport.open_session()
+    log('RCE Connection with AC-CENTER established.', "pywavalog.txt")
     channel.get_pty(width=int(c))
     channel.exec_command('python \\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\clean_inputs_fold.py')
 
@@ -83,6 +91,7 @@ def ac_run():
             if channel.exit_status_ready():
                 break
 
+    log('Cleaned Pywava input folder.', "pywavalog.txt")
 
     print()
 
@@ -98,6 +107,8 @@ def ac_run():
     fl = False
     ind_results = []
 
+    log('Transfering files to AC Center.', "pywavalog.txt")
+
     for file in js_data:
 
         inp = file["FileName"]
@@ -112,9 +123,12 @@ def ac_run():
                 ind_results.append(file)
 
                 success(f'File {inp} was successfully transfered to AC-Center')
+                log(f'File {inp} was successfully transfered to AC-Center', "pywavalog.txt")
             except:
                 fl = True
                 fl(f'File {inp} could not be transfered.')
+                log(f'File {inp} could not be transfered.', "pywavalog.txt")
+
 
     if fl == True: warning('Some files were not transfered.')
     else: info('All selected files were transfered')
@@ -133,22 +147,27 @@ def ac_run():
             inp.write(js_inp)
 
         success('Inputs initialized.')
+        log('Inputs initialized.', "pywavalog.txt")
 
     except:
         fail("Failed to write transfer results.")
+        log('Failed to write transfer results.', "pywavalog.txt")
 
     print()
 
     # Run PyWAVA
     info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Attempting analyses.')
 
+    log('Runing analyses.', "pywavalog.txt")
     rp.runs_(transport, "inputs.json", c)
+    log('Done with analyses.', "pywavalog.txt")
 
     print()
     
     # Get results
     info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Fetching results')
 
+    log('Retrieving analyses results.', "pywavalog.txt")
     sftp.get('\\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\scan_results.json', 'scan_results.json')
 
     res = fr.get_stats('scan_results.json')
