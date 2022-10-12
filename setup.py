@@ -84,21 +84,21 @@ with spinner('Preparing Frontend software...'):
     cmd_run("/usr/bin/cp -r Frontend /src/Frontend")
     cmd_run("/usr/bin/cp -r Asterix_libs /src/Frontend")
     cmd_run("/usr/bin/chown -R docker_runner:docker /src/Frontend")
-success("Frontend software prepared.")
+success("Frontend software ready.")
 
 
 with spinner('Preparing Backend software...'):
     cmd_run("/usr/bin/cp -r Backend /src/Backend")
     cmd_run("/usr/bin/cp -r Asterix_libs /src/Backend")
     cmd_run("/usr/bin/chown -R docker_runner:docker /src/Backend")
-success("Backend software retrieved.")
+success("Backend software ready.")
 
 
 with spinner('Preparing Brain software...'):
     cmd_run("/usr/bin/cp -r Brain /src/Brain")
     cmd_run("/usr/bin/cp -r Asterix_libs /src/Brain")
     cmd_run("/usr/bin/chown -R docker_runner:docker /src/Brain")
-success("Brain software retrieved.")
+success("Brain software ready.")
 
 
 with spinner('Collecting PyRATE...'):
@@ -133,7 +133,7 @@ with spinner('Adding UDEV rules...'):
 success("UDEV rules added.")
 
 
-success('Host software retrieved')
+success('Host software ready.')
 
 
 with spinner("Building Frontend container. This may take some time..."):

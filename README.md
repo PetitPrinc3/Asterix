@@ -60,6 +60,25 @@ You will also find functionnalities that have not been implemented but were part
 | :-: |
 | Detailed status |
 
+#### ANSSI Requirements compliance
+
+| ID | ANSSI mandatory requirement item | Compliance | Precision |
+| :-: | :-: | :-: | :-: |
+| FS1 | Secure transfer of file(s): the product must allow the transfer of file(s) from a removable medium while guaranteeing the harmlessness of the medium and the files (the product must be designed in such a way that its integrity and operation cannot be altered by removable media or a file). The analysis of a file must not degrade the availability of the product. | :green_circle: | 95% |
+| FS3 | Display of the list of file(s): the product must make it possible to list the content of the input media as well as that of the output for the selection of the files to be transferred and their verifications. | :green_circle: | 100% |
+| FS5 | Security analysis: the product must carry out a systematic antiviral analysis of the files to be imported. | :green_circle: | 100% |
+| FS6 | Encryption: the product stores the connection secrets of the administrators (No user authentication on the white station necessary. Authentication on the PID is carried out with the operational IS for the users. | :green_circle: | 100% |
+| FS7 | Identification, authentication and access control: the product identifies and authenticates the administrators allowing to control the resources according to the rights of the latter. | :green_circle: | 100% |
+| FS8 | Software integrity: the product makes it possible to update the software that constitutes it (operating system and specific software(s)). | :red_cirlce: | 0% |
+| FS9 | Integrity of event logs: the product reports all operations performed by users and by itself (excluding file(s) transfer). | :orange_circle: | 30% |
+| FS10 | Protection of flows: incoming and outgoing administrative flows of the product must be secured. | :yellow_circle: | 50% - Unchecked |
+| FS11 | Partitioning: the business functions (administration, transfer, analysis, etc.) of the product are partitioned in order to limit remote control and the risk of rebound. | :green_circle: | 95% |
+| FS12 | Sizing: the product must be correctly sized in order to take into account the constraints of transfer time, storage capacity, etc. | :green_circle: | 90% - Case design |
+| FS13 | Integrity of incoming and outgoing media: the product must guarantee the integrity of inserted media, whether incoming or outgoing. | :green_circle: | 100% - Unchecked |
+| FS14 | Product integrity: whatever the input or output medium, its insertion must not affect the integrity of the product. | :green_circle: | 100% - Unchecked |
+| FS15 | Filtering in the case of a PID connected to a network: The product must protect direct access to the operational network from the PID. | :red_circle: | 0% - Disconnected |
+
+
 ## Contributing to the project
 
 We will gladly accept any valuable input !  
