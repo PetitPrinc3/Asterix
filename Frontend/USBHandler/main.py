@@ -164,6 +164,8 @@ def main():
     print("\nAvailable Files :")
     tab(f_res)
 
+    export_log("frontMAINlog.txt")
+
     
 
 if __name__ == "__main__":

@@ -55,12 +55,17 @@ def log_from_log(local_log, global_log):
 
     with open(global_log, "r+") as gl:
 
-        gl.write(local_log_entries)
+        existing = gl.read()
+
+        entries = existing + local_log_entries
+
+        gl.write(entries)
+
 
 
 def export_log(fpath):
-    subprocess.call(f'/usr/bin/mv {fpath} /mnt/DataShare/', shell=True)
-    subprocess.call(f'/usr/bin/chmod +r /mnt/DataShare/{fpath.split("/")[-1]}', shell=True)
+    subprocess.call(f'/bin/mv {fpath} /mnt/DataShare/', shell=True)
+    subprocess.call(f'/bin/chmod +r /mnt/DataShare/{fpath.split("/")[-1]}', shell=True)
 
 
 ################################################################################
