@@ -3,6 +3,7 @@ asterix ALL=(docker_runner) NOPASSWD: /usr/bin/docker exec -w /usr/share/PythonH
 asterix ALL=(docker_runner) NOPASSWD: /usr/bin/docker exec -w /usr/share/PyrateAutomation -it frontend python3 main.py
 asterix ALL=(docker_runner) NOPASSWD: /usr/bin/docker exec -w /usr/share/PythonHandler -it brain python3 gen_res.py
 asterix ALL=(docker_runner) NOPASSWD: /usr/bin/docker exec -w /usr/share/USBHandler -it backend python3 main.py
+asterix ALL=(docker_runner) NOPASSWD: /usr/bin/docker exec -w /usr/share/PythonHandler -it brain /bin/bash init_clean.sh
 
 asterix ALL=(root) NOPASSWD: /bin/bash /src/Host/eject_devices.sh
 asterix ALL=(root) NOPASSWD: /usr/bin/python /src/Host/db_create.py
