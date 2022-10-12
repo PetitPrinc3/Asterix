@@ -69,7 +69,7 @@ You will also find functionnalities that have not been implemented but were part
 | FS5 | Security analysis: the product must carry out a systematic antiviral analysis of the files to be imported. | :green_circle: | 100% |
 | FS6 | Encryption: the product stores the connection secrets of the administrators (No user authentication on the white station necessary. Authentication on the PID is carried out with the operational IS for the users. | :green_circle: | 100% |
 | FS7 | Identification, authentication and access control: the product identifies and authenticates the administrators allowing to control the resources according to the rights of the latter. | :green_circle: | 100% |
-| FS8 | Software integrity: the product makes it possible to update the software that constitutes it (operating system and specific software(s)). | :red_cirlce: | 0% |
+| FS8 | Software integrity: the product makes it possible to update the software that constitutes it (operating system and specific software(s)). | :red_circle: | 0% |
 | FS9 | Integrity of event logs: the product reports all operations performed by users and by itself (excluding file(s) transfer). | :orange_circle: | 30% |
 | FS10 | Protection of flows: incoming and outgoing administrative flows of the product must be secured. | :yellow_circle: | 50% - Unchecked |
 | FS11 | Partitioning: the business functions (administration, transfer, analysis, etc.) of the product are partitioned in order to limit remote control and the risk of rebound. | :green_circle: | 95% |
