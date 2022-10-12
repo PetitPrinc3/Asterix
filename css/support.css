@@ -1,7 +1,7 @@
 body {
   position: absolute;
 	height: 110vh;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 .support {
