@@ -3,7 +3,11 @@ import json
 import subprocess
 
 from Asterix_libs.prints import *
+from Asterix_libs.log import *
 
+reset_log("brainRESlog.txt")
+
+log("Generating results.", "brainRESlog.txt")
 
 clean = json.load(open("/mnt/DataShare/clean.json", "r"))["ind_results"]
 saned = json.load(open("/mnt/DataShare/san_clean.json", "r"))["ind_results"]
@@ -27,6 +31,8 @@ with open("trt_result.json", "r+") as out:
 
         fls.append(file_)
 
+        log("Validated file : " + file_["FileName"])
+
     js_out["ind_results"] = fls
 
     out.seek(0)
@@ -36,3 +42,7 @@ with open("trt_result.json", "r+") as out:
     out.write(js_dump)
 
 subprocess.call('/bin/cp trt_result.json /mnt/DataShare/trt_result.json', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+log("End of results generation.")
+
+export_log("brainRESlog.txt")

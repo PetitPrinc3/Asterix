@@ -32,7 +32,11 @@ log_from_log('/var/lib/docker/volumes/DataShare/_data/brainMAINlog.txt', logfile
 
 subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/PyrateAutomation -it frontend python3 main.py", shell = True)
 
+log_from_log('/var/lib/docker/volumes/DataShare/_data/frontPYRATElog.txt', logfile)
+
 subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/PythonHandler -it brain python3 gen_res.py", shell = True)
+
+log_from_log('/var/lib/docker/volumes/DataShare/_data/brainRESlog.txt', logfile)
 
 subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/USBHandler -it backend python3 main.py", shell = True)
 
