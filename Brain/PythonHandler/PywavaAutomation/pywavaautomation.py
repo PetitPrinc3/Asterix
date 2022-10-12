@@ -32,8 +32,6 @@ password = 'ac-center'
 
 def ac_run():
 
-    reset_log("pywalvalog.txt")
-
     start = datetime.now()
 
     client = paramiko.SSHClient()

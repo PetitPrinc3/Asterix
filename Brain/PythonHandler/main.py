@@ -9,6 +9,8 @@ from Asterix_libs.log import *
 from PywavaAutomation import pywavaautomation
 
 reset_log("brainMAINlog.txt")
+reset_log("PywavaAutomation/pywavalog.txt")
+
 
 subprocess.call("/bin/cp /mnt/DataShare/user_inp.json user_inp.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
