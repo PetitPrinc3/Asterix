@@ -14,7 +14,7 @@ logfile = init_log()
 
 log("Asterix started.", logfile)
 
-subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/PythonHandler -it brain /bin/bash init_clean.sh", shell = True)
+subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/PythonHandler -it brain /bin/sh init_clean.sh", shell = True)
 
 log("Cleaned shared folders.", logfile)
 

@@ -1,2 +1,2 @@
-#!/bin/bash
-/usr/bin/rm -r /mnt/InputFiles/* /mnt/OutputFiles/* /mnt/DataShare/*
+#!/bin/sh
+/bin/rm -r /mnt/InputFiles/* /mnt/OutputFiles/* /mnt/DataShare/*

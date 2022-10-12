@@ -206,7 +206,7 @@ success("Cron Jobs set up.")
 
 
 with spinner("Adding sudoers rules..."):
-    cmd_run("/usr/bin/cp Host/010_asterix-nopasswd /etc/sudoers.d/010_asterix-nopasswd")
+    subprocess.run("/usr/bin/cp Host/010_asterix-nopasswd /etc/sudoers.d/010_asterix-nopasswd", shell = True, stdout=subprocess.PIPE)
 subprocess.run("visudo -c", shell = True)
 success("Added sudoers rules.")
 
