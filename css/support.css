@@ -1,15 +1,11 @@
 body {
   position: absolute;
-	height: 110vh;
-  overflow: hidden;
 }
 
 .support {
   background-image: url("../assets/images/background.png");
   background-size: cover;
   background-repeat: no-repeat;
-	max-height: 100vh;
-  overflow: scroll;
 }
 
 .overlay {
@@ -22,6 +18,7 @@ body {
   transition: opacity 500ms;
   visibility: hidden;
   opacity: 0;
+  z-index: 999;
 }
 
 .popup {
@@ -34,6 +31,7 @@ body {
   position: relative;
   transition: all 5s ease-in-out;
   overflow: hidden;
+  z-index: 999;
 }
 
 .popup h2 {
@@ -54,7 +52,7 @@ body {
 }
 
 .popup .close:hover {
-  color: #06D85F;
+  color: #ea1d6f;
 }
 
 .popup .content {
@@ -100,7 +98,6 @@ body {
   bottom: 0;
   border-radius: 15px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, .4);
-  z-index: -1;
 }
 
 .screen-header {
@@ -192,7 +189,7 @@ body {
 
 .app-contact {
   margin-top: auto;
-  font-size: 8px;
+  font-size: 15px;
   color: #888;
 }
 
@@ -218,7 +215,6 @@ body {
   border-bottom: 1px solid #666;
   color: #ddd;
   font-size: 14px;
-  text-transform: uppercase;
   outline: none;
   transition: border-color .2s;
 }

@@ -12,21 +12,20 @@
 
 <body>
 	<div class="support">
-		<div id="popup1" class="overlay">
-			<div class="popup">
-				<h2>Thank you !</h2>
-				<a class="close" href="#">&times;</a>
-				<div class="content">
-					Thank you for contacting us, we will try to answer your request as fast as possible !
-				</div>
-
-				<img src="assets/images/masterpiece.png" alt="masterpiece" class="masterpiece">
-				<img src="assets/images/asterix.png" alt="logo" class="logo">
-
-			</div>
-		</div>
-
 		<div class="background">
+			<div id="popup1" class="overlay">
+				<div class="popup">
+					<h2>Thank you !</h2>
+					<a class="close" href="#">&times;</a>
+					<div class="content">
+						Thank you for contacting us, we will try to answer your request as fast as possible !
+					</div>
+	
+					<img src="assets/images/masterpiece.png" alt="masterpiece" class="masterpiece">
+					<img src="assets/images/asterix.png" alt="logo" class="logo">
+	
+				</div>
+			</div>
 			<div class="container">
 				<div class="screen">
 					<div class="screen-header">
@@ -49,32 +48,31 @@
 							<div>
 								<img src="assets/images/asterix.png" alt="Asterix">
 							</div>
-							<div class="app-contact">CONTACT INFO : gavrochebackups@gmail.com</div>
+							<div class="app-contact">Contact Info : gavrochebackups@gmail.com</div>
 						</div>
 						<div class="screen-body-item">
-							<div class="app-form">
-								<div class="app-form-group">
-									<input class="app-form-control" placeholder="NAME">
+							<form class="app-form validate-form">
+								<div class="app-form-group validate-input">
+									<input class="app-form-control" placeholder="NAME" name="Name" data-validate = "Name is required">
 								</div>
-								<div class="app-form-group">
-									<input class="app-form-control" placeholder="EMAIL">
+								<div class="app-form-group validate-input">
+									<input class="app-form-control" placeholder="EMAIL" name="Email" data-validate = "Valid email is required: ex@abc.xyz">
 								</div>
-								<div class="app-form-group">
-									<select class="app-form-select" placeholder="Topic" name="TOPIC">
+								<div class="app-form-group validate-input">
+									<select class="app-form-select" placeholder="Topic" name="Topic" data-validate = "Subject is required">
 										<option style="color: black;" disabled hidden selected>Topic</option>
 										<option>Installation Issue</option>
 										<option>Report a Bug</option>
 										<option>Other</option>
 									</select>
 								</div>
-								<div class="app-form-group message">
-									<textarea class="app-form-control message" placeholder="MESSAGE" rows="10"></textarea>
+								<div class="app-form-group message validate-input">
+									<textarea class="app-form-control message" placeholder="MESSAGE" rows="10" name="Message" data-validate = "Message is required"></textarea>
 								</div>
 								<div class="app-form-group buttons">
-									<button class="app-form-button">CANCEL</button>
 									<button class="app-form-button">SEND</button>
 								</div>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -84,19 +82,14 @@
 	</div>
 
 	<!--===============================================================================================-->
-	<script src="vendor/jquery-3.6.0.min.js"></script>
+	<script src="js/jquery-3.6.0.min.js"></script>
 	<!--===============================================================================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	<!--===============================================================================================-->
 	<script src="vendor/select2/select2.min.js"></script>
 	<!--===============================================================================================-->
-	<script>
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-	</script>
-
+	
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	<script>

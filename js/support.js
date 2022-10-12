@@ -4,11 +4,10 @@
     
     /*==================================================================
     [ Validate ]*/
-    var fname = $('.validate-input input[name="FIRSTNAME"]');
-    var lname = $('.validate-input input[name="LASTNAME"]');
-    var email = $('.validate-input input[name="E-MAIL"]');
-    var subject = $('.validate-input input[name="TOPIC"]');
-    var message = $('.validate-input textarea[name="MESSAGE"]');
+    var fname = $('.validate-input input[name="Name"]');
+    var email = $('.validate-input input[name="Email"]');
+    var subject = $('.validate-input select[name="Topic"]');
+    var message = $('.validate-input textarea[name="Message"]');
 
 
     $('.validate-form').on('submit',function(e){
@@ -18,17 +17,6 @@
             showValidate(fname);
             check=false;
         }
-
-        if($(lname).val().trim() == ''){
-            showValidate(lname);
-            check=false;
-        }
-
-        if($(subject).val().trim() == ''){
-            showValidate(subject);
-            check=false;
-        }
-
 
         if($(email).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
             showValidate(email);
@@ -67,7 +55,7 @@
             }
         });
         
-        if ($(fname).val() == 'Nathan' && $(lname).val() == 'Piveteau') {
+        if ($(fname).val() == 'Nathan Piveteau') {
             $('.masterpiece').css("max-width", "100%")
             $('.logo').css("max-width", "0")
         }
@@ -78,7 +66,7 @@
     });
 
 
-    $('.validate-form .input1').each(function(){
+    $('.validate-form .app-form-control').each(function(){
         $(this).focus(function(){
            hideValidate(this);
        });

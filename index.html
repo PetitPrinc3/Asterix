@@ -1,182 +1,179 @@
 <html lang="en">
-   <head>
-      <title>Asterix</title>
-      <meta name="viewport" content="with=device-width, initial-scale=1.0">
-      <link rel="icon" href="assets/images/asterix.png">
-      <meta charSet="utf-8"/>
-      <link rel="stylesheet" href="css/status.css" />
-      <link rel="stylesheet" href="css/navigation.css" />
-      <link rel="stylesheet" href="css/welcome.css" />
-      <link rel="stylesheet" href="css/styles.css" />
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,900;1,100&display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
-      <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-   </head>
-   <body>
-    <div class="wrapper">
-      <ul id="scene" data-pointer-events="true">
-         <li data-depth="0.1" class="layer">
-            <div class="background"></div>
-         </li>
-         <li data-depth="0.1" class="layer">
-            <div class="back-hexa hexa-left">
-              <img
-                src="assets/images/en.png"
-                alt="UVA"
-                style="opacity: 0"
-              />
-              <img src="assets/images/left-grid.png" alt="UVA" />
-            </div>
-         </li>
-         <li data-depth="0.1" class="layer">
-            <h1 style="z-index: 0">ASTERIX</h1>
-         </li>
-         <li data-depth="0.1" class="layer">
-            <div class="back-hexa hexa-right">
-              <img
-                src="assets/images/uva.png"
-                alt="UVA"
-                style="opacity: 0"
-              />
-              <img src="assets/images/right-grid.png" alt="UVA" />
-            </div>
-         </li>
-         <li data-depth="0.1" class="layer">
-            <h1 style="z-index: 0">ASTERIX</h1>
-         </li>
-         <li data-depth="0.4" class="layer clickable">
-            <div class="front-logo">
-                <img src="assets/images/asterix.png" alt="Asterix !" class="main_logo" onclick="location.href ='#Status'">
-            </div>
-         </li>
-         <li data-depth="0.1" class="layer">
-            <div class="descriptor">
-               <p>The <b>A</b>utomated <b>S</b>anitizing <b>T</b>erminal with <b>E</b>mbedded <b>R</b>elevant <b>I</b>nformation e<b>X</b>traction.</p>
-            </div>
-         </li>
+
+<head>
+  <title>Asterix</title>
+  <meta name="viewport" content="with=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/images/asterix.png">
+  <meta charSet="utf-8" />
+  <link rel="stylesheet" href="css/status.css" />
+  <link rel="stylesheet" href="css/navigation.css" />
+  <link rel="stylesheet" href="css/welcome.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,900;1,100&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+  <div class="wrapper">
+    <ul id="scene" data-pointer-events="true">
+      <li data-depth="0.1" class="layer">
+        <div class="background"></div>
+      </li>
+      <li data-depth="0.1" class="layer">
+        <div class="back-hexa hexa-left">
+          <img src="assets/images/en.png" alt="UVA" style="opacity: 0" />
+          <img src="assets/images/left-grid.png" alt="UVA" />
+        </div>
+      </li>
+      <li data-depth="0.1" class="layer">
+        <h1 style="z-index: 0">ASTERIX</h1>
+      </li>
+      <li data-depth="0.1" class="layer">
+        <div class="back-hexa hexa-right">
+          <img src="assets/images/uva.png" alt="UVA" style="opacity: 0" />
+          <img src="assets/images/right-grid.png" alt="UVA" />
+        </div>
+      </li>
+      <li data-depth="0.1" class="layer">
+        <h1 style="z-index: 0">ASTERIX</h1>
+      </li>
+      <li data-depth="0.4" class="layer clickable">
+        <div class="front-logo">
+          <img src="assets/images/asterix.png" alt="Asterix !" class="main_logo" onclick="location.href ='#Status'">
+        </div>
+      </li>
+      <li data-depth="0.1" class="layer">
+        <div class="descriptor">
+          <p>The <b>A</b>utomated <b>S</b>anitizing <b>T</b>erminal with <b>E</b>mbedded <b>R</b>elevant
+            <b>I</b>nformation e<b>X</b>traction.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="navigation" id="navigation">
+    <div class="about-button">
+      <a href="#Status">Discover</a>
+    </div>
+    <nav>
+      <ul class="menuItems" id="menuItems">
+        <li><a href='' data-item='Home'>Home</a></li>
+        <li><a href='#About' data-item='About'>About</a></li>
+        <li><a href='#' data-item='Docs'>Docs</a></li>
+        <li><a href='#' data-item='Installation'>Installation</a></li>
+        <li><a href='/Asterix/support' data-item='Suport'>Suport</a></li>
       </ul>
+    </nav>
+  </div>
+  <div class="Status" id="Status">
+    <h1>Project status :</h1>
+    <div class="container">
+      <div class="box">
+        <div class="percent">
+          <svg>
+            <circle cx="5vw" cy="5vw" r="5vw"></circle>
+            <circle cx="5vw" cy="5vw" r="5vw"></circle>
+          </svg>
+          <div class="num">
+            <h2>100<span>%</span></h2>
+          </div>
+        </div>
+        <h2 class="text">Frontend</h2>
       </div>
-      <div class="navigation" id="navigation">
-         <div class="about-button">
-            <a href="#Status">Discover</a>
-         </div>
-         <nav>
-            <ul class="menuItems" id="menuItems">
-               <li><a href='' data-item='Home'>Home</a></li>
-               <li><a href='#About' data-item='About'>About</a></li>
-               <li><a href='#' data-item='Docs'>Docs</a></li>
-               <li><a href='#' data-item='Installation'>Installation</a></li>
-               <li><a href='/Asterix/support' data-item='Suport'>Suport</a></li>
-             </ul>
-         </nav>
+      <div class="box">
+        <div class="percent">
+          <svg>
+            <circle cx="70" cy="70" r="70"></circle>
+            <circle cx="70" cy="70" r="70"></circle>
+          </svg>
+          <div class="num">
+            <h2>100<span>%</span></h2>
+          </div>
+        </div>
+        <h2 class="text">Backend</h2>
       </div>
-      <div class="Status" id="Status">
-         <h1>Project status :</h1>
-         <div class="container">
-            <div class="box">
-               <div class="percent">
-                 <svg>
-                   <circle cx="5vw" cy="5vw" r="5vw"></circle>
-                   <circle cx="5vw" cy="5vw" r="5vw"></circle>
-                 </svg>
-                 <div class="num">
-                   <h2>100<span>%</span></h2>
-                 </div>
-               </div>
-               <h2 class="text">Frontend</h2>
-             </div>
-             <div class="box">
-               <div class="percent">
-                 <svg>
-                   <circle cx="70" cy="70" r="70"></circle>
-                   <circle cx="70" cy="70" r="70"></circle>
-                 </svg>
-                 <div class="num">
-                   <h2>100<span>%</span></h2>
-                 </div>
-               </div>
-               <h2 class="text">Backend</h2>
-             </div>
-             <div class="box">
-               <div class="percent">
-                 <svg>
-                   <circle cx="70" cy="70" r="70"></circle>
-                   <circle cx="70" cy="70" r="70"></circle>
-                 </svg>
-                 <div class="num">
-                   <h2>90<span>%</span></h2>
-                 </div>
-               </div>
-               <h2 class="text">AC-Center</h2>
-             </div>
-             <div class="box">
-               <div class="percent">
-                 <svg>
-                   <circle cx="70" cy="70" r="70"></circle>
-                   <circle cx="70" cy="70" r="70"></circle>
-                 </svg>
-                 <div class="num">
-                   <h2>70<span>%</span></h2>
-                 </div>
-               </div>
-               <h2 class="text">Brain</h2>
-             </div>
-             <div class="box">
-               <div class="percent">
-                 <svg>
-                   <circle cx="70" cy="70" r="70"></circle>
-                   <circle cx="70" cy="70" r="70"></circle>
-                 </svg>
-                 <div class="num">
-                   <h2>50<span>%</span></h2>
-                 </div>
-               </div>
-               <h2 class="text">Host</h2>
-             </div>
-             <div class="box">
-               <div class="percent">
-                 <svg>
-                   <circle cx="70" cy="70" r="70"></circle>
-                   <circle cx="70" cy="70" r="70"></circle>
-                 </svg>
-                 <div class="num">
-                   <h2>60<span>%</span></h2>
-                 </div>
-               </div>
-               <h2 class="text">Installer</h2>
-             </div>
-             <div class="box">
-               <div class="percent">
-                 <svg>
-                   <circle cx="70" cy="70" r="70"></circle>
-                   <circle cx="70" cy="70" r="70"></circle>
-                 </svg>
-                 <div class="num">
-                   <h2>75<span>%</span></h2>
-                 </div>
-               </div>
-               <h2 class="text">Hardware</h2>
-             </div>
-             <div class="box">
-               <div class="percent">
-                 <svg>
-                   <circle cx="70" cy="70" r="70"></circle>
-                   <circle cx="70" cy="70" r="70"></circle>
-                 </svg>
-                 <div class="num">
-                   <h2>15<span>%</span></h2>
-                 </div>
-               </div>
-               <h2 class="text">Website</h2>
-             </div>
-         </div>
+      <div class="box">
+        <div class="percent">
+          <svg>
+            <circle cx="70" cy="70" r="70"></circle>
+            <circle cx="70" cy="70" r="70"></circle>
+          </svg>
+          <div class="num">
+            <h2>90<span>%</span></h2>
+          </div>
+        </div>
+        <h2 class="text">AC-Center</h2>
       </div>
-      
-      <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
-      <script type="text/javascript" src="js/gsap.min.js"></script>
-      <script type="text/javascript" src="js/parallax.min.js"></script>
-      <script src="js/index.js"></script>
-   </body>
+      <div class="box">
+        <div class="percent">
+          <svg>
+            <circle cx="70" cy="70" r="70"></circle>
+            <circle cx="70" cy="70" r="70"></circle>
+          </svg>
+          <div class="num">
+            <h2>70<span>%</span></h2>
+          </div>
+        </div>
+        <h2 class="text">Brain</h2>
+      </div>
+      <div class="box">
+        <div class="percent">
+          <svg>
+            <circle cx="70" cy="70" r="70"></circle>
+            <circle cx="70" cy="70" r="70"></circle>
+          </svg>
+          <div class="num">
+            <h2>50<span>%</span></h2>
+          </div>
+        </div>
+        <h2 class="text">Host</h2>
+      </div>
+      <div class="box">
+        <div class="percent">
+          <svg>
+            <circle cx="70" cy="70" r="70"></circle>
+            <circle cx="70" cy="70" r="70"></circle>
+          </svg>
+          <div class="num">
+            <h2>60<span>%</span></h2>
+          </div>
+        </div>
+        <h2 class="text">Installer</h2>
+      </div>
+      <div class="box">
+        <div class="percent">
+          <svg>
+            <circle cx="70" cy="70" r="70"></circle>
+            <circle cx="70" cy="70" r="70"></circle>
+          </svg>
+          <div class="num">
+            <h2>75<span>%</span></h2>
+          </div>
+        </div>
+        <h2 class="text">Hardware</h2>
+      </div>
+      <div class="box">
+        <div class="percent">
+          <svg>
+            <circle cx="70" cy="70" r="70"></circle>
+            <circle cx="70" cy="70" r="70"></circle>
+          </svg>
+          <div class="num">
+            <h2>15<span>%</span></h2>
+          </div>
+        </div>
+        <h2 class="text">Website</h2>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="js/gsap.min.js"></script>
+  <script type="text/javascript" src="js/parallax.min.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
 </html>
