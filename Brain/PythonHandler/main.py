@@ -31,6 +31,7 @@ if len(ac_res[0]) > 0:
         for suc in ac_res[0]:
             success(f'File {suc["PATH"]} is clean.')
             log(f'File {suc["PATH"]} is clean.', "brainMAINlog.txt")
+            log(suc, "brainMAINlog.txt")
             file = ffh("user_inp.json", suc["HASH"])
             
             files.append(file)

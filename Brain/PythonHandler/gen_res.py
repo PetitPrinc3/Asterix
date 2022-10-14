@@ -31,7 +31,7 @@ with open("trt_result.json", "r+") as out:
 
         fls.append(file_)
 
-        log("Validated file : " + file_["FileName"])
+        log("Validated file : " + file_["FileName"],"brainRESlog.txt")
 
     js_out["ind_results"] = fls
 
@@ -43,6 +43,6 @@ with open("trt_result.json", "r+") as out:
 
 subprocess.call('/bin/cp trt_result.json /mnt/DataShare/trt_result.json', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-log("End of results generation.")
+log("End of results generation.", "brainRESlog.txt")
 
 export_log("brainRESlog.txt")

@@ -183,7 +183,7 @@ def ac_run():
     except:
         pass
 
-    log('END OF ANALYSIS PROCESS.')
+    log('END OF ANALYSIS PROCESS.', "PywavaAutomation/pywavalog.txt")
 
     return res
 

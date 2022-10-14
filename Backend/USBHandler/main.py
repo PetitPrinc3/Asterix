@@ -13,6 +13,7 @@ import Asterix_libs.copy as cp
 
 from Asterix_libs.spinner import spinner
 from Asterix_libs.prints import *
+from Asterix_libs.log import *
 
 
 ################################################################################
@@ -41,20 +42,25 @@ def tab(f_lst):
 
 def main():
 
+    reset_log("backendMAINlog.txt")
+
     subprocess.call('/bin/cp /mnt/DataShare/trt_result.json trt_result.json', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     if not uid.db_test("/mnt/DataShare/USB_ID.db"): exit()
 
     outp = ud.inp_wait(["/mnt/USBOutputDevice/USBOutputPart", "/mnt/USBOutputDevice/USBOutputDisk", "/mnt/DataShare/BadUSBOutput"])
 
-    if outp is None: fail('Output detection failed.'); exit()
-    if outp == "/mnt/DataShare/BadUSBOutput": fail("The output drive is not a valid USB drive."); subprocess.call("rm /mnt/DataShare/BadUSBOutput", shell=True); fail('This incident will be reported.'); exit()
+    if outp is None: fail('Output detection failed.'); log("Output Detection BUG ***", "backendMAINlog.txt") ;exit()
+    if outp == "/mnt/DataShare/BadUSBOutput": fail("The output drive is not a valid USB drive."); log("BAD OUTPUT DEVICE ***", "backendMAINlog.txt"); subprocess.call("rm /mnt/DataShare/BadUSBOutput", shell=True); fail('This incident will be reported.'); exit()
 
     Vid, Pid = uid.get_ids("/dev/" + outp.split("/")[-1])
+
+    log(f'Detected USB drive with Vid: {Vid} and Pid: {Pid}.', "backendMAINlog.txt")
 
     val = uid.match_ids("/mnt/DataShare/USB_ID.db", Vid, Pid)
 
     if not val: 
+        log("Vid/Pid do NOT match.", "backendMAINlog.txt")
         fail('Output device not recognized.') 
         print("Vendor ID  : ", Vid)
         print("Product ID : ", Pid)
@@ -82,6 +88,7 @@ def main():
 
     else:
         success('Output Device recognized !')
+        log("Pid/Vid MATCH.", "backendMAINlog.txt")
 
     print()
 
@@ -92,6 +99,10 @@ def main():
 
     print("\nAvailable Files :")
     tab(f_res)
+
+    log(f'Final copied files : {f_res}', "backendMAINlog.txt")
+
+    export_log("backendMAINlog.txt")
 
 
 if __name__ == "__main__":
