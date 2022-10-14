@@ -67,7 +67,7 @@ You will also find functionnalities that have not been implemented but were part
 | FS1 | Secure transfer of file(s): the product must allow the transfer of file(s) from a removable medium while guaranteeing the harmlessness of the medium and the files (the product must be designed in such a way that its integrity and operation cannot be altered by removable media or a file). The analysis of a file must not degrade the availability of the product. | :green_circle: | 95% |
 | FS3 | Display of the list of file(s): the product must make it possible to list the content of the input media as well as that of the output for the selection of the files to be transferred and their verifications. | :green_circle: | 100% |
 | FS5 | Security analysis: the product must carry out a systematic antiviral analysis of the files to be imported. | :green_circle: | 100% |
-| FS6 | Encryption: the product stores the connection secrets of the administrators (No user authentication on the white station necessary. Authentication on the PID is carried out with the operational IS for the users. | :green_circle: | 100% |
+| FS6 | Encryption: the product stores the connection secrets of the administrators (No user authentication on the white station necessary). Authentication on the PID is carried out with the operational IS for the users. | :green_circle: | 100% |
 | FS7 | Identification, authentication and access control: the product identifies and authenticates the administrators allowing to control the resources according to the rights of the latter. | :green_circle: | 100% |
 | FS8 | Software integrity: the product makes it possible to update the software that constitutes it (operating system and specific software(s)). | :red_circle: | 0% |
 | FS9 | Integrity of event logs: the product reports all operations performed by users and by itself (excluding file(s) transfer). | :orange_circle: | 30% |
@@ -77,6 +77,19 @@ You will also find functionnalities that have not been implemented but were part
 | FS13 | Integrity of incoming and outgoing media: the product must guarantee the integrity of inserted media, whether incoming or outgoing. | :green_circle: | 100% - Unchecked |
 | FS14 | Product integrity: whatever the input or output medium, its insertion must not affect the integrity of the product. | :green_circle: | 100% - Unchecked |
 | FS15 | Filtering in the case of a PID connected to a network: The product must protect direct access to the operational network from the PID. | :red_circle: | 0% - Disconnected |
+
+#### Specification compliance
+
+| ID | Specification item | Compliance | Precision |
+| :-: | :-: | :-: | :-: |
+| R1 | Our device must be as Open-Source as possible. | :green_circle: | 100% |
+| R2 | Our device must meet the ANSSI requirements where possible. | :yellow_circle: | 70% |
+| R3 | Our device must be easily operable. | :orange_circle: | 50% - Missing GUI |
+| R4 | Our device must be able to protect itself from BadUSBs. | :green_circle: | 100% |
+| R5 | Our device must be able to extract relevant data from corrupted files. | :green_circle: | 100% - For supported formats |
+| R6 | Our device must operate completely offline. | :green_circle: | 100% - Unverified |
+| R7 | Our device must be easily transportable. | :yellow_circle: | 70% - No case |
+| R8 | Our device must be updatable using a trusted USB medium. | :red_circle: | 0% - Not implemented |
 
 
 ## Contributing to the project
