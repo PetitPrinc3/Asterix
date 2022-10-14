@@ -25,6 +25,7 @@
 .navigation .about-button a {
 	position: relative;
 	font-family: 'Roboto', cursive;
+	font-size: 1.8vw;
 	top: -10px;
 	width: 15%;
 	min-width: -webkit-fit-content;
@@ -115,6 +116,3 @@ nav .menuItems li a:hover::before {
 	transition: all 0.5s ease-in-out;
 }
 
-@media screen and (max-width: 600px) {
-
-  }

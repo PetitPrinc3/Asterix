@@ -28,7 +28,7 @@
 	padding: 0;
 	overflow: hidden;
 	width: 100%;
-	height: 100%;
+	height: 100vh;
 }
 
 #scene .layer {
@@ -47,12 +47,12 @@
 
 #scene .layer h1 {
 	cursor: default;
-  	padding-top: 2%;
-  	text-align: center;
-  	font-size: 15vw;
-  	color: white;
-  	-webkit-text-stroke: 2px black;
-  	font-family: 'Luckiest Guy', cursive;
+	padding-top: 2%;
+	text-align: center;
+	font-size: 15vw;
+	color: white;
+	-webkit-text-stroke: 2px black;
+	font-family: 'Luckiest Guy', cursive;
 }
 
 .descriptor {
@@ -68,15 +68,15 @@
 	transition: 0.4s;
 }
 
-.front-logo .main_logo{
-  transition: 0.5s;
-  margin-top : 50px;
+.front-logo .main_logo {
+	transition: 0.5s;
+	margin-top: 50px;
 }
 
 .front-logo .main_logo:hover {
-  cursor: pointer;
-  -webkit-transform: scale(1.15);
-          transform: scale(1.15);
+	cursor: pointer;
+	-webkit-transform: scale(1.15);
+	transform: scale(1.15);
 }
 
 .background {
@@ -100,12 +100,6 @@
   cursor: pointer;
   transform: scale(1.05);
 }*/
-}
-
-@media screen and (max-width: 850px) {
-	.front-logo {
-		top: 35%;
-	}
 }
 
 .front-logo img {
@@ -139,11 +133,6 @@
 	font-family: 'Luckiest Guy', cursive;
 }
 
-@media screen and (max-width: 1200px) {
-	.front-logo h1 {
-		font-size: 12rem;
-	}
-}
 
 .front-logo h2 {
 	font-size: 6rem;
@@ -155,12 +144,6 @@
 	margin: 0;
 }
 
-@media screen and (max-width: 1200px) {
-	.front-logo h2 {
-		font-size: 5rem;
-	}
-}
-
 /*Hexgrid*/
 .back-hexa {
 	opacity: 0.7;
@@ -169,29 +152,17 @@
 	width: 45%;
 	height: auto;
 	z-index: auto;
-  }
-  
-  @media screen and (max-width: 850px) {
-	.back-hexa {
-	  display: none;
-	}
-  }
-  
-  .back-hexa p {
+}
+
+.back-hexa p {
 	top: -3em;
 	width: 100%;
 	position: absolute;
 	margin: 1em auto;
 	padding: 0 10px;
-  }
-  
-  @media screen and (max-width: 1200px) {
-	.back-hexa p {
-	  font-size: 1.2rem;
-	}
-  }
-  
-  .back-hexa img {
+}
+
+.back-hexa img {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -199,13 +170,48 @@
 	height: auto;
 	-webkit-transition: opacity 1s ease-in-out;
 	transition: opacity 1s ease-in-out;
-  }
-  
-  .hexa-left {
+}
+
+.hexa-left {
 	left: 0;
-  }
-  
-  .hexa-right {
+}
+
+.hexa-right {
 	right: 0;
-  }
-  
+}
+
+@media screen and (max-width: 400px) {
+
+	.hexa-right {
+		top: 5vh;
+		position: absolute;
+		width: 100vw;
+		height: 15vh;
+	}
+
+	.front-logo {
+		top: 32.5vh;
+		height: 60vh;
+		width: 100vw;
+	}
+	
+	.front-logo img {
+		width: 100vw;
+	}
+
+	.hexa-left {
+		top: 55vh;
+		position: absolute;
+		width: 100vw;
+		height: 15vh;
+	}
+
+	.descriptor p {
+		margin-top: 2vh;
+		font-size: 4vw;
+	}
+
+	.descriptor b {
+		color: #fbea2c;
+	}
+}
