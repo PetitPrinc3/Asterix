@@ -52,6 +52,6 @@ with spinner('Waiting for drive removal...'):
     ud.rem_wait(["/dev/USBInputDisk", "/dev/USBInputPart", "/dev/USBOutputDisk", "/dev/USBOutputPart"])
 success('Done. Thank you for using Asterix <3')
 
-log("USB Devices removed.")
+log("USB Devices removed.", logfile)
 
 log("Asterix completed.", logfile)

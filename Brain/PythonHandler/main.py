@@ -55,6 +55,7 @@ if len(ac_res[1]) > 0:
     for fai in ac_res[1]:
         fail(f'File {fai["PATH"]} were flagged as malicious.')
         log(f'File {fai["PATH"]} were flagged as malicious.', "brainMAINlog.txt")
+        log(fai, "brainMAINlog.txt")
 
     print()
     print("Do you wish to try and sanitize the files ? (Y/n)")
