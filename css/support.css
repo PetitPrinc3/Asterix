@@ -6,6 +6,8 @@ body {
   background-image: url("../assets/images/background.png");
   background-size: cover;
   background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100vw;
 }
 
 .overlay {
@@ -76,7 +78,9 @@ body {
 
 .background {
   display: flex;
-  min-height: 100vh;
+  min-height: 100%;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
 }
 
 .container {

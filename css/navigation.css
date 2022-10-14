@@ -15,7 +15,6 @@
 	align-items: center;
 	top: -12px;
 	margin: 0;
-	bottom: 0;
 	width: 100%;
 	height: 12px;
 	background: #26272b;
@@ -33,12 +32,12 @@
 	min-width: fit-content;
 	text-decoration: none;
 	height: auto;
-	padding: 5px 15px 5px 15px;
 	border-radius: 15px 15px 0 0;
 	background: #26272b;
 	color: white;
 	text-align: center;
 	cursor: pointer;
+	bottom: 0;
 	-webkit-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
@@ -55,29 +54,37 @@
 
 nav {
 	overflow: hidden;
+	background-color: #26272b;
 }
 
 .sticky {
+	background-color: #26272b;
 	position: fixed;
-	top: 5px;
-	width: 80vw;
-	border-radius: 25px;
+	top: 0;
+	width: 100%;
+	z-index: 99;
 }
 
 .sticky + .content {
 	padding-top: 60px;
 }
 
+
+li {
+	margin-top: 2vh;
+	margin-bottom: 2vh;
+}
+
+
 nav .menuItems {
-	border-radius: 25px;
-	background-color: #383a3f;
 	list-style: none;
 	display: grid;
-	grid-template-columns: repeat(5, 20%);
+	grid-template-columns: repeat(5, 20vw);
 	text-align: center;
-	margin-left: 10vw;
-	margin-right: 10vw;
-	padding: 20px;
+}
+
+nav .menuItems ul {
+	white-space: nowrap;
 }
 
 nav .menuItems li a {
@@ -85,7 +92,7 @@ nav .menuItems li a {
 	text-align: center;
 	text-decoration: none;
 	color: white;
-	font-size: 30px;
+	font-size: 1.8vw;
 	font-weight: bold;
 	transition: all 0.5s ease-in-out;
 	position: relative;
@@ -108,3 +115,6 @@ nav .menuItems li a:hover::before {
 	transition: all 0.5s ease-in-out;
 }
 
+@media screen and (max-width: 600px) {
+
+  }
