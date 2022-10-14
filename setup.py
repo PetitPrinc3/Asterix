@@ -189,12 +189,15 @@ with spinner("Fixing user permissions..."):
     cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes")
     cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/DataShare")
     cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/DataShare/_data")
+success('Fixed user permissions.')
 
 
 info("Seting up AC-Center environment...")
 
+
 print("Copy VM files to /src/win10_VM and press any key to resume.")
 getch.getch()
+
 
 with spinner('Preparing Windows 10 VM Environment...'):
     cmd_run("/usr/bin/chown -R vm_runner:vm_runner /src/win10_VM")
@@ -211,45 +214,6 @@ with spinner("Adding sudoers rules..."):
     subprocess.run("/usr/bin/cp Host/010_asterix-nopasswd /etc/sudoers.d/010_asterix-nopasswd", shell = True, stdout=subprocess.PIPE)
 subprocess.run("visudo -c", shell = True)
 success("Added sudoers rules.")
-
-
-# with spinner('Creating system disk image...'):
-#     cmd_run("/usr/bin/qemu-img create -f vhdx -o subformat=fixed /src/win10_VM/system.vhdx 64G")
-# success('64Gb System disk image was initialized.')
-
-
-# info('Collecting VirtIO drivers...')
-# subprocess.Popen("/usr/bin/wget --no-check-certificate -O /src/win10_VM/virtio_drivers.iso https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.221-1/virtio-win-0.1.221.iso", shell=True)
-# success('VirtIO drivers collected.')
-
-
-# with spinner('Collecting windows UUID...'):
-#     UUID=subprocess.Popen("""/usr/bin/wget --no-check-certificate -qO- "https://uupdump.net/known.php?q=windows+10+21h2+arm64" | grep 'href="\./selectlang\.php?id=.*"' -o | sed 's/^.*id=//g' | sed 's/"$//g' | head -n1""", shell=True, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-#     WIN_LANG="en-us"
-# success('Collected windows UUID.')
-
-
-# info('Collected windows downloader from UUPdump...')
-# cmd_run('/usr/bin/mkdir tmp')
-# subprocess.run(f'/usr/bin/wget --no-check-certificate -O "tmp/uupdump.zip" "https://uupdump.net/get.php?id={UUID}&pack={WIN_LANG}&edition=professional&autodl=2"', shell=True)
-# cmd_run('cd tmp && /usr/bin/unzip -q "uupdump.zip"')
-# success('Collected windows downloader.')
-
-
-# info('Downloading windows ISO. This will take some time.')
-# subprocess.run("cd tmp && /bin/bash uup_download_linux.sh", shell=True)
-# success('Windows ISO collected.')
-
-
-# with spinner('Finalizing VM environment...'):
-#     cmd_run("/usr/bin/mv tmp/*.ISO /src/win10_VM")
-# success("VM environment finalized")
-
-
-# cmd_run("/usr/bin/rm -r tmp")
-
-
-# info("""When you are ready to setup the VM, execute "bash vm_setup.sh". Follow the instructions provided on the repository's README.""")
 
 
 warning("AC-Center needs to be configured manually, check https://github.com/G4vr0ch3/Asterix/blob/main/AC-Center/README.md")
