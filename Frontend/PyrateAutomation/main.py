@@ -117,9 +117,10 @@ elapsed = end-start
 
 subprocess.call('/bin/cp san_clean.json /mnt/DataShare/san_clean.json', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Exhausted in ' + str(elapsed))
+
 print()
 
-info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Exhausted in ' + str(elapsed))
 log('END OF SANITIZING PROCESS.', "frontPYRATElog.txt")
 
 export_log("frontPYRATElog.txt")
