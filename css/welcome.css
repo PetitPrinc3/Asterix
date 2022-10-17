@@ -54,9 +54,9 @@
 }
 
 .descriptor {
-	display: grid;
 	position: absolute;
 	bottom: 5vh;
+	width: 100%;
 	font-family: 'Roboto';
 	font-size: 15px;
 	font-weight: bold;
