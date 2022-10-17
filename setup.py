@@ -206,7 +206,7 @@ success("Win VM source folder created.")
 
 
 with spinner("Setting up Cron Jobs..."):
-    cmd_run("/usr/bin/crontab Host/cron_jobs")
+    cmd_run("/usr/bin/cp Host/asterix_jobs /etc/cron.d/asterix_jobs")
 success("Cron Jobs set up.")
 
 
