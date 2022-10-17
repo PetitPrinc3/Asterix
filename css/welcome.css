@@ -42,6 +42,7 @@
 	cursor: default;
 	text-align: center;
 	font-size: 12vw;
+	margin-top: 3vh;
 	margin-bottom: 5vh;
 	color: white;
 	-webkit-text-stroke: 2px black;
@@ -175,7 +176,7 @@
 @media screen and (orientation:portrait) {
 
 	#scene {
-		height: 100vh;
+		max-height: 100vh;
 		display: block;
 	}
 
