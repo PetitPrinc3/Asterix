@@ -4,7 +4,6 @@
 	display: block;
 	text-align: center;
 	height: 100vh;
-	overflow: hidden;
 	/*div:hover {
     cursor: pointer;
     transform: scale(1.05);
@@ -47,9 +46,8 @@
 
 #scene .layer h1 {
 	cursor: default;
-	padding-top: 2%;
 	text-align: center;
-	font-size: 15vw;
+	font-size: 12vw;
 	color: white;
 	-webkit-text-stroke: 2px black;
 	font-family: 'Luckiest Guy', cursive;
@@ -57,7 +55,8 @@
 
 .descriptor {
 	display: grid;
-	padding-top: 90vh;
+	position: absolute;
+	bottom: 5vh;
 	font-family: 'Roboto';
 	font-size: 15px;
 	font-weight: bold;
@@ -70,7 +69,6 @@
 
 .front-logo .main_logo {
 	transition: 0.5s;
-	margin-top: 50px;
 }
 
 .front-logo .main_logo:hover {
@@ -95,7 +93,7 @@
 .front-logo {
 	position: absolute;
 	width: 100%;
-	top: 35%;
+	top: 17vw;
 	/*div:hover {
   cursor: pointer;
   transform: scale(1.05);
@@ -106,8 +104,8 @@
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	width: 28%;
-	height: auto;
+	height: 22vw;
+	width: auto;
 	min-width: 200px;
 	-webkit-transition: -webkit-transform 0.2s;
 	transition: -webkit-transform 0.2s;
@@ -125,9 +123,9 @@
 
 .front-logo h1 {
 	cursor: default;
-	padding-top: 2%;
+	margin: 1vh;
 	text-align: center;
-	font-size: 25vh;
+	font-size: 20vh;
 	color: white;
 	-webkit-text-stroke: 2px black;
 	font-family: 'Luckiest Guy', cursive;
@@ -148,8 +146,7 @@
 .back-hexa {
 	opacity: 0.7;
 	position: absolute;
-	top: 13%;
-	width: 45%;
+	width: 45vw;
 	height: auto;
 	z-index: auto;
 }
@@ -164,7 +161,7 @@
 
 .back-hexa img {
 	position: absolute;
-	top: 0;
+	top: 5vw;
 	left: 0;
 	width: 100%;
 	height: auto;
@@ -182,32 +179,39 @@
 
 @media screen and (max-width: 400px) {
 
+	#scene {
+		height: 100vh;
+		display: block;
+	}
+
 	.hexa-right {
-		top: 5vh;
 		position: absolute;
 		width: 100vw;
 		height: 15vh;
+		top: 50vh;
 	}
 
 	.front-logo {
-		top: 32.5vh;
-		height: 60vh;
+		top: 35vh;
 		width: 100vw;
 	}
 	
 	.front-logo img {
+		position: absolute;
+		top: 0;
 		width: 100vw;
+		height: auto;
 	}
 
 	.hexa-left {
-		top: 55vh;
 		position: absolute;
+		top: 0;
 		width: 100vw;
 		height: 15vh;
 	}
 
 	.descriptor p {
-		margin-top: 2vh;
+		margin-bottom: 2vh;
 		font-size: 4vw;
 	}
 
