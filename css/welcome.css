@@ -1,13 +1,7 @@
-/*Logo*/
-/*Front*/
 .front-logo {
 	display: block;
 	text-align: center;
 	height: 100vh;
-	/*div:hover {
-    cursor: pointer;
-    transform: scale(1.05);
-  }*/
 }
 
 .wrapper {
@@ -48,6 +42,7 @@
 	cursor: default;
 	text-align: center;
 	font-size: 12vw;
+	margin-bottom: 5vh;
 	color: white;
 	-webkit-text-stroke: 2px black;
 	font-family: 'Luckiest Guy', cursive;
@@ -177,7 +172,7 @@
 	right: 0;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (orientation:portrait) {
 
 	#scene {
 		height: 100vh;
@@ -201,11 +196,13 @@
 		top: 0;
 		width: 100vw;
 		height: auto;
+		max-height: 90vh;
+		max-width: 90vh;
 	}
 
 	.hexa-left {
 		position: absolute;
-		top: 0;
+		top: -10vh;
 		width: 100vw;
 		height: 15vh;
 	}
