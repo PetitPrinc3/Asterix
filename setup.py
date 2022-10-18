@@ -17,6 +17,8 @@ def libimport():
     try:
         import getch
         from pyfiglet import figlet_format as pfg
+        import paramiko
+        import sqlite3
         return True
     except:
         return False
@@ -31,6 +33,7 @@ if not libimport():
 
 
 import getch
+import sqlite3
 from pyfiglet import figlet_format as pfg
 
 
@@ -84,6 +87,9 @@ with spinner('Preparing Frontend software...'):
     cmd_run("/usr/bin/cp -r Frontend /src/Frontend")
     cmd_run("/usr/bin/cp -r Asterix_libs /src/Frontend")
     cmd_run("/usr/bin/chown -R docker_runner:docker /src/Frontend")
+    cmd_run("/usr/bin/chmod -R u=rx /src/Frontend")
+    cmd_run("/usr/bin/chmod -R g=rx /src/Frontend")
+    cmd_run("/usr/bin/chmod -R o=-r-w-x /src/Frontend")
 success("Frontend software ready.")
 
 
@@ -91,6 +97,9 @@ with spinner('Preparing Backend software...'):
     cmd_run("/usr/bin/cp -r Backend /src/Backend")
     cmd_run("/usr/bin/cp -r Asterix_libs /src/Backend")
     cmd_run("/usr/bin/chown -R docker_runner:docker /src/Backend")
+    cmd_run("/usr/bin/chmod -R u=rx /src/Backend")
+    cmd_run("/usr/bin/chmod -R g=rx /src/Backend")
+    cmd_run("/usr/bin/chmod -R o=-r-w-x /src/Backend")
 success("Backend software ready.")
 
 
@@ -98,6 +107,9 @@ with spinner('Preparing Brain software...'):
     cmd_run("/usr/bin/cp -r Brain /src/Brain")
     cmd_run("/usr/bin/cp -r Asterix_libs /src/Brain")
     cmd_run("/usr/bin/chown -R docker_runner:docker /src/Brain")
+    cmd_run("/usr/bin/chmod -R u=rx /src/Brain")
+    cmd_run("/usr/bin/chmod -R g=rx /src/Brain")
+    cmd_run("/usr/bin/chmod -R o=-r-w-x /src/Brain")
 success("Brain software ready.")
 
 
@@ -107,10 +119,10 @@ success("Pyrate collected.")
 
 
 info('Preparing Host software...')
-cmd_run('/usr/bin/mkdir -p /src/Host')
+cmd_run('/usr/bin/mkdir -p /src/Host/Administration')
 cmd_run('/usr/bin/cp Host/eject_devices.sh /src/Host/eject_devices.sh')
 cmd_run('/usr/bin/cp Host/db_create.py /src/Host/db_create.py')
-cmd_run('/usr/bin/chmod -R 600 /src/Host')
+cmd_run('/usr/bin/chmod -R 000 /src/Host')
 
 
 with spinner('Adding mounting service...'):
@@ -138,16 +150,19 @@ success('Host software ready.')
 
 with spinner("Building Frontend container. This may take some time..."):
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t frontend /src/Frontend"')
+    frontend_img = subprocess.Popen('/usr/bin/docker images --filter=reference=frontend --format "{{.ID}}"', shell = True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
 success("Frontend software installed.")
 
 
 with spinner("Building Backend container. This may take some time..."):
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t backend /src/Backend"')
+    backend_img = subprocess.Popen('/usr/bin/docker images --filter=reference=backend --format "{{.ID}}"', shell = True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
 success("Backend software installed.")
 
 
 with spinner("Building Brain container. This may take some time..."):
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t brain /src/Brain"')
+    brain_img = subprocess.Popen('/usr/bin/docker images --filter=reference=brain --format "{{.ID}}"', shell = True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
 success("Brain software installed.")
 
 
@@ -171,7 +186,40 @@ with spinner('Starting containers...'):
     cmd_run("/usr/bin/cp Host/docker_runner_scripts/boot.sh /opt/docker_runner/boot.sh")
     cmd_run("/usr/bin/cp Host/docker_runner_scripts/run.sh /opt/docker_runner/run.sh")
     subprocess.run('/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"', shell=True)
+    frontend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=frontend"', shell = True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    backend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=backend"', shell = True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    brain_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=brain"', shell = True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
 success("Docker containers started.")
+
+
+with spinner('Adding component data to Admin DB...'):
+    conn=sqlite3.connect('/src/Host/Administration/ASTERIX_ADMIN.db')
+    cur= conn.cursor()
+    print('Database connection opened.')
+    sql= 'SELECT sqlite_version();'
+    cur.execute(sql)
+    res=cur.fetchall()
+    print('SQLite Version : ' + res[0][0])
+    cur.execute("""CREATE TABLE IF NOT EXISTS containers (c_name TEXT, c_id TEXT, i_id TEXT)""")
+    cur.execute("""CREATE TABLE IF NOT EXISTS vms (name TEXT, disk TEXT, hash TEXT)""")
+    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""",("frontend",frontend_ctn, frontend_img))
+    print(f'Inserted frontend, {frontend_ctn}, {frontend_img}')
+    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""",("frontend",backend_ctn, backend_img))
+    print(f'Inserted backend, {backend_ctn}, {backend_img}')
+    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""",("frontend",brain_ctn, brain_img))
+    print(f'Inserted brain, {brain_ctn}, {brain_img}')
+    cur.execute("""INSERT INTO vms(name, disk, hash) VALUES (?,?,?)""",("AC-CENTER","/src/win10_VM/system.vhdx", "x5b902ffa10efb18d8066b40cbed89e9a"))
+    warning(f'Inserted ACCENTER row with default values.')
+    conn.commit()
+    cur.close()
+    conn.close()
+    print('Database connection closed\n')
+success('Admin DB set up.')
+
+
+with spinner('Setting up Administration tools...'):
+    cmd_run('/usr/bin/cp Host/Administration/admin_utility.py /src/Host/Administration/admin_utility.py')
+success('Administration tools ready.')
 
 
 with spinner("Fixing user permissions..."):
@@ -201,7 +249,9 @@ getch.getch()
 
 with spinner('Preparing Windows 10 VM Environment...'):
     cmd_run("/usr/bin/chown -R vm_runner:vm_runner /src/win10_VM")
-    cmd_run("/usr/bin/chmod -R 755 /src/win10_VM")
+    cmd_run("/usr/bin/chmod -R u=rx /src/win10_VM")
+    cmd_run("/usr/bin/chmod -R g=rx /src/win10_VM")
+    cmd_run("/usr/bin/chmod -R o=-r-x-w /src/win10_VM")
 success("Win VM source folder created.")
 
 
