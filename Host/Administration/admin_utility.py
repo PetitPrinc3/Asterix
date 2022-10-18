@@ -18,6 +18,33 @@ password = 'ac-center'
 database = 'ASTERIX_ADMIN.db'
 
 
+def vm_check():
+
+    vms = get_vms()
+
+    if vms == []:
+        print('NO VM FOUND IN DATABASE')
+        exit()
+
+    else:
+
+        with spinner('Fetching VM Status ...'):
+
+            for vm in vms:
+                disk_path = vm[1]
+                disk_hash = vm[2]
+
+    with spinner('Computing disk hash...'):
+        md5hash = subprocess.Popen(f'/usr/bin/md5sum {disk_path}', shell = True, stdout = subprocess.PIPE).stdout.read().strip().split(" ")[0]
+    success(f'Calculated md5 sum : {md5hash}')
+    if md5hash != disk_hash:
+        warning(f'Hashes do not match {disk_hash}:{md5hash}. VM Might be corrupted.')
+        return False
+    else:
+        success(f'Hashes match {disk_hash}:{md5hash}. VM Checked')
+        return True
+
+
 def cmd_run(cmd):
     if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
         fail('Process failed. This is critical.')
@@ -92,7 +119,7 @@ def get_status_container(container_name, container_id):
         return '\U0001F534 Unknown  '
 
 
-def get_status_vm(vm_disk_path, vm_hash):
+def get_status_vm(vm_integrity_checked):
 
     running_vms = subprocess.Popen('ps -ef | grep qemu-system-aarch64', shell=True, stderr=subprocess.DEVNULL,
                                    stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip().split('\n')[:-2]
@@ -111,8 +138,10 @@ def get_status_vm(vm_disk_path, vm_hash):
         if transport.is_active():
             try:
                 transport.send_ignore()
-                return '\U0001F7E2 Connected     '
-
+                if vm_integrity_checked:
+                    return '\U0001F7E2 Connected     '
+                else:
+                    return '\U0001F535 Connected (UC)'
             except Exception as _e:
                 return '\U0001F7E1 Error         '
         else:
@@ -227,7 +256,7 @@ def reset_containers():
         success("Brain software installed.")
 
 
-def fetch_glob():
+def fetch_glob(vm_integrity_checked):
 
     containers = get_containers()
 
@@ -274,7 +303,7 @@ def fetch_glob():
                 vm_name = vm[0]
                 vm_disk = vm[1]
                 vm_hash = vm[2]
-                vm_status = get_status_vm(vm_disk, vm_hash)
+                vm_status = get_status_vm(vm_integrity_checked)
 
                 print('| ' + vm_name[-container_name_size:] + " "*(max(container_name_size, 11) - len(
                     vm_name[-container_name_size:]) - 2) + " | NONE " + " "*max(container_id_size - 4, 0) + "| " + vm_status + " |")
@@ -305,11 +334,13 @@ def usb_enroll():
 
 def main():
 
+    vm_integrity_checked = False
+
     while True:
 
         try:
 
-            fetch_glob()
+            fetch_glob(vm_integrity_checked)
 
             print("""
 Actions :
@@ -352,14 +383,17 @@ q) Exit
                 restart_vm()
 
             elif choice == "5":
+                vm_integrity_checked = vm_check()
+
+            elif choice == "6":
                 info('Selected VM RESET.')
                 reset_vm()
 
-            elif choice == "6":
+            elif choice == "7":
                 info('Selected log check.')
                 log_check()
 
-            elif choice == "7":
+            elif choice == "8":
                 info('Selected new USB device enrolment.')
                 usb_enroll()
 

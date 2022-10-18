@@ -242,7 +242,7 @@ with spinner('Adding component data to Admin DB...'):
                 ("brain", brain_ctn, brain_img))
     info(f'Inserted brain, {brain_ctn}, {brain_img}        ')
     cur.execute("""INSERT INTO vms(name, disk, hash) VALUES (?,?,?)""",
-                ("AC-CENTER", "/src/win10_VM/system.vhdx", "x5b902ffa10efb18d8066b40cbed89e9a"))
+                ("AC-CENTER", "/src/win10_VM/system.vhdx", "5b902ffa10efb18d8066b40cbed89e9a"))
     warning(f'Inserted ACCENTER row with default values.')
     conn.commit()
     cur.close()
