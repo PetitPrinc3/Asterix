@@ -84,6 +84,7 @@ def main():
         #     exit()
 
         fail("USB Identification failed. Exiting.")
+        export_log("backendMAINlog.txt")
         exit()
 
     else:

@@ -5,6 +5,8 @@ import sqlite3
 import paramiko
 import subprocess
 
+from time import sleep
+
 from Asterix_libs.spinner import spinner
 from Asterix_libs.prints import *
 from Asterix_libs.log import *
@@ -314,22 +316,28 @@ def fetch_glob(vm_integrity_checked):
 
 def usb_enroll():
     with spinner("Plug USB drive to enroll in Input port..."):
-        idProduct=os.popen(f'udevadm info -q all -a /dev/USBInputDisk | grep idProduct | cut -d "=" -f 3 | head -n 1').read().strip()
-        idVendor=os.popen(f'udevadm info -q all -a /dev/USBInputDisk | grep idVendor | cut -d "=" -f 3 | head -n 1').read().strip()
-        conn=sqlite3.connect('USB_ID.db')
-        cur= conn.cursor()
-        print('Database connection opened.')
-        sql= 'SELECT sqlite_version();'
-        cur.execute(sql)
-        res=cur.fetchall()
-        print('SQLite Version : ' + res[0][0])
-        print("Known drives table checked.")
-        cur.execute("""INSERT INTO known_drives(idVendor,idProduct) VALUES (?,?)""",(idVendor,idProduct))
-        print(f'Inserted ({idVendor},{idProduct})')
-        conn.commit()
-        cur.close()
-        conn.close()
-        print('Database connection closed\n')
+    
+        while not os.path.exists("/dev/USBInputDisk"):
+            sleep(.5)
+
+    idProduct=os.popen(f'udevadm info -q all -a /dev/USBInputDisk | grep idProduct | cut -d "=" -f 3 | head -n 1').read().strip()
+    idVendor=os.popen(f'udevadm info -q all -a /dev/USBInputDisk | grep idVendor | cut -d "=" -f 3 | head -n 1').read().strip()
+    conn=sqlite3.connect('/src/Host/Administration/USB_ID.db')
+    cur= conn.cursor()
+    print('Database connection opened.')
+    sql= 'SELECT sqlite_version();'
+    cur.execute(sql)
+    res=cur.fetchall()
+    print('SQLite Version : ' + res[0][0])
+    print("Known drives table checked.")
+    cur.execute("""INSERT INTO known_drives(idVendor,idProduct) VALUES (?,?)""",(idVendor,idProduct))
+    print(f'Inserted ({idVendor},{idProduct})')
+    conn.commit()
+    cur.close()
+    conn.close()
+    print('Database connection closed\n')
+
+    cmd_run('/bin/cp /src/Host/Administration/USB_ID.db /var/lib/docker/volumes/DataShare/_data/USB_ID.db')
 
 
 def main():

@@ -28,6 +28,7 @@ with open("inputs.json", "r") as inp:
     js = json.load(inp)
     if len(js["ind_results"]) == 0:
         subprocess.call('/bin/cp default.json /mnt/DataShare/san_clean.json', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        export_log("frontPYRATElog.txt")
         exit()
 
 start = datetime.now()
