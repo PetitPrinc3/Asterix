@@ -36,7 +36,7 @@ def xcopy(js1, f_lst, dst):
         i = 1
 
         while os.path.exists(dst_path):
-            dst_path = dst + ".".join(os.path.basename(file).split(".")[:-1]) + f'_{i}' + os.path.basename(file).split(".")[-1]
+            dst_path = dst + ".".join(os.path.basename(file).split(".")[:-1]) + f'_{i}.' + os.path.basename(file).split(".")[-1]
             i += 1
 
         copy(file, dst_path)
