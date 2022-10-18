@@ -356,9 +356,10 @@ Actions :
 2) Restart Containers
 3) RESET CONTAINERS
 4) Restart VMs
-5) RESET VMs
-6) Check logs
-7) Enroll new trusted USB device.
+5) VMs check
+6) VM RESET
+7) Log check
+8) Enroll new trusted USB device
 q) Exit
 
 """)
