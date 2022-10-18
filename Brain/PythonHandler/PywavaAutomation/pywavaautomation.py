@@ -72,7 +72,7 @@ def ac_run():
     info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Initializing environment.')
     sftp = client.open_sftp()
     log('SFTP Connection with AC-CENTER established. (SCANRESULTSINIT)', "PywavaAutomation/pywavalog.txt")
-    sftp.put("default.json", '\\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\scan_results.json')
+    sftp.put("default.json", '\\Users\\ac-center\\Pywava\\scan_results.json')
 
     print()
 
@@ -82,7 +82,7 @@ def ac_run():
     channel = transport.open_session()
     log('RCE Connection with AC-CENTER established.', "PywavaAutomation/pywavalog.txt")
     channel.get_pty(width=int(c))
-    channel.exec_command('python \\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\clean_inputs_fold.py')
+    channel.exec_command('python \\Users\\ac-center\\Pywava\\clean_inputs_fold.py')
 
     with spinner("Cleaning Input folder..."):
         while True:
@@ -110,7 +110,7 @@ def ac_run():
     for file in js_data:
 
         inp = file["FileName"]
-        outp = f'\\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA\\Inputs\\{os.path.basename(inp)}'
+        outp = f'\\Users\\ac-center\\PyWAVA\\Inputs\\{os.path.basename(inp)}'
 
         with spinner(f'Sending file {inp} to AC-Center'):
             try:
@@ -166,7 +166,7 @@ def ac_run():
     info('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Fetching results')
 
     log('Retrieving analyses results.', "PywavaAutomation/pywavalog.txt")
-    sftp.get('\\Users\\ac-center\\Desktop\\PywavaAutomation\\Pywava\\scan_results.json', 'scan_results.json')
+    sftp.get('\\Users\\ac-center\\Pywava\\scan_results.json', 'scan_results.json')
 
     res = fr.get_stats('scan_results.json')
 

@@ -95,9 +95,9 @@ def runs_(transport, jsonfile, c):
         channel.get_pty(width=int(c))
 
         if file["SCANTYPE"] == "FASTSCAN":
-            channel.exec_command(f'cd \\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA && python pywava.py -b -d -f "\\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA\\Inputs\\{os.path.basename(file["FileName"])}"')
+            channel.exec_command(f'cd \\Users\\ac-center\\PyWAVA && python pywava.py -b -d -f "\\Users\\ac-center\\PyWAVA\\Inputs\\{os.path.basename(file["FileName"])}"')
         if file["SCANTYPE"] == "COMPLETESCAN": 
-            channel.exec_command(f'cd \\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA && python pywava.py -b -cd -f "\\Users\\ac-center\\Desktop\\PywavaAutomation\\PyWAVA\\Inputs\\{os.path.basename(file["FileName"])}"')
+            channel.exec_command(f'cd \\Users\\ac-center\\PyWAVA && python pywava.py -b -cd -f "\\Users\\ac-center\\PyWAVA\\Inputs\\{os.path.basename(file["FileName"])}"')
 
         while not channel.recv_ready():
             pass
