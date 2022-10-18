@@ -32,6 +32,13 @@ def xcopy(js1, f_lst, dst):
 
     for file in f_lst:
         dst_path = dst + os.path.basename(file)
+
+        i = 1
+
+        while os.path.exists(dst_path):
+            dst_path = dst + ".".join(os.path.basename(file).split(".")[:-1]) + f'_{i}' + os.path.basename(file).split(".")[-1]
+            i += 1
+
         copy(file, dst_path)
     
         try:
@@ -43,7 +50,7 @@ def xcopy(js1, f_lst, dst):
         if inp_hash is not None: 
 
             if dst_hash == inp_hash:
-                success(f"File {file} successfully copied.")
+                success(f"File {file} successfully copied to {dst_path}.")
 
                 js_ind = {
                             "FileName": dst_path,
