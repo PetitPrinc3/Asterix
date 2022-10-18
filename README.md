@@ -1,8 +1,10 @@
-# Asterix : Automated Sanitizing Terminal with Embedded Relevant Information eXtraction
+# Asterix (SANDBOX)
 
-![Asterix](Images/banner.png)
+> Automated Sanitizing Terminal with Embedded Relevant Information eXtraction
 
 ## What is this repo ?
+
+<img src="Images/asterix.png" align="right" height="300rem">
 
 This project will be in active development from the 22nd of August 2022 until at least the 10th of November 2022.  
 The ultimate goal is to propose an Open-Source USB malware cleaner kiosk that is portable and offers good functionalities.
