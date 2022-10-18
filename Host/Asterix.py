@@ -18,10 +18,6 @@ subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/shar
 
 log("Cleaned shared folders.", logfile)
 
-subprocess.run('/usr/bin/sudo -u root /usr/bin/python /src/Host/db_create.py', shell=True)
-
-log_from_log('/opt/asterix/dblog.txt', logfile)
-
 subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/USBHandler -it frontend python3 main.py", shell = True)
 
 log_from_log('/var/lib/docker/volumes/DataShare/_data/frontMAINlog.txt', logfile)

@@ -5,7 +5,7 @@ from Asterix_libs.log import *
 def create():
         dblogfile = reset_log("dblog.txt")
         try:
-                conn=sqlite3.connect('USB_ID.db')
+                conn=sqlite3.connect('/src/Host/Administration/USB_ID.db')
                 cur= conn.cursor()
                 print('Database connection opened.')
                 log('Database connection opened.', dblogfile)
@@ -36,6 +36,6 @@ if __name__ == "__main__":
 
         import subprocess
 
-        subprocess.run('/usr/bin/cp USB_ID.db /var/lib/docker/volumes/DataShare/_data/', shell = True)
+        subprocess.run('/usr/bin/cp /src/Host/Administration/USB_ID.db /var/lib/docker/volumes/DataShare/_data/', shell = True)
 
         subprocess.run(f'/usr/bin/chown asterix:asterix /opt/asterix/dblog.txt && /usr/bin/chmod 600 /opt/asterix/dblog.txt', shell = True)

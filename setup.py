@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+from pyfiglet import figlet_format as pfg
+import sqlite3
+import getch
 import subprocess
 import sys
 import os
@@ -10,7 +13,11 @@ from Asterix_libs.spinner import spinner
 
 
 def cmd_run(cmd):
-    if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0: fail('Process failed. This is critical.'); print(cmd); fail("Exiting now."); exit()
+    if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
+        fail('Process failed. This is critical.')
+        print(cmd)
+        fail("Exiting now.")
+        exit()
 
 
 def libimport():
@@ -32,41 +39,47 @@ if not libimport():
     success('Python libraries collected.')
 
 
-import getch
-import sqlite3
-from pyfiglet import figlet_format as pfg
-
-
 print(pfg('AsterixSETUP'))
 
 
-if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode('utf-8').strip() != 'root': fail('This program must be run as root.'); exit()
+if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode('utf-8').strip() != 'root':
+    fail('This program must be run as root.')
+    exit()
 
 
 def get_docker():
     with spinner('Installing Docker Engine...'):
-        subprocess.call("curl -fsSL https://get.docker.com -o get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.call("curl -fsSL https://get.docker.com -o get-docker.sh",
+                        shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         info('Fetched install script.        ')
-        subprocess.call("bash get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.call("bash get-docker.sh", shell=True,
+                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         info('Docker installed.              ')
-        subprocess.call("rm get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.call("systemctl start docker", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.call("systemctl enable docker", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.call("rm get-docker.sh", shell=True,
+                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.call("systemctl start docker", shell=True,
+                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.call("systemctl enable docker", shell=True,
+                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.call("docker version", shell=True)
     success('Docker Engine installed.')
 
 
-if subprocess.run('docker version', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stderr.decode('utf-8').strip() == '/bin/sh: 1: docker: not found': warning('Oops, docker is not installed. Installing now !'); get_docker()
+if subprocess.run('docker version', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stderr.decode('utf-8').strip() == '/bin/sh: 1: docker: not found':
+    warning('Oops, docker is not installed. Installing now !')
+    get_docker()
 
 
-if subprocess.Popen('qemu-system-aarch64 -machine help', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0: 
+if subprocess.Popen('qemu-system-aarch64 -machine help', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
     with spinner('Collecting QEMU KVM...'):
         cmd_run("apt install virt-manager libvirt0 qemu-system -y")
     success('QEMU KVM Installed.')
 
 with spinner('Creating source folders...'):
-    if not os.path.exists("/src"): cmd_run("/usr/bin/mkdir /src")
-    if len(os.listdir("/src")) != 0: cmd_run("/usr/bin/rm -r /src/*")
+    if not os.path.exists("/src"):
+        cmd_run("/usr/bin/mkdir /src")
+    if len(os.listdir("/src")) != 0:
+        cmd_run("/usr/bin/rm -r /src/*")
     cmd_run('/usr/bin/mkdir /src/win10_VM')
 success("Source folders created.")
 
@@ -80,6 +93,8 @@ with spinner('Creating software users'):
         cmd_run("/usr/sbin/usermod -G kvm vm_runner")
     if subprocess.Popen('id asterix', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
         cmd_run("/usr/sbin/useradd -m -d /opt/asterix asterix")
+    if subprocess.Popen('id asterix_admin', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
+        cmd_run("/usr/sbin/useradd asterix_admin")
 success('Software users created.')
 
 
@@ -126,7 +141,8 @@ cmd_run('/usr/bin/chmod -R 000 /src/Host')
 
 
 with spinner('Adding mounting service...'):
-    subprocess.run('rm -r /usr/share/Asterix', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run('rm -r /usr/share/Asterix', shell=True,
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     cmd_run('mkdir -p /usr/share/Asterix/Mounters')
     cmd_run('/usr/bin/cp Host/Mounters/*.sh /usr/share/Asterix/Mounters/')
     cmd_run('/usr/bin/chmod 777 /usr/share/Asterix/Mounters/*.sh')
@@ -149,35 +165,43 @@ success('Host software ready.')
 
 
 with spinner("Building Frontend container. This may take some time..."):
-    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t frontend /src/Frontend"')
-    frontend_img = subprocess.Popen('/usr/bin/docker images --filter=reference=frontend --format "{{.ID}}"', shell = True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    cmd_run(
+        '/usr/bin/su - docker_runner -c "/usr/bin/docker build -t frontend /src/Frontend"')
+    frontend_img = subprocess.Popen(
+        '/usr/bin/docker images --filter=reference=frontend --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
 success("Frontend software installed.")
 
 
 with spinner("Building Backend container. This may take some time..."):
-    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t backend /src/Backend"')
-    backend_img = subprocess.Popen('/usr/bin/docker images --filter=reference=backend --format "{{.ID}}"', shell = True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    cmd_run(
+        '/usr/bin/su - docker_runner -c "/usr/bin/docker build -t backend /src/Backend"')
+    backend_img = subprocess.Popen(
+        '/usr/bin/docker images --filter=reference=backend --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
 success("Backend software installed.")
 
 
 with spinner("Building Brain container. This may take some time..."):
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t brain /src/Brain"')
-    brain_img = subprocess.Popen('/usr/bin/docker images --filter=reference=brain --format "{{.ID}}"', shell = True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    brain_img = subprocess.Popen('/usr/bin/docker images --filter=reference=brain --format "{{.ID}}"',
+                                 shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
 success("Brain software installed.")
 
 
-with spinner('Creating relevant docker volumes...'): 
+with spinner('Creating relevant docker volumes...'):
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBInputDevice"')
     info('USBInputDevice volume created.         ')
-    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"')
+    cmd_run(
+        '/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"')
     info('InputFiles volume created.             ')
-    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name Sanitized"')
+    cmd_run(
+        '/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name Sanitized"')
     info('Sanitized volume created.              ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBOutputDevice"')
     info('USBOutputDevice volume created.        ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name OutputFiles"')
     info('OutputFiles volume created.            ')
-    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name DataShare"')
+    cmd_run(
+        '/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name DataShare"')
     info('DataShare volume created.              ')
 success("All relevant docker volumes created.")
 
@@ -185,36 +209,51 @@ success("All relevant docker volumes created.")
 with spinner('Starting containers...'):
     cmd_run("/usr/bin/cp Host/docker_runner_scripts/boot.sh /opt/docker_runner/boot.sh")
     cmd_run("/usr/bin/cp Host/docker_runner_scripts/run.sh /opt/docker_runner/run.sh")
-    subprocess.run('/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"', shell=True)
-    frontend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=frontend"', shell = True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-    backend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=backend"', shell = True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-    brain_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=brain"', shell = True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    subprocess.run(
+        '/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"', shell=True)
+    frontend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=frontend"', shell=True,
+                                    stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    backend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=backend"', shell=True,
+                                   stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    brain_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=brain"', shell=True,
+                                 stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
 success("Docker containers started.")
 
 
 with spinner('Adding component data to Admin DB...'):
-    conn=sqlite3.connect('/src/Host/Administration/ASTERIX_ADMIN.db')
-    cur= conn.cursor()
-    print('Database connection opened.')
-    sql= 'SELECT sqlite_version();'
+    conn = sqlite3.connect('/src/Host/Administration/ASTERIX_ADMIN.db')
+    cur = conn.cursor()
+    info('Database connection opened.             ')
+    sql = 'SELECT sqlite_version();'
     cur.execute(sql)
-    res=cur.fetchall()
-    print('SQLite Version : ' + res[0][0])
-    cur.execute("""CREATE TABLE IF NOT EXISTS containers (c_name TEXT, c_id TEXT, i_id TEXT)""")
-    cur.execute("""CREATE TABLE IF NOT EXISTS vms (name TEXT, disk TEXT, hash TEXT)""")
-    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""",("frontend",frontend_ctn, frontend_img))
-    print(f'Inserted frontend, {frontend_ctn}, {frontend_img}')
-    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""",("frontend",backend_ctn, backend_img))
-    print(f'Inserted backend, {backend_ctn}, {backend_img}')
-    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""",("frontend",brain_ctn, brain_img))
-    print(f'Inserted brain, {brain_ctn}, {brain_img}')
-    cur.execute("""INSERT INTO vms(name, disk, hash) VALUES (?,?,?)""",("AC-CENTER","/src/win10_VM/system.vhdx", "x5b902ffa10efb18d8066b40cbed89e9a"))
+    res = cur.fetchall()
+    info('SQLite Version : ' + res[0][0] + '      ')
+    cur.execute(
+        """CREATE TABLE IF NOT EXISTS containers (c_name TEXT, c_id TEXT, i_id TEXT)""")
+    cur.execute(
+        """CREATE TABLE IF NOT EXISTS vms (name TEXT, disk TEXT, hash TEXT)""")
+    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""",
+                ("frontend", frontend_ctn, frontend_img))
+    info(f'Inserted frontend, {frontend_ctn}, {frontend_img}')
+    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""",
+                ("backend", backend_ctn, backend_img))
+    info(f'Inserted backend, {backend_ctn}, {backend_img}')
+    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""",
+                ("brain", brain_ctn, brain_img))
+    info(f'Inserted brain, {brain_ctn}, {brain_img}        ')
+    cur.execute("""INSERT INTO vms(name, disk, hash) VALUES (?,?,?)""",
+                ("AC-CENTER", "/src/win10_VM/system.vhdx", "x5b902ffa10efb18d8066b40cbed89e9a"))
     warning(f'Inserted ACCENTER row with default values.')
     conn.commit()
     cur.close()
     conn.close()
-    print('Database connection closed\n')
+    info('Database connection closed              ')
 success('Admin DB set up.')
+
+
+with spinner('Created known USB drives Database...'):
+    cmd_run('/usr/bin/python /src/Host/db_create.py')
+success('Done setting up known USB database.')
 
 
 with spinner('Setting up Administration tools...'):
@@ -233,14 +272,18 @@ with spinner("Fixing user permissions..."):
     cmd_run("/usr/bin/chmod -R g=rwx /opt/docker_runner")
     cmd_run("/usr/bin/chmod -R o=-r-w-x /opt/docker_runner")
     cmd_run("/usr/bin/chmod -R +r /var/lib/docker/volumes/DataShare/_data")
-    cmd_run("chown root:asterix /var/lib/docker")
-    cmd_run("chown root:asterix /var/lib/docker/volumes")
-    cmd_run("chown root:asterix /var/lib/docker/volumes/DataShare")
-    cmd_run("chown root:asterix /var/lib/docker/volumes/DataShare/_data")
+    cmd_run("/usr/bin/chown root:asterix /var/lib/docker")
+    cmd_run("/usr/bin/chown root:asterix /var/lib/docker/volumes")
+    cmd_run("/usr/bin/chown root:asterix /var/lib/docker/volumes/DataShare")
+    cmd_run("/usr/bin/chown root:asterix /var/lib/docker/volumes/DataShare/_data")
     cmd_run("/usr/bin/chmod g=rx /var/lib/docker")
     cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes")
     cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/DataShare")
     cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/DataShare/_data")
+    cmd_run("/usr/bin/chown -R asterix_admin:asterix_admin /src/Host/Administration/*")
+    cmd_run("/usr/bin/chmod u=rwx /src/Host/Administration/*")
+    cmd_run("/usr/bin/chmod g=rwx /src/Host/Administration/*")
+    cmd_run("/usr/bin/chmod o=-r-w-x /src/Host/Administration/*")
 success('Fixed user permissions.')
 
 
@@ -265,13 +308,21 @@ success("Cron Jobs set up.")
 
 
 with spinner("Adding sudoers rules..."):
-    subprocess.run("/usr/bin/cp Host/010_asterix-nopasswd /etc/sudoers.d/010_asterix-nopasswd", shell = True, stdout=subprocess.PIPE)
-subprocess.run("visudo -c", shell = True)
+    subprocess.run("/usr/bin/cp Host/010_asterix-nopasswd /etc/sudoers.d/010_asterix-nopasswd",
+                   shell=True, stdout=subprocess.PIPE)
+subprocess.run("visudo -c", shell=True)
 success("Added sudoers rules.")
 
 
 warning("AC-Center needs to be configured manually, check https://github.com/G4vr0ch3/Asterix/blob/main/AC-Center/README.md")
 
+info('Setup new asterix_admin password :')
+subprocess.call('passwd asterix_admin', shell=True)
+success('Done.')
+
+info('Setup new root password :')
+subprocess.call('passwd root', shell=True)
+success('Done.')
 
 # SETUP END
 success("Exhausted")
