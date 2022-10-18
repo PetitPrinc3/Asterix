@@ -18,9 +18,9 @@ subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/shar
 
 log("Cleaned shared folders.", logfile)
 
-subprocess.run("/usr/bin/sudo -u root /usr/bin/cp /src/Host/Administration/USB_ID.db /var/lib/docker/volumes/DataShare/_data/USB_ID.db", shell = True)
+subprocess.run("/usr/bin/sudo -u /usr/bin/cp /src/Host/Administration/USB_ID.db /var/lib/docker/volumes/DataShare/_data/USB_ID.db", shell = True)
 
-log("Copied database to shared folders.")
+log("Copied database to shared folders.", logfile)
 
 subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/USBHandler -it frontend python3 main.py", shell = True)
 

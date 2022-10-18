@@ -317,10 +317,17 @@ def usb_enroll():
     with spinner("Plug USB drive to enroll in Input port..."):
     
         while not os.path.exists("/dev/USBInputDisk"):
-            sleep(.5)
+            try:
+                sleep(.5)
+            except KeyboardInterrupt:
+                fail('Keyboard Interruption Detected. Exiting.')
+                exit()
+    
+    success('USB Device detected.')
 
-    idProduct=os.popen(f'udevadm info -q all -a /dev/USBInputDisk | grep idProduct | cut -d "=" -f 3 | head -n 1').read().strip()
-    idVendor=os.popen(f'udevadm info -q all -a /dev/USBInputDisk | grep idVendor | cut -d "=" -f 3 | head -n 1').read().strip()
+    idProduct="".join(os.popen(f'udevadm info -q all -a /dev/USBInputDisk | grep idProduct | cut -d "=" -f 3 | head -n 1').read().strip().split('"'))
+    idVendor="".join(os.popen(f'udevadm info -q all -a /dev/USBInputDisk | grep idVendor | cut -d "=" -f 3 | head -n 1').read().strip().split('"'))
+    print(idProduct, idVendor)
     conn=sqlite3.connect('/src/Host/Administration/USB_ID.db')
     cur= conn.cursor()
     print('Database connection opened.')
@@ -336,7 +343,7 @@ def usb_enroll():
     conn.close()
     print('Database connection closed\n')
 
-    cmd_run('/bin/cp /src/Host/Administration/USB_ID.db /var/lib/docker/volumes/DataShare/_data/USB_ID.db')
+    cmd_run('/bin/cp /src/Host/Administration/USB_ID.db /opt/asterix/USB_ID.db')
 
 
 def main():
