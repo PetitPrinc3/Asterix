@@ -30,12 +30,12 @@ def libimport():
     except:
         return False
 
+cmd_run(f'cp -r Host/Host_libs {sys.path[2]}')
+cmd_run(f'cp -r Asterix_libs {sys.path[2]}')
 
 if not libimport():
     with spinner("Collecting Python libraries..."):
         cmd_run('pip install getch pyfiglet paramiko')
-        cmd_run(f'cp -r Host/Host_libs {sys.path[2]}')
-        cmd_run(f'cp -r Asterix_libs {sys.path[2]}')
     success('Python libraries collected.')
 
 
