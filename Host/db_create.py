@@ -38,5 +38,3 @@ if __name__ == "__main__":
 
         subprocess.run('/usr/bin/cp /src/Host/Administration/USB_ID.db /var/lib/docker/volumes/DataShare/_data/', shell = True)
         subprocess.run('/usr/bin/chmod a=rx /var/lib/docker/volumes/DataShare/_data/USB_ID.db', shell = True)
-
-        subprocess.run(f'/usr/bin/chown asterix:asterix /opt/asterix/dblog.txt && /usr/bin/chmod 600 /opt/asterix/dblog.txt', shell = True)

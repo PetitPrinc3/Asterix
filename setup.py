@@ -209,14 +209,10 @@ success("All relevant docker volumes created.")
 with spinner('Starting containers...'):
     cmd_run("/usr/bin/cp Host/docker_runner_scripts/boot.sh /opt/docker_runner/boot.sh")
     cmd_run("/usr/bin/cp Host/docker_runner_scripts/run.sh /opt/docker_runner/run.sh")
-    subprocess.run(
-        '/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"', shell=True)
-    frontend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=frontend"', shell=True,
-                                    stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-    backend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=backend"', shell=True,
-                                   stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-    brain_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=brain"', shell=True,
-                                 stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    subprocess.run('/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"', shell=True)
+    frontend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=frontend"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    backend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=backend"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    brain_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=brain"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
 success("Docker containers started.")
 
 
@@ -228,21 +224,15 @@ with spinner('Adding component data to Admin DB...'):
     cur.execute(sql)
     res = cur.fetchall()
     info('SQLite Version : ' + res[0][0] + '      ')
-    cur.execute(
-        """CREATE TABLE IF NOT EXISTS containers (c_name TEXT, c_id TEXT, i_id TEXT)""")
-    cur.execute(
-        """CREATE TABLE IF NOT EXISTS vms (name TEXT, disk TEXT, hash TEXT)""")
-    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""",
-                ("frontend", frontend_ctn, frontend_img))
+    cur.execute("""CREATE TABLE IF NOT EXISTS containers (c_name TEXT, c_id TEXT, i_id TEXT)""")
+    cur.execute("""CREATE TABLE IF NOT EXISTS vms (name TEXT, disk TEXT, hash TEXT)""")
+    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""", ("frontend", frontend_ctn, frontend_img))
     info(f'Inserted frontend, {frontend_ctn}, {frontend_img}')
-    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""",
-                ("backend", backend_ctn, backend_img))
+    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""", ("backend", backend_ctn, backend_img))
     info(f'Inserted backend, {backend_ctn}, {backend_img}')
-    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""",
-                ("brain", brain_ctn, brain_img))
+    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""", ("brain", brain_ctn, brain_img))
     info(f'Inserted brain, {brain_ctn}, {brain_img}        ')
-    cur.execute("""INSERT INTO vms(name, disk, hash) VALUES (?,?,?)""",
-                ("ACCENTER", "/src/win10_VM/system.vhdx", "5b902ffa10efb18d8066b40cbed89e9a"))
+    cur.execute("""INSERT INTO vms(name, disk, hash) VALUES (?,?,?)""", ("ACCENTER", "/src/win10_VM/system.vhdx", "5b902ffa10efb18d8066b40cbed89e9a"))
     warning(f'Inserted ACCENTER row with default values.')
     conn.commit()
     cur.close()
