@@ -288,8 +288,7 @@ def fetch_glob(vm_integrity_checked):
                 container_id = container[1]
                 container_status = get_status_container(
                     container_name, container_id)
-                print('| ' + container_name[-container_name_size:] + " "*(max(container_name_size, 11) - len(container_name[-container_name_size:]) - 2) + " | " +
-                      container_id[-container_id_size:] + " "*(container_id_size - len(container_id[-container_id_size:])) + " | " + container_status + "      |")
+                print('| ' + container_name[-container_name_size:] + " "*(max(container_name_size, 11) - len(container_name[-container_name_size:]) - 2) + " | " + container_id[-container_id_size:] + " "*(container_id_size - len(container_id[-container_id_size:])) + " | " + container_status + "      |")
 
     vms = get_vms()
 
@@ -308,7 +307,7 @@ def fetch_glob(vm_integrity_checked):
                 vm_status = get_status_vm(vm_integrity_checked)
 
                 print('| ' + vm_name[-container_name_size:] + " "*(max(container_name_size, 11) - len(
-                    vm_name[-container_name_size:]) - 2) + " | NONE " + " "*max(container_id_size - 4, 0) + "| " + vm_status + " |")
+                    vm_name[-container_name_size:]) - 2) + " | " + vm_hash[-container_id_size:] + " "*(container_id_size - len(vm_hash[-container_id_size:])) + " | " + vm_status + " |")
 
     print('|_'+"_"*max(container_name_size, 9) + "_|_" +
           "_"*container_id_size + "_|___________________|")
