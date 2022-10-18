@@ -341,9 +341,7 @@ def usb_enroll():
     conn.commit()
     cur.close()
     conn.close()
-    print('Database connection closed\n')
-
-    cmd_run('/bin/cp /src/Host/Administration/USB_ID.db /opt/asterix/USB_ID.db')
+    print('Database connection closed')
 
 
 def main():
@@ -365,8 +363,9 @@ Actions :
 4) Restart VMs
 5) VMs check
 6) VM RESET
-7) Log check
-8) Enroll new trusted USB device
+7) Stop All
+8) Log check
+9) Enroll new trusted USB device
 q) Exit
 
 """)
@@ -405,10 +404,28 @@ q) Exit
                 reset_vm()
 
             elif choice == "7":
+                kill_vm()
+                containers = get_containers()
+
+                conn = sqlite3.connect(database)
+                cur = conn.cursor()
+
+                for container in containers:
+                    container_name = container[0]
+                    container_id = container[1]
+                    container_image = container[2]
+
+                    with spinner(f'Killing container {container_name}...'):
+                        subprocess.call(f'/usr/bin/docker container kill {container_id}',
+                                        shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                    info(f'Killed container {container_name}.')
+
+
+            elif choice == "8":
                 info('Selected log check.')
                 log_check()
 
-            elif choice == "8":
+            elif choice == "9":
                 info('Selected new USB device enrolment.')
                 usb_enroll()
 
