@@ -33,6 +33,23 @@ RUN chmod -R u=rwx /usr/share/PyrateAutomation
 RUN chmod -R g=rx /usr/share/PyrateAutomation
 RUN chmod -R o=-r-w-x /usr/share/PyrateAutomation
 
+# Give volume permissions to user
+RUN mkdir /mnt/USBInputDevice
+RUN chown -R asterix:asterix /mnt/USBInputDevice
+RUN chmod -R u=rx /mnt/USBInputDevice
+
+RUN mkdir /mnt/InputFiles
+RUN chown -R asterix:asterix /mnt/InputFiles
+RUN chmod -R u=rwx /mnt/InputFiles
+
+RUN mkdir /mnt/DataShare
+RUN chown -R asterix:asterix /mnt/DataShare
+RUN chmod -R u=rwx /mnt/DataShare
+
+RUN mkdir /mnt/Sanitized
+RUN chown -R asterix:asterix /mnt/Sanitized
+RUN chmod -R u=rwx /mnt/Sanitized
+
 # Switch to Asterix user
 USER asterix
 

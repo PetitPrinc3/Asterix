@@ -142,8 +142,7 @@ cmd_run('/usr/bin/chmod -R 000 /src/Host')
 
 
 with spinner('Adding mounting service...'):
-    subprocess.run('rm -r /usr/share/Asterix', shell=True,
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run('rm -r /usr/share/Asterix', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     cmd_run('mkdir -p /usr/share/Asterix/Mounters')
     cmd_run('/usr/bin/cp Host/Mounters/*.sh /usr/share/Asterix/Mounters/')
     cmd_run('/usr/bin/chmod 777 /usr/share/Asterix/Mounters/*.sh')
@@ -166,25 +165,20 @@ success('Host software ready.')
 
 
 with spinner("Building Frontend container. This may take some time..."):
-    cmd_run(
-        '/usr/bin/su - docker_runner -c "/usr/bin/docker build -t frontend /src/Frontend"')
-    frontend_img = subprocess.Popen(
-        '/usr/bin/docker images --filter=reference=frontend --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t frontend /src/Frontend"')
+    frontend_img = subprocess.Popen('/usr/bin/docker images --filter=reference=frontend --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
 success("Frontend software installed.")
 
 
 with spinner("Building Backend container. This may take some time..."):
-    cmd_run(
-        '/usr/bin/su - docker_runner -c "/usr/bin/docker build -t backend /src/Backend"')
-    backend_img = subprocess.Popen(
-        '/usr/bin/docker images --filter=reference=backend --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t backend /src/Backend"')
+    backend_img = subprocess.Popen('/usr/bin/docker images --filter=reference=backend --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
 success("Backend software installed.")
 
 
 with spinner("Building Brain container. This may take some time..."):
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t brain /src/Brain"')
-    brain_img = subprocess.Popen('/usr/bin/docker images --filter=reference=brain --format "{{.ID}}"',
-                                 shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    brain_img = subprocess.Popen('/usr/bin/docker images --filter=reference=brain --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
 success("Brain software installed.")
 
 
