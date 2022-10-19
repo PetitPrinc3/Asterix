@@ -211,6 +211,31 @@ with spinner('Starting containers...'):
 success("Docker containers started.")
 
 
+with spinner("Fixing user permissions..."):
+    cmd_run("/usr/bin/cp Host/Asterix.py /opt/asterix/Asterix.py")
+    cmd_run("/usr/bin/chown -R asterix:asterix /opt/asterix")
+    cmd_run("/usr/bin/chmod -R u=rwx /opt/asterix")
+    cmd_run("/usr/bin/chmod -R g=rwx /opt/asterix")
+    cmd_run("/usr/bin/chmod -R o=-r-w-x /opt/asterix")
+    cmd_run("/usr/bin/chown -R docker_runner:docker_runner /opt/docker_runner")
+    cmd_run("/usr/bin/chmod -R u=rwx /opt/docker_runner")
+    cmd_run("/usr/bin/chmod -R g=rwx /opt/docker_runner")
+    cmd_run("/usr/bin/chmod -R o=-r-w-x /opt/docker_runner")
+    cmd_run("/usr/bin/chown root:asterix /var/lib/docker/")
+    cmd_run("/usr/bin/chown root:asterix /var/lib/docker/volumes/")
+    cmd_run("/usr/bin/chown root:asterix /var/lib/docker/volumes/DataShare/")
+    cmd_run("/usr/bin/chown root:asterix /var/lib/docker/volumes/DataShare/_data/")
+    cmd_run("/usr/bin/chmod g=rx /var/lib/docker/")
+    cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/")
+    cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/DataShare/")
+    cmd_run("/usr/bin/chmod -R g=rx /var/lib/docker/volumes/DataShare/_data/")
+    cmd_run("/usr/bin/chown -R asterix_admin:asterix_admin /src/Host/Administration/*")
+    cmd_run("/usr/bin/chmod u=rwx /src/Host/Administration/*")
+    cmd_run("/usr/bin/chmod g=rwx /src/Host/Administration/*")
+    cmd_run("/usr/bin/chmod o=-r-w-x /src/Host/Administration/*")
+success('Fixed user permissions.')
+
+
 with spinner('Adding component data to Admin DB...'):
     conn = sqlite3.connect('/src/Host/Administration/ASTERIX_ADMIN.db')
     cur = conn.cursor()
@@ -248,31 +273,6 @@ with spinner('Setting up Administration tools...'):
     cmd_run('/usr/bin/chmod g=rx /bin/asterix-admin')
     cmd_run('/usr/bin/chmod o=-r-w-x /bin/asterix-admin')
 success('Administration tools ready.')
-
-
-with spinner("Fixing user permissions..."):
-    cmd_run("/usr/bin/cp Host/Asterix.py /opt/asterix/Asterix.py")
-    cmd_run("/usr/bin/chown -R asterix:asterix /opt/asterix")
-    cmd_run("/usr/bin/chmod -R u=rwx /opt/asterix")
-    cmd_run("/usr/bin/chmod -R g=rwx /opt/asterix")
-    cmd_run("/usr/bin/chmod -R o=-r-w-x /opt/asterix")
-    cmd_run("/usr/bin/chown -R docker_runner:docker_runner /opt/docker_runner")
-    cmd_run("/usr/bin/chmod -R u=rwx /opt/docker_runner")
-    cmd_run("/usr/bin/chmod -R g=rwx /opt/docker_runner")
-    cmd_run("/usr/bin/chmod -R o=-r-w-x /opt/docker_runner")
-    cmd_run("/usr/bin/chown root:asterix /var/lib/docker/")
-    cmd_run("/usr/bin/chown root:asterix /var/lib/docker/volumes/")
-    cmd_run("/usr/bin/chown root:asterix /var/lib/docker/volumes/DataShare/")
-    cmd_run("/usr/bin/chown root:asterix /var/lib/docker/volumes/DataShare/_data/")
-    cmd_run("/usr/bin/chmod g=rx /var/lib/docker/")
-    cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/")
-    cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/DataShare/")
-    cmd_run("/usr/bin/chmod -R g=rx /var/lib/docker/volumes/DataShare/_data/")
-    cmd_run("/usr/bin/chown -R asterix_admin:asterix_admin /src/Host/Administration/*")
-    cmd_run("/usr/bin/chmod u=rwx /src/Host/Administration/*")
-    cmd_run("/usr/bin/chmod g=rwx /src/Host/Administration/*")
-    cmd_run("/usr/bin/chmod o=-r-w-x /src/Host/Administration/*")
-success('Fixed user permissions.')
 
 
 info("Seting up AC-Center environment...")
