@@ -31,7 +31,8 @@ def xcopy(js1, f_lst, dst):
     js_out, f = [], []
 
     for file in f_lst:
-        dst_path = dst + os.path.basename(file)
+        
+        dst_path = dst + "_".join(os.path.basename(file).split(" "))
 
         i = 1
 
@@ -53,6 +54,7 @@ def xcopy(js1, f_lst, dst):
                 success(f"File {file} successfully copied to {dst_path}.")
 
                 js_ind = {
+                            "Origin": file,
                             "FileName": dst_path,
                             "HASH": dst_hash
                         }
