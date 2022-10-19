@@ -48,15 +48,15 @@ You will also find functionnalities that have not been implemented but were part
 
 | Item | Status | Completion | Comment |
 | :-: | :-: | :-: | :-: |
-| Frontend | :green_circle: | 100% | Done. |
-| Backend | :green_circle: | 100% | Gave up on drive formatting. |
-| AC-Center (ARM) | :yellow_circle: | 99% | SSH Identity. |
+| Frontend | :green_circle: | 99% | USER |
+| Backend | :green_circle: | 99% | USER |
+| [AC-Center (ARM)](https://github.com/G4vr0ch3/Asterix/tree/main/AC-Center#ac-center-for-arm-devices) | :green_circle: | 99% | Hardening |
 | AC-Center (x64) | :hourglass: | 0% |  |
-| Brain | :green_circle: | 100% | Implementing ssh interraction with other containers ? |
-| Host | :orange_circle: | 50% | Main soft/Hardening/GUI. |
-| Installer | :orange_circle: | 70% |  |
+| Brain | :green_circle: | 99% | USER |
+| Host | :yellow_circle: | 80% | Hardening/GUI. |
+| Installer | :yellow_circle: | 85% |  |
 | Hardware | :orange_circle: | 75% | Case. |
-| [Website](https://g4vr0ch3.github.io/Asterix) | :orange_circle: | 15% | Under construction |
+| [Website](https://g4vr0ch3.github.io/Asterix) | :orange_circle: | 30% | Under construction |
 
 | ![](Images/status.png) |
 | :-: |
