@@ -37,4 +37,4 @@ RUN chmod -R o=-r-w-x /usr/share/PyrateAutomation
 USER asterix
 
 # Install requirements
-RUN pip3 install -r /usr/share/PyrateAutomation/Pyrate/requirements.txt --root-user-action=ignore
+RUN pip3 install -r /usr/share/PyrateAutomation/Pyrate/requirements.txt
