@@ -20,7 +20,7 @@ RUN chmod -R o=-r-w-x /usr/share/USBHandler
 
 # Adding shared libraries
 ADD Asterix_libs /usr/lib/python3.10/Asterix_libs
-RUN chmod 777 /usr/lib/python3.10
+RUN chmod 777 /usr/lib/python3.10/Asterix_libs
 
 # Give volume permissions to user
 RUN mkdir /mnt/USBOutputDevice

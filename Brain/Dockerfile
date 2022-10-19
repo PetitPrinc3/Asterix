@@ -14,7 +14,7 @@ RUN python3 -m ensurepip
 
 # Adding shared libraries
 ADD Asterix_libs /usr/lib/python3.10/Asterix_libs
-RUN chmod 777 /usr/lib/python3.10
+RUN chmod 777 /usr/lib/python3.10/Asterix_libs
 
 # Adding Python softwares
 ADD PythonHandler /usr/share/PythonHandler
