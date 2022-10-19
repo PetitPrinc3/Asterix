@@ -318,7 +318,7 @@ while True:
             break
 
         elif choice == 'y':
-            success('Skipped.')
+            success('Starting AC Center.')
 
             import paramiko
 
@@ -332,7 +332,9 @@ while True:
 
             paramiko.util.log_to_file('/dev/null')
 
-            subprocess.run("/bin/bash /src/win10_VM/run.sh &", shell=True)
+            cmd_run('/usr/bin/cp AC-Center/vm_run.sh /src/win10_VM/vm_run.sh')
+
+            subprocess.run("/bin/bash /src/win10_VM/vm_run.sh &", shell=True)
 
             with spinner('Restarting VM...'):
 
