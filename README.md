@@ -93,6 +93,26 @@ You will also find functionnalities that have not been implemented but were part
 | R7 | Our device must be easily transportable. | :yellow_circle: | 70% - No case |
 | R8 | Our device must be updatable using a trusted USB medium. | :red_circle: | 0% - Not implemented |
 
+## Installation
+
+> :warning: The project is not yet production-ready. Implement it at you own risk.
+
+To install the software :
+- First download the latest [release](https://github.com/G4vr0ch3/Asterix/releases)
+
+```
+~$ wget https://codeload.github.com/G4vr0ch3/Asterix/zip/refs/tags/<RELEASE TAG>
+```
+- Unzip the source code.
+```
+~$ unzip <RELEASE TAG>
+```
+- Install the software using setup.py
+```
+~$ python setup.py
+```
+- Follow the instructions (Don't forget to manually setup the AC-Center.)
+- You're done ! Enjoy.
 
 ## Contributing to the project
 
