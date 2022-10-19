@@ -8,5 +8,3 @@ asterix ALL=(docker_runner) NOPASSWD: /usr/bin/docker exec -w /usr/share/PythonH
 asterix ALL=(root) NOPASSWD: /usr/bin/cp /src/Host/Administration/USB_ID.db /var/lib/docker/volumes/DataShare/_data/USB_ID.db
 asterix ALL=(root) NOPASSWD: /bin/bash /src/Host/eject_devices.sh
 asterix ALL=(root) NOPASSWD: /usr/bin/python /src/Host/db_create.py
-
-asterix_admin ALL=(root) asterix-admin
