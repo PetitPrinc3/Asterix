@@ -164,24 +164,6 @@ success("UDEV rules added.")
 success('Host software ready.')
 
 
-with spinner("Building Frontend container. This may take some time..."):
-    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t frontend /src/Frontend"')
-    frontend_img = subprocess.Popen('/usr/bin/docker images --filter=reference=frontend --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-success("Frontend software installed.")
-
-
-with spinner("Building Backend container. This may take some time..."):
-    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t backend /src/Backend"')
-    backend_img = subprocess.Popen('/usr/bin/docker images --filter=reference=backend --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-success("Backend software installed.")
-
-
-with spinner("Building Brain container. This may take some time..."):
-    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t brain /src/Brain"')
-    brain_img = subprocess.Popen('/usr/bin/docker images --filter=reference=brain --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-success("Brain software installed.")
-
-
 with spinner('Creating relevant docker volumes...'):
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBInputDevice"')
     info('USBInputDevice volume created.         ')
@@ -199,16 +181,6 @@ with spinner('Creating relevant docker volumes...'):
         '/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name DataShare"')
     info('DataShare volume created.              ')
 success("All relevant docker volumes created.")
-
-
-with spinner('Starting containers...'):
-    cmd_run("/usr/bin/cp Host/docker_runner_scripts/boot.sh /opt/docker_runner/boot.sh")
-    cmd_run("/usr/bin/cp Host/docker_runner_scripts/run.sh /opt/docker_runner/run.sh")
-    subprocess.run('/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"', shell=True)
-    frontend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=frontend"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-    backend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=backend"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-    brain_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=brain"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-success("Docker containers started.")
 
 
 with spinner("Fixing user permissions..."):
@@ -230,6 +202,34 @@ with spinner("Fixing user permissions..."):
     cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/DataShare/")
     cmd_run("/usr/bin/chmod -R g=rx /var/lib/docker/volumes/DataShare/_data/")
 success('Fixed user permissions.')
+
+
+with spinner("Building Frontend container. This may take some time..."):
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t frontend /src/Frontend"')
+    frontend_img = subprocess.Popen('/usr/bin/docker images --filter=reference=frontend --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+success("Frontend software installed.")
+
+
+with spinner("Building Backend container. This may take some time..."):
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t backend /src/Backend"')
+    backend_img = subprocess.Popen('/usr/bin/docker images --filter=reference=backend --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+success("Backend software installed.")
+
+
+with spinner("Building Brain container. This may take some time..."):
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t brain /src/Brain"')
+    brain_img = subprocess.Popen('/usr/bin/docker images --filter=reference=brain --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+success("Brain software installed.")
+
+
+with spinner('Starting containers...'):
+    cmd_run("/usr/bin/cp Host/docker_runner_scripts/boot.sh /opt/docker_runner/boot.sh")
+    cmd_run("/usr/bin/cp Host/docker_runner_scripts/run.sh /opt/docker_runner/run.sh")
+    subprocess.run('/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"', shell=True)
+    frontend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=frontend"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    backend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=backend"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    brain_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=brain"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+success("Docker containers started.")
 
 
 with spinner('Adding component data to Admin DB...'):
