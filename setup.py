@@ -1,16 +1,17 @@
 #!/usr/bin/python3
 
-from pyfiglet import figlet_format as pfg
+import subprocess
 import sqlite3
 import getch
-import subprocess
 import sys
 import os
 
 from re import sub
+from time import sleep
 from Asterix_libs.prints import *
 from Asterix_libs.spinner import spinner
 
+from pyfiglet import figlet_format as pfg
 
 def cmd_run(cmd):
     if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
@@ -339,8 +340,9 @@ while True:
             with spinner('Restarting VM...'):
 
                 ready = False
+                tmout = 0
 
-                while not ready:
+                while not ready and tmout < 120:
 
                     try:
                         client.connect(target, port=10022,
@@ -353,8 +355,11 @@ while True:
 
                     except Exception as _e:
                         ready = False
+                        tmout += 1
+                        sleep(1)
 
-            if ready: success('VM restarted.')
+            if ready and tmout < 120: success('VM restarted.')
+            elif ready and tmout >= 120: fail('VM timed out.')
             else: warning('VM not ready.')
             break
 

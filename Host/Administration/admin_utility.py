@@ -179,8 +179,9 @@ def start_vm():
     with spinner('Restarting VM...'):
 
         ready = False
+        tmout = 0
 
-        while not ready:
+        while not ready and tmout < 120:
 
             try:
                 client.connect(target, port=10022,
@@ -188,9 +189,11 @@ def start_vm():
                 ready = True
             except Exception as _e:
                 ready = False
+                sleep(1)
+                tmout += 1
 
-    success('VM restarted.')
-
+    if tmout < 120 : success('VM restarted.')
+    else: fail('Timed out.')
 
 def kill_vm():
 
