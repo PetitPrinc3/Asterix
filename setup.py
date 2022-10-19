@@ -329,8 +329,12 @@ while True:
             paramiko.util.log_to_file('/dev/null')
 
             cmd_run('/usr/bin/cp AC-Center/vm_run.sh /src/win10_VM/vm_run.sh')
+            cmd_run('/usr/bin/chown vm_runner:vm_runner /src/win10_VM/vm_run.sh')
+            cmd_run('/usr/bin/chmod u=rx /src/win10_VM/vm_run.sh')
+            cmd_run('/usr/bin/chmod g=rx /src/win10_VM/vm_run.sh')
+            cmd_run('/usr/bin/chmod o=-r-w-x /src/win10_VM/vm_run.sh')
 
-            subprocess.run("/bin/bash /src/win10_VM/vm_run.sh &", shell=True)
+            subprocess.run("/usr/bin/sudo -u vm_runner /bin/bash /src/win10_VM/vm_run.sh &", shell=True)
 
             with spinner('Restarting VM...'):
 
