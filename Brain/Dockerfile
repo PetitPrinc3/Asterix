@@ -18,6 +18,7 @@ RUN chmod 777 /usr/lib/python3.10
 
 # Adding Python softwares
 ADD PythonHandler /usr/share/PythonHandler
+RUN chown -R asterix:asterix /usr/share/PythonHandler
 RUN chmod -R u=rwx /usr/share/PythonHandler
 RUN chmod -R g=rx /usr/share/PythonHandler
 RUN chmod -R o=-r-w-x /usr/share/PythonHandler
