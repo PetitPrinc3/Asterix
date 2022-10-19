@@ -330,8 +330,8 @@ def usb_enroll():
     
     success('USB Device detected.')
 
-    idProduct="".join(os.popen(f'udevadm info -q all -a /dev/USBInputDisk | grep idProduct | cut -d "=" -f 3 | head -n 1').read().strip().split('"'))
-    idVendor="".join(os.popen(f'udevadm info -q all -a /dev/USBInputDisk | grep idVendor | cut -d "=" -f 3 | head -n 1').read().strip().split('"'))
+    idProduct="".join(os.popen(f'/usr/bin/udevadm info -q all -a /dev/USBInputDisk | grep idProduct | cut -d "=" -f 3 | head -n 1').read().strip().split('"'))
+    idVendor="".join(os.popen(f'/usr/bin/udevadm info -q all -a /dev/USBInputDisk | grep idVendor | cut -d "=" -f 3 | head -n 1').read().strip().split('"'))
     print(idProduct, idVendor)
     conn=sqlite3.connect('/src/Host/Administration/USB_ID.db')
     cur= conn.cursor()
@@ -347,6 +347,17 @@ def usb_enroll():
     cur.close()
     conn.close()
     print('Database connection closed')
+
+
+def reset_vm():
+    kill_vm()
+
+    # with spinner('Restoring VM files.'):
+    #     subprocess.call('/usr/bin/rm /src/win10_VM/*', shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+    #     cmd_run('/usr/bin/cp /src/win10_VM/Backup/System_Backup.vhdx /src/win10_VM/system.vhdx')
+    #     cmd_run('/usr/bin/cp /src/AC-Center/vm_run.sh /src/win10_VM/vm_run.sh')
+    #     cmd_run('/usr/bin/cp /usr/share/AAVMF/AAVMF_CODE.fd /src/win10_VM/AAVMF_CODE.fd')
+    #     cmd_run('/usr/bin/cp /usr/share/AAVMS/AAVMF_VARS.fd /src/win10_VM/AAVMF_VARS.fd')
 
 
 def main():
