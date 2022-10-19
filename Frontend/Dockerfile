@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN useradd asterix
+RUN addgroup -S asterix && adduser -S asterix -G asterix
 
 # Installing software dependencies
 RUN apk add gcc
