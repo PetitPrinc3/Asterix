@@ -12,7 +12,6 @@ RUN apk add poppler-utils
 
 # Installing pip
 RUN python3 -m ensurepip
-RUN python3 -m pip install --upgrade pip
 
 # Adding USB Input disk handler
 ADD USBHandler/* /usr/share/USBHandler/
@@ -54,4 +53,5 @@ RUN chmod -R u=rwx /mnt/Sanitized
 USER asterix
 
 # Install requirements
+RUN python3 -m pip install --upgrade pip
 RUN pip3 install -r /usr/share/PyrateAutomation/Pyrate/requirements.txt
