@@ -229,10 +229,6 @@ with spinner("Fixing user permissions..."):
     cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/")
     cmd_run("/usr/bin/chmod g=rx /var/lib/docker/volumes/DataShare/")
     cmd_run("/usr/bin/chmod -R g=rx /var/lib/docker/volumes/DataShare/_data/")
-    cmd_run("/usr/bin/chown -R asterix_admin:asterix_admin /src/Host/Administration/*")
-    cmd_run("/usr/bin/chmod u=rwx /src/Host/Administration/*")
-    cmd_run("/usr/bin/chmod g=rwx /src/Host/Administration/*")
-    cmd_run("/usr/bin/chmod o=-r-w-x /src/Host/Administration/*")
 success('Fixed user permissions.')
 
 
