@@ -374,6 +374,37 @@ info('Setup new root password :')
 subprocess.call('passwd root', shell=True)
 success('Done.')
 
+
+with spinner('Setting asterix as default user...'):
+
+    cmd_run('/usr/bin/cp /etc/lightdm/lightdm.conf lightdm.conf.backup')
+    
+    with open('lightdm.conf.backup', 'r') as old:
+        
+        origin = old.readlines()
+
+        old.close()
+
+    with open('/etc/lightdm/lightdm.conf', 'w') as new:
+
+        for line in origin:
+
+            if line.startswith('autologin-user='):
+                new_line = 'autologin-user=asterix\n'
+
+                new.write(new_line)
+            
+            else:
+                new.write(line)
+
+        new.close()
+
+success('Asterix is the new default user.')
+
+
+warning('A reboot is required to complete the setup.')
+
+
 success('You can now use Asterix while the setup finishes.')
 
 with spinner("Backing up VM disk..."):
