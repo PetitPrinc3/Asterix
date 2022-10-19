@@ -6,12 +6,15 @@ import getch
 import sys
 import os
 
+
 from re import sub
 from time import sleep
 from Asterix_libs.prints import *
 from Asterix_libs.spinner import spinner
 
+
 from pyfiglet import figlet_format as pfg
+
 
 def cmd_run(cmd):
     if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
@@ -31,8 +34,10 @@ def libimport():
     except:
         return False
 
+
 cmd_run(f'cp -r Host/Host_libs {sys.path[2]}')
 cmd_run(f'cp -r Asterix_libs {sys.path[2]}')
+
 
 if not libimport():
     with spinner("Collecting Python libraries..."):
@@ -374,6 +379,7 @@ info('Setup new asterix_admin password :')
 subprocess.call('passwd asterix_admin', shell=True)
 success('Done.')
 
+
 info('Setup new root password :')
 subprocess.call('passwd root', shell=True)
 success('Done.')
@@ -411,6 +417,7 @@ warning('A reboot is required to complete the setup.')
 
 success('You can now use Asterix while the setup finishes.')
 
+
 with spinner("Backing up VM disk..."):
     if os.path.exists("/src/win10_VM/system.vhdx"):
         cmd_run('/usr/bin/mkdir -p /src/win10_VM/Backup')
@@ -423,6 +430,7 @@ with spinner("Backing up VM disk..."):
         fail('No DISK found to backup.')
         exit()
 success('VM Disk backed up.')
+
 
 # SETUP END
 success("Exhausted")
