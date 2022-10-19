@@ -17,7 +17,7 @@ port = 10022
 username = 'ac-center'
 password = 'ac-center'
 
-database = 'ASTERIX_ADMIN.db'
+database = '/src/Host/Administration/ASTERIX_ADMIN.db'
 
 
 def vm_check():
@@ -37,7 +37,7 @@ def vm_check():
                 disk_hash = vm[2]
 
     with spinner('Computing disk hash...'):
-        md5hash = subprocess.Popen(f'/usr/bin/md5sum {disk_path}', shell = True, stdout = subprocess.PIPE).stdout.read().strip().split(" ")[0]
+        md5hash = subprocess.Popen(f'/usr/bin/md5sum {disk_path}', shell = True, stdout = subprocess.PIPE).stdout.read().decode('utf-8').strip().split(" ")[0]
     success(f'Calculated md5 sum : {md5hash}')
     if md5hash != disk_hash:
         warning(f'Hashes do not match {disk_hash}:{md5hash}. VM Might be corrupted.')
@@ -140,10 +140,12 @@ def get_status_vm(vm_integrity_checked):
         if transport.is_active():
             try:
                 transport.send_ignore()
-                if vm_integrity_checked:
+                if vm_integrity_checked is None:
+                    return '\U0001F535 Connected     '
+                elif vm_integrity_checked:
                     return '\U0001F7E2 Connected     '
                 else:
-                    return '\U0001F535 Connected (UC)'
+                    return '\U0001F534 Connected (UC)'
             except Exception as _e:
                 return '\U0001F7E1 Error         '
         else:
@@ -349,7 +351,7 @@ def usb_enroll():
 
 def main():
 
-    vm_integrity_checked = False
+    vm_integrity_checked = None
 
     while True:
 

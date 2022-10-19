@@ -9,3 +9,4 @@ asterix ALL=(root) NOPASSWD: /usr/bin/cp /src/Host/Administration/USB_ID.db /var
 asterix ALL=(root) NOPASSWD: /bin/bash /src/Host/eject_devices.sh
 asterix ALL=(root) NOPASSWD: /usr/bin/python /src/Host/db_create.py
 
+asterix_admin ALL=(root) asterix-admin

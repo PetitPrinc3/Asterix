@@ -1,0 +1,1 @@
+%asterix_admin ALL=(root:root) PASSWD: /bin/asterix-admin
