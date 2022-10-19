@@ -174,7 +174,7 @@ def start_vm():
 
     paramiko.util.log_to_file('/dev/null')
 
-    subprocess.run("/bin/bash /src/win10_VM/run.sh &", shell=True)
+    subprocess.run("/bin/bash /src/win10_VM/vm_run.sh &", shell=True)
 
     with spinner('Restarting VM...'):
 
