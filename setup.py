@@ -152,8 +152,8 @@ success('Created mounting service.')
 
 
 with spinner('Adding UDEV rules...'):
-    cmd_run("/usr/bin/cp Host/00-frontend.rules /etc/udev/rules.d")
-    cmd_run("/usr/bin/cp Host/00-backend.rules /etc/udev/rules.d")
+    cmd_run("/usr/bin/cp Host/UDEV/00-frontend.rules /etc/udev/rules.d")
+    cmd_run("/usr/bin/cp Host/UDEV/00-backend.rules /etc/udev/rules.d")
     info('Reloading rules...      ')
     cmd_run("udevadm control --reload-rules")
     info('Triggering rules...     ')
@@ -255,7 +255,7 @@ success('Done setting up known USB database.')
 
 with spinner('Setting up Administration tools...'):
     cmd_run('/usr/bin/cp Host/Administration/admin_utility.py /src/Host/Administration/admin_utility.py')
-    cmd_run('/usr/bin/cp Host/asterix-admin /bin/asterix-admin')
+    cmd_run('/usr/bin/cp Host/Administration/asterix-admin /bin/asterix-admin')
     cmd_run('/usr/bin/chmod u=rx /bin/asterix-admin')
     cmd_run('/usr/bin/chmod g=rx /bin/asterix-admin')
     cmd_run('/usr/bin/chmod o=-r-w-x /bin/asterix-admin')
@@ -291,8 +291,8 @@ success('Created mounting service.')
 
 
 with spinner("Adding sudoers rules..."):
-    subprocess.run("/usr/bin/cp Host/010_asterix-nopasswd /etc/sudoers.d/010_asterix-nopasswd", shell=True, stdout=subprocess.PIPE)
-    subprocess.run("/usr/bin/cp Host/010_asterix_admin /etc/sudoers.d/010_asterix_admin", shell=True, stdout=subprocess.PIPE)
+    subprocess.run("/usr/bin/cp Host/Sudoers/010_asterix-nopasswd /etc/sudoers.d/010_asterix-nopasswd", shell=True, stdout=subprocess.PIPE)
+    subprocess.run("/usr/bin/cp Host/Sudoers/010_asterix_admin /etc/sudoers.d/010_asterix_admin", shell=True, stdout=subprocess.PIPE)
     cmd_run('/usr/bin/chmod 0440 /etc/sudoers.d/010_asterix-nopasswd')
     cmd_run('/usr/bin/chmod 0440 /etc/sudoers.d/010_asterix_admin')
 subprocess.run("visudo -c", shell=True)
