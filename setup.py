@@ -447,6 +447,28 @@ with spinner('Changing splash screens...'):
 success('Changed splash screen.')
 
 
+print("Do you wish to permanently disable the device's wifi and bluetooth ? (Y/n)")
+
+try:
+    choice = str(input('>>> '))[0].lower()
+
+    if choice == 'n':
+        success('Got it !')
+
+    elif choice == 'y':
+        success('Disabling wifi and bluetooth.')
+
+        block_rules = open("Host/modprobe_blocks", "r").readlines()
+
+        with open ("/etc/modprobe.d/raspi-blacklist.conf", "r+") as mprobe:
+
+            mprobe.writelines(block_rules)
+        
+        success('Blocked bluetooth and wifi.')
+
+except KeyboardInterrupt:
+    success('Skipped.')
+
 warning('A reboot is required to complete the setup.')
 
 

@@ -1,0 +1,9 @@
+blacklist brcmfmac
+blacklist brcmutil
+blacklist hci_uart
+blacklist btbcm
+blacklist btintel
+blacklist rfcom
+blacklist btqca
+blacklist btsdio
+blacklist bluetooth
