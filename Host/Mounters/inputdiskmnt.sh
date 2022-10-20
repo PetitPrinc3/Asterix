@@ -44,7 +44,7 @@ do_mount()
     /bin/mkdir -p ${MNTPOINT}
 
     # Global mount options
-    OPTS="rw,relatime"
+    OPTS="ro,relatime"
 
     # File system type specific mount options
     if [[ ${ID_FS_TYPE} == "vfat" ]]; then
