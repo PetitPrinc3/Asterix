@@ -55,18 +55,13 @@ if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subproces
 
 def get_docker():
     with spinner('Installing Docker Engine...'):
-        subprocess.call("curl -fsSL https://get.docker.com -o get-docker.sh",
-                        shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.call("curl -fsSL https://get.docker.com -o get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         info('Fetched install script.        ')
-        subprocess.call("bash get-docker.sh", shell=True,
-                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.call("bash get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         info('Docker installed.              ')
-        subprocess.call("rm get-docker.sh", shell=True,
-                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.call("systemctl start docker", shell=True,
-                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.call("systemctl enable docker", shell=True,
-                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.call("rm get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.call("systemctl start docker", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.call("systemctl enable docker", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.call("docker version", shell=True)
     success('Docker Engine installed.')
 
@@ -172,18 +167,15 @@ success('Host software ready.')
 with spinner('Creating relevant docker volumes...'):
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBInputDevice"')
     info('USBInputDevice volume created.         ')
-    cmd_run(
-        '/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"')
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"')
     info('InputFiles volume created.             ')
-    cmd_run(
-        '/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name Sanitized"')
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name Sanitized"')
     info('Sanitized volume created.              ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBOutputDevice"')
     info('USBOutputDevice volume created.        ')
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name OutputFiles"')
     info('OutputFiles volume created.            ')
-    cmd_run(
-        '/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name DataShare"')
+    cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name DataShare"')
     info('DataShare volume created.              ')
 success("All relevant docker volumes created.")
 
