@@ -123,37 +123,39 @@ def get_status_container(container_name, container_id):
 
 def get_status_vm(vm_integrity_checked):
 
-    running_vms = subprocess.Popen('ps -ef | grep qemu-system-aarch64', shell=True, stderr=subprocess.DEVNULL,
-                                   stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip().split('\n')[:-2]
+    running_vms = subprocess.Popen('ps -ef | grep qemu-system-aarch64', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip().split('\n')[:-2]
 
     if running_vms == []:
         return '\U0001F7E0 No running VM '
 
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    else:
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-    try:
+        paramiko.util.log_to_file('/dev/null')
 
-        client.connect(target, port=10022,
-                       username=username, password=password)
-        transport = client.get_transport()
-        if transport.is_active():
-            try:
-                transport.send_ignore()
-                if vm_integrity_checked is None:
-                    return '\U0001F535 Connected     '
-                elif vm_integrity_checked:
-                    return '\U0001F7E2 Connected     '
-                else:
-                    return '\U0001F534 Connected (UC)'
-            except Exception as _e:
-                return '\U0001F7E1 Error         '
-        else:
+        try:
+
+            client.connect(target, port=10022,
+                        username=username, password=password)
+            transport = client.get_transport()
+            if transport.is_active():
+                try:
+                    transport.send_ignore()
+                    if vm_integrity_checked is None:
+                        return '\U0001F535 Connected     '
+                    elif vm_integrity_checked:
+                        return '\U0001F7E2 Connected     '
+                    else:
+                        return '\U0001F534 Connected (UC)'
+                except Exception as _e:
+                    return '\U0001F7E1 Error         '
+            else:
+                return '\U0001F7E0 Innactive     '
+
+        except:
+
             return '\U0001F7E0 Innactive     '
-
-    except:
-
-        return '\U0001F7E0 Innactive     '
 
 
 def restart_containers():
@@ -199,8 +201,7 @@ def start_vm():
 
 def kill_vm():
 
-    running_vms = subprocess.Popen("ps -ef | grep qemu-system-aarch64 | awk '{print $2}'", shell=True,
-                                   stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip().split('\n')[:-2]
+    running_vms = subprocess.Popen("ps -ef | grep qemu-system-aarch64 | awk '{print $2}'", shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip().split('\n')[:-2]
 
     with spinner('Killing VMs...'):
         while running_vms != []:

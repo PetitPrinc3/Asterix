@@ -272,8 +272,8 @@ getch.getch()
 with spinner('Preparing Windows 10 VM Environment...'):
     cmd_run("/usr/bin/chown -R vm_runner:vm_runner /src/win10_VM")
     cmd_run("/usr/bin/cp AC-Center/vm_run.sh /src/win10_VM/vm_run.sh")
-    cmd_run("/usr/bin/chmod -R u=rx /src/win10_VM")
-    cmd_run("/usr/bin/chmod -R g=rx /src/win10_VM")
+    cmd_run("/usr/bin/chmod -R u=rwx /src/win10_VM")
+    cmd_run("/usr/bin/chmod -R g=rwx /src/win10_VM")
     cmd_run("/usr/bin/chmod -R o=-r-x-w /src/win10_VM")
 success("Win VM source folder created.")
 
@@ -281,6 +281,13 @@ success("Win VM source folder created.")
 with spinner("Setting up Cron Jobs..."):
     cmd_run("/usr/bin/cp Host/asterix_jobs /etc/cron.d/asterix_jobs")
 success("Cron Jobs set up.")
+
+
+with spinner('Adding accenter autostart service...'):
+    cmd_run('/usr/bin/cp Host/accenter_start.service /etc/systemd/system/')
+    cmd_run('systemctl daemon-reload')
+    cmd_run('systemctl enable accenter_start.service')
+success('Created mounting service.')
 
 
 with spinner("Adding sudoers rules..."):
