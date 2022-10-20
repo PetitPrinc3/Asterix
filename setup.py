@@ -295,74 +295,66 @@ success("Added sudoers rules.")
 warning("AC-Center needs to be configured manually, check https://github.com/G4vr0ch3/Asterix/blob/main/AC-Center/README.md")
 
 print('Do you wish to start the AC-Center using default values ? (Y/n)')
-while True:
+try:
+    choice = str(input('>>> '))[0].lower()
 
-    try:
-        choice = str(input('>>> '))[0].lower()
+    if choice == 'n':
+        success('Skip starting AC-Center.')
 
-        if choice == 'n':
-            success('Skip starting AC-Center.')
-            break
+    elif choice == 'y':
+        success('Starting AC Center.')
 
-        elif choice == 'y':
-            success('Starting AC Center.')
+        import paramiko
 
-            import paramiko
+        target = '127.0.0.1'
+        port = 10022
+        username = 'ac-center'
+        password = 'ac-center'
 
-            target = '127.0.0.1'
-            port = 10022
-            username = 'ac-center'
-            password = 'ac-center'
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-            client = paramiko.SSHClient()
-            client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        paramiko.util.log_to_file('/dev/null')
 
-            paramiko.util.log_to_file('/dev/null')
+        cmd_run('/urs/bin/chown -R vm_runner:vm_runner /src/win10_VM')
+        cmd_run('/urs/bin/chmod -R u=rx /src/win10_VM')
+        cmd_run('/urs/bin/chmod -R g=rx /src/win10_VM')
+        cmd_run('/urs/bin/chmod -R o=-r-w-x /src/win10_VM')
+        cmd_run('/usr/bin/cp AC-Center/vm_run.sh /src/win10_VM/vm_run.sh')
+        cmd_run('/usr/bin/chown vm_runner:vm_runner /src/win10_VM/vm_run.sh')
+        cmd_run('/usr/bin/chmod u=rx /src/win10_VM/vm_run.sh')
+        cmd_run('/usr/bin/chmod g=rx /src/win10_VM/vm_run.sh')
+        cmd_run('/usr/bin/chmod o=-r-w-x /src/win10_VM/vm_run.sh')
 
-            cmd_run('/urs/bin/chown -R vm_runner:vm_runner /src/win10_VM')
-            cmd_run('/urs/bin/chmod -R u=rx /src/win10_VM')
-            cmd_run('/urs/bin/chmod -R g=rx /src/win10_VM')
-            cmd_run('/urs/bin/chmod -R o=-r-w-x /src/win10_VM')
-            cmd_run('/usr/bin/cp AC-Center/vm_run.sh /src/win10_VM/vm_run.sh')
-            cmd_run('/usr/bin/chown vm_runner:vm_runner /src/win10_VM/vm_run.sh')
-            cmd_run('/usr/bin/chmod u=rx /src/win10_VM/vm_run.sh')
-            cmd_run('/usr/bin/chmod g=rx /src/win10_VM/vm_run.sh')
-            cmd_run('/usr/bin/chmod o=-r-w-x /src/win10_VM/vm_run.sh')
+        subprocess.run("/usr/bin/sudo -u vm_runner /bin/bash /src/win10_VM/vm_run.sh &", shell=True)
 
-            subprocess.run("/usr/bin/sudo -u vm_runner /bin/bash /src/win10_VM/vm_run.sh &", shell=True)
+        with spinner('Restarting VM...'):
 
-            with spinner('Restarting VM...'):
+            ready = False
+            tmout = 0
 
-                ready = False
-                tmout = 0
+            while not ready and tmout < 120:
 
-                while not ready and tmout < 120:
+                try:
+                    client.connect(target, port=10022,
+                                username=username, password=password, timeout=1)
+                    ready = True
 
-                    try:
-                        client.connect(target, port=10022,
-                                    username=username, password=password, timeout=1)
-                        ready = True
+                except KeyboardInterrupt:
+                    success('Skipped')
+                    break
 
-                    except KeyboardInterrupt:
-                        success('Skipped')
-                        break
+                except Exception as _e:
+                    ready = False
+                    tmout += 1
+                    sleep(1)
 
-                    except Exception as _e:
-                        ready = False
-                        tmout += 1
-                        sleep(1)
+        if ready and tmout < 120: success('VM restarted.')
+        elif ready and tmout >= 120: fail('VM timed out.')
+        else: warning('VM not ready.')
 
-            if ready and tmout < 120: success('VM restarted.')
-            elif ready and tmout >= 120: fail('VM timed out.')
-            else: warning('VM not ready.')
-            break
-
-    except KeyboardInterrupt:
-        success('Skipped.')
-        break
-    
-    except:
-        pass
+except KeyboardInterrupt:
+    success('Skipped.')
 
 
 info('Setup new asterix_admin password :')
