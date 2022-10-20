@@ -30,7 +30,7 @@ RUN chmod -R u=rwx /mnt/InputFiles
 
 RUN mkdir /mnt/OutputFiles
 RUN chown -R asterix:asterix /mnt/OutputFiles
-RUN chmod -R u=rx /mnt/OutputFiles
+RUN chmod -R u=rwx /mnt/OutputFiles
 
 RUN mkdir /mnt/DataShare
 RUN chown -R asterix:asterix /mnt/DataShare
