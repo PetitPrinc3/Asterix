@@ -49,7 +49,7 @@ def main():
 
     reset_log("frontMAINlog.txt")
 
-    inp = ud.inp_wait(["/mnt/USBInputDevice/USBInputPart", "/mnt/USBInputDevice/USBInputDisk", "/mnt/DataShare/BadUSBInput"])
+    inp = ud.inp_wait(["/mnt/USBInputDevice/USBInputPart", "/mnt/DataShare/BadUSBInput"])
 
     log("USB Input detected.","frontMAINlog.txt")
 

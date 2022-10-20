@@ -1,8 +1,0 @@
-[Unit]
-Description=Mount USB Drive on %i
-
-[Service]
-Type=oneshot
-RemainAfterExit=true
-ExecStart=/usr/share/Asterix/Mounters/outpdiskmnt.sh add %i
-ExecStop=/usr/share/Asterix/Mounters/outpdiskmnt.sh remove %i
