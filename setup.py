@@ -181,6 +181,17 @@ success("All relevant docker volumes created.")
 
 
 with spinner("Fixing user permissions..."):
+
+    cmd_run('/usr/bin/cp Host/Asterix.py /opt/asterix/Asterix.py')
+    cmd_run('/usr/bin/chown -R asterix:asterix /opt/asterix')
+    cmd_run('/usr/bin/chmod -R u=rwx /opt/asterix')
+    cmd_run('/usr/bin/chmod -R g=rwx /opt/asterix')
+    cmd_run('/usr/bin/chmod -R o=-r-w-x /opt/asterix')
+    cmd_run('/usr/bin/chown -R docker_runner:docker_runner /opt/docker_runner')
+    cmd_run('/usr/bin/chmod -R u=rwx /opt/docker_runner')
+    cmd_run('/usr/bin/chmod -R g=rwx /opt/docker_runner')
+    cmd_run('/usr/bin/chmod -R o=-r-w-x /opt/docker_runner')
+
     cmd_run('/usr/bin/mkdir -p /usr/share/Asterix/PermissionFix/')
     cmd_run('/usr/bin/cp Host/PermissionFix/permission_fix.sh /usr/share/Asterix/PermissionFix/permission_fix.sh')
     cmd_run('/usr/bin/chmod 777 /usr/share/Asterix/PermissionFix/permission_fix.sh')
