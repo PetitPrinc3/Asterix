@@ -1,0 +1,11 @@
+[Unit]
+Description=Fixing User Permissions on Docker Volumes
+After
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/share/Asterix/PermissionFix/permission_fix.sh
+
+[Install]
+WantedBy=multi-user.target
