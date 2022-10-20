@@ -10,6 +10,9 @@ from pyfiglet import figlet_format as pfg
 
 print(pfg('Asterix'))
 
+subprocess.run("/usr/bin/mkdir -p /opt/asterix/.tmp/")
+subprocess.run("/usr/bin/rm /opt/asterix/.tmp/*")
+
 logfile = init_log()
 
 log("Asterix started.", logfile)
@@ -24,23 +27,28 @@ log("Copied database to shared folders.", logfile)
 
 subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/USBHandler -it frontend python3 main.py", shell = True)
 
-log_from_log('/var/lib/docker/volumes/DataShare/_data/frontMAINlog.txt', logfile)
+subprocess.run('sudo -u root /usr/bin/cp /var/lib/docker/volumes/DataShare/_data/frontMAINlog.txt /opt/asterix/.tmp/')
+log_from_log('/opt/asterix/.tmp/frontMAINlog.txt', logfile)
 
 subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/PythonHandler -it brain python3 main.py", shell = True)
 
-log_from_log('/var/lib/docker/volumes/DataShare/_data/brainMAINlog.txt', logfile)
+subprocess.run('sudo -u root /usr/bin/cp /var/lib/docker/volumes/DataShare/_data/brainMAINlog.txt /opt/asterix/.tmp/')
+log_from_log('/opt/asterix/.tmp/brainMAINlog.txt', logfile)
 
 subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/PyrateAutomation -it frontend python3 main.py", shell = True)
 
-log_from_log('/var/lib/docker/volumes/DataShare/_data/frontPYRATElog.txt', logfile)
+subprocess.run('sudo -u root /usr/bin/cp /var/lib/docker/volumes/DataShare/_data/frontPYRATElog.txt /opt/asterix/.tmp/')
+log_from_log('/opt/asterix/.tmp/frontPYRATElog.txt', logfile)
 
 subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/PythonHandler -it brain python3 gen_res.py", shell = True)
 
-log_from_log('/var/lib/docker/volumes/DataShare/_data/brainRESlog.txt', logfile)
+subprocess.run('sudo -u root /usr/bin/cp /var/lib/docker/volumes/DataShare/_data/brainRESlog.txt /opt/asterix/.tmp/')
+log_from_log('/opt/asterix/.tmp/brainRESlog.txt', logfile)
 
 subprocess.run("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/USBHandler -it backend python3 main.py", shell = True)
 
-log_from_log('/var/lib/docker/volumes/DataShare/_data/backendMAINlog.txt', logfile)
+subprocess.run('sudo -u root /usr/bin/cp /var/lib/docker/volumes/DataShare/_data/backendMAINlog.txt /opt/asterix/.tmp/')
+log_from_log('/opt/asterix/.tmp/backendMAINlog.txt', logfile)
 
 subprocess.run("/usr/bin/sudo -u root /bin/bash /src/Host/eject_devices.sh", shell = True)
 
