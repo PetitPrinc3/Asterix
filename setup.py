@@ -232,7 +232,9 @@ with spinner('Adding component data to Admin DB...'):
     res = cur.fetchall()
     info('SQLite Version : ' + res[0][0] + '      ')
     cur.execute("""CREATE TABLE IF NOT EXISTS containers (c_name TEXT, c_id TEXT, i_id TEXT)""")
+    info('Created containers table')
     cur.execute("""CREATE TABLE IF NOT EXISTS vms (name TEXT, disk TEXT, hash TEXT)""")
+    info('Created vms table')
     cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""", ("frontend", frontend_ctn, frontend_img))
     info(f'Inserted frontend, {frontend_ctn}, {frontend_img}')
     cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""", ("backend", backend_ctn, backend_img))
@@ -241,6 +243,8 @@ with spinner('Adding component data to Admin DB...'):
     info(f'Inserted brain, {brain_ctn}, {brain_img}        ')
     cur.execute("""INSERT INTO vms(name, disk, hash) VALUES (?,?,?)""", ("ACCENTER", "/src/win10_VM/system.vhdx", "5b902ffa10efb18d8066b40cbed89e9a"))
     warning(f'Inserted ACCENTER row with default values.')
+    cur.execute("""CREATE TABLE IF NOT EXISTS logs (date TEXT, path TEXT, content TEXT)""")
+    info('Created logs table')
     conn.commit()
     cur.close()
     conn.close()
@@ -249,7 +253,7 @@ success('Admin DB set up.')
 
 
 with spinner('Created known USB drives Database...'):
-    cmd_run('/usr/bin/python /src/Host/db_create.py')
+    subprocess.run('/usr/bin/python /src/Host/Administration/db_create.py', shell=True, stderr=subprocess.DEVNULL)
 success('Done setting up known USB database.')
 
 

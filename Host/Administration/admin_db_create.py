@@ -1,5 +1,7 @@
 import sqlite3
 
+from datetime import datetime
+
 from Asterix_libs.log import *
 
 def create():
@@ -18,6 +20,9 @@ def create():
     cur.execute("""CREATE TABLE IF NOT EXISTS vms (name TEXT, disk TEXT, hash TEXT)""")
     cur.execute("""INSERT INTO vms(name, disk, hash) VALUES (?,?,?)""",("AC-CENTER","/src/win10_VM/system.vhdx", "x5b902ffa10efb18d8066b40cbed89e9a"))
  
+    cur.execute("""CREATE TABLE IF NOT EXISTS logs (date TEXT, content TEXT)""")
+    cur.execute("""INSERT INTO logs(date,path,content) VALUES(?,?)""",(datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), "NONE", "ADMIN_DB_CREATE"))
+
     conn.commit()
     cur.close()
     conn.close()
