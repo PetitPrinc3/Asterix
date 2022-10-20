@@ -189,7 +189,7 @@ success("All relevant docker volumes created.")
 
 
 with spinner("Fixing user permissions..."):
-    cmd_run('/usr/bin/mkdir -p /usr/share/Asterix/PermissionFix/permission_fix.sh')
+    cmd_run('/usr/bin/mkdir -p /usr/share/Asterix/PermissionFix/')
     cmd_run('/usr/bin/cp Host/PermissionFix/permission_fix.sh /usr/share/Asterix/PermissionFix/permission_fix.sh')
     cmd_run('/usr/bin/chmod 777 /usr/share/Asterix/PermissionFix/permission_fix.sh')
     cmd_run('/usr/bin/cp Host/PermissionFix/permission_fix.service /etc/systemd/system/permission_fix.service')
