@@ -25,7 +25,7 @@ RUN chmod -R 777 /usr/lib/python3.10/Asterix_libs
 # Give volume permissions to user
 RUN mkdir /mnt/USBOutputDevice
 RUN chown -R asterix:asterix /mnt/USBOutputDevice
-RUN chmod -R u=rx /mnt/USBOutputDevice
+RUN chmod -R u=rwx /mnt/USBOutputDevice
 
 RUN mkdir /mnt/OutputFiles
 RUN chown -R asterix:asterix /mnt/OutputFiles
