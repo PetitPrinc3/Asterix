@@ -65,21 +65,11 @@ do_unmount()
     if [[ -z ${MOUNTED} ]]; then
         echo "Warning: ${DEVICE} is not mounted"
     else
-        /bin/umount -l ${DEVICE}
         /bin/umount $MNTPOINT
         echo "**** Unmounted ${DEVICE}"
     fi
     
-    for f in /media/* ; do
-        if [[ -n $(/usr/bin/find "$f" -maxdepth 0 -type d -empty) ]]; then
-            if ! /bin/grep -q " $f " /etc/mtab; then
-                echo "**** Removing mount point $f"
-                /bin/rmdir "$f"
-            fi
-        fi
-    done
-
-    /usr/bin/rmdir $MNTPOINT
+    /bin/rmdir $MNTPOINT
 }
 
 case "${ACTION}" in
