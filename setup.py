@@ -458,7 +458,7 @@ try:
     elif choice == 'y':
         success('Disabling wifi and bluetooth.')
 
-        block_rules = open("Host/modprobe_blocks", "r").readlines()
+        block_rules = open("Host/modprobe_locks", "r").readlines()
 
         with open ("/etc/modprobe.d/raspi-blacklist.conf", "r+") as mprobe:
 
