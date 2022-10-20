@@ -412,6 +412,52 @@ with spinner('Setting asterix as default user...'):
 success('Asterix is the new default user.')
 
 
+with spinner("Disabling drive auto mount..."):
+
+    cmd_run('/usr/bin/cp /opt/asterix/.config/pcmanfm/LXDE-pi/pcmanfm.conf pcmanfm.conf.backup')
+    
+    with open('pcmanfm.conf.backup', 'r') as old:
+        
+        origin = old.readlines()
+
+        old.close()
+
+    with open('/opt/asterix/.config/pcmanfm/LXDE-pi/pcmanfm.conf', 'w') as new:
+
+        for line in origin:
+
+            if line.startswith('mount_on_startup='):
+                new_line = 'mount_on_startup=0\n'
+
+                new.write(new_line)
+            
+            elif line.startswith('mount_removable='):
+                new_line = 'mount_removable=0\n'
+
+                new.write(new_line)
+
+            elif line.startswith('autorun='):
+                new_line = 'autorun=0\n'
+
+                new.write(new_line)
+
+            else:
+                new.write(line)
+
+        new.close()
+
+success('Disabled drive auto mount.')
+
+
+with spinner('Changing splash screens...'):
+
+    cmd_run('/usr/bin/cp /usr/share/plymouth/themes/pix/splash.png splash.png.backup')
+
+    cmd_run('/usr/bin/cp Images/asterix.png /usr/share/plymouth/themes/pix/splash.png')
+
+success('Changed splash screen.')
+
+
 warning('A reboot is required to complete the setup.')
 
 
