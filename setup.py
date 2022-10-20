@@ -314,6 +314,10 @@ while True:
 
             paramiko.util.log_to_file('/dev/null')
 
+            cmd_run('/urs/bin/chown -R vm_runner:vm_runner /src/win10_VM')
+            cmd_run('/urs/bin/chmod -R u=rx /src/win10_VM')
+            cmd_run('/urs/bin/chmod -R g=rx /src/win10_VM')
+            cmd_run('/urs/bin/chmod -R o=-r-w-x /src/win10_VM')
             cmd_run('/usr/bin/cp AC-Center/vm_run.sh /src/win10_VM/vm_run.sh')
             cmd_run('/usr/bin/chown vm_runner:vm_runner /src/win10_VM/vm_run.sh')
             cmd_run('/usr/bin/chmod u=rx /src/win10_VM/vm_run.sh')
