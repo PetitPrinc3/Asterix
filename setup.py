@@ -71,13 +71,13 @@ print(pfg('AsterixSETUP'))
 
 def get_docker():
     with spinner('Installing Docker Engine...'):
-        subprocess.call("curl -fsSL https://get.docker.com -o get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        cmd_run("curl -fsSL https://get.docker.com -o get-docker.sh")
         info('Fetched install script.        ')
-        subprocess.call("bash get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        cmd_run("/bin/bash get-docker.sh")
         info('Docker installed.              ')
-        subprocess.call("rm get-docker.sh", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.call("systemctl start docker", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.call("systemctl enable docker", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        cmd_run("rm get-docker.sh")
+        cmd_run("systemctl start docker")
+        cmd_run("systemctl enable docker")
     subprocess.call("docker version", shell=True)
     success('Docker Engine installed.')
 
