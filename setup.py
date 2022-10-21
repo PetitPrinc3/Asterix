@@ -16,11 +16,34 @@ if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subproces
 
 
 def cmd_run(cmd):
-    if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
-        fail('Process failed. This is critical.')
-        print(cmd)
-        fail("Exiting now.")
-        exit()
+    try:
+        if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait(timeout=600) != 0:
+            warning('Process failed once. Trying again.')
+            try:
+                if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait(timeout=600) != 0:
+                    fail('Process failed. This is critical.')
+                    print(cmd)
+                    fail("Exiting now.")
+                    exit(1)
+            except subprocess.TimeoutExpired:
+                    fail('Command timed out. This is critical.')
+                    print(cmd)
+                    fail("Exiting now.")
+                    exit(1)
+
+    except subprocess.TimeoutExpired:
+        warning('Command timed out. Trying again.')
+        try:
+            if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait(timeout=600) != 0:
+                fail('Process failed. This is critical.')
+                print(cmd)
+                fail("Exiting now.")
+                exit(1)
+        except subprocess.TimeoutExpired:
+                fail('Command timed out. This is critical.')
+                print(cmd)
+                fail("Exiting now.")
+                exit(1)
 
 
 cmd_run(f'cp -r Host/Host_libs {sys.path[2]}')
