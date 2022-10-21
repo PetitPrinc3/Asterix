@@ -2,18 +2,17 @@
 
 import subprocess
 import sqlite3
-import getch
 import sys
 import os
 
 
 from re import sub
 from time import sleep
-from Asterix_libs.prints import *
-from Asterix_libs.spinner import spinner
 
 
-from pyfiglet import figlet_format as pfg
+if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode('utf-8').strip() != 'root':
+    fail('This program must be run as root.')
+    exit()
 
 
 def cmd_run(cmd):
@@ -24,33 +23,27 @@ def cmd_run(cmd):
         exit()
 
 
-def libimport():
-    try:
-        import getch
-        from pyfiglet import figlet_format as pfg
-        import paramiko
-        import sqlite3
-        return True
-    except:
-        return False
-
-
 cmd_run(f'cp -r Host/Host_libs {sys.path[2]}')
 cmd_run(f'cp -r Asterix_libs {sys.path[2]}')
 
+from Asterix_libs.prints import *
+from Asterix_libs.spinner import spinner
 
-if not libimport():
+
+try:
+    import getch
+    from pyfiglet import figlet_format as pfg
+    import paramiko
+    import sqlite3
+except:
     with spinner("Collecting Python libraries..."):
         cmd_run('pip install getch pyfiglet paramiko')
+        import getch
+        from pyfiglet import figlet_format as pfg
     success('Python libraries collected.')
 
 
 print(pfg('AsterixSETUP'))
-
-
-if subprocess.run('whoami', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode('utf-8').strip() != 'root':
-    fail('This program must be run as root.')
-    exit()
 
 
 def get_docker():
