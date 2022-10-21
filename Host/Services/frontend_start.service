@@ -1,0 +1,12 @@
+[Unit]
+Description=Start Frontend on boot
+
+[Service]
+Type=simple
+User=docker_runner
+Group=docker_runner
+ExecStart=/usr/bin/docker start frontend
+ExecStop=/usr/bin/docker stop frontend
+
+[Install]
+WantedBy=multi-user.target

@@ -99,6 +99,43 @@ with spinner('Creating software users'):
 success('Software users created.')
 
 
+info('Setup new asterix_admin password :')
+subprocess.call('passwd asterix_admin', shell=True)
+success('Done.')
+
+
+info('Setup new root password :')
+subprocess.call('passwd root', shell=True)
+success('Done.')
+
+
+with spinner('Setting asterix as default user...'):
+
+    cmd_run('/usr/bin/cp /etc/lightdm/lightdm.conf lightdm.conf.backup')
+    
+    with open('lightdm.conf.backup', 'r') as old:
+        
+        origin = old.readlines()
+
+        old.close()
+
+    with open('/etc/lightdm/lightdm.conf', 'w') as new:
+
+        for line in origin:
+
+            if line.startswith('autologin-user='):
+                new_line = 'autologin-user=asterix\n'
+
+                new.write(new_line)
+            
+            else:
+                new.write(line)
+
+        new.close()
+
+success('Asterix is the new default user.')
+
+
 with spinner('Preparing Frontend software...'):
     cmd_run("/usr/bin/cp -r Frontend /src/Frontend")
     cmd_run("/usr/bin/cp -r Asterix_libs /src/Frontend")
@@ -141,13 +178,12 @@ cmd_run('/usr/bin/cp Host/Administration/db_create.py /src/Host/Administration/d
 cmd_run('/usr/bin/chmod -R 000 /src/Host')
 
 
-with spinner('Adding mounting service...'):
+with spinner('Adding mounting scripts...'):
     subprocess.run('rm -r /usr/share/Asterix', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     cmd_run('mkdir -p /usr/share/Asterix/Mounters')
-    cmd_run('/usr/bin/cp Host/Mounters/*.sh /usr/share/Asterix/Mounters/')
-    cmd_run('/usr/bin/chmod 777 /usr/share/Asterix/Mounters/*.sh')
-    cmd_run('/usr/bin/cp Host/Mounters/*.service /etc/systemd/system/')
-    cmd_run('systemctl daemon-reload')
+    cmd_run('/usr/bin/cp Host/Host_Scripts/inputpartmnt.sh /usr/share/Asterix/Mounters/')
+    cmd_run('/usr/bin/cp Host/Host_Scripts/outppartmnt.sh /usr/share/Asterix/Mounters/')
+    cmd_run('/usr/bin/chmod =rx /usr/share/Asterix/Mounters/*.sh')
 success('Created mounting service.')
 
 
@@ -161,7 +197,28 @@ with spinner('Adding UDEV rules...'):
 success("UDEV rules added.")
 
 
-success('Host software ready.')
+with spinner('Creating Systemd services...'):
+    cmd_run('/usr/bin/cp Host/Services/frontend_start.service /etc/systemd/system/')
+    cmd_run('/usr/bin/cp Host/Services/backend_start.service /etc/systemd/system/')
+    cmd_run('/usr/bin/cp Host/Services/brain_start.service /etc/systemd/system/')
+    cmd_run('/usr/bin/cp Host/Services/accenter_start.service /etc/systemd/system/')
+    cmd_run('/usr/bin/cp Host/Services/inputpart@.service /etc/systemd/system/')
+    cmd_run('/usr/bin/cp Host/Services/outppart@.service /etc/systemd/system/')
+    cmd_run('systemctl daemon-reload')
+    cmd_run('systemctl enable accenter_start.service')
+    cmd_run('systemctl enable frontend_start.service')
+    cmd_run('systemctl enable backend_start.service')
+    cmd_run('systemctl enable brain_start.service')
+success('Created systemd service.')
+
+
+with spinner("Adding sudoers rules..."):
+    subprocess.run("/usr/bin/cp Host/Sudoers/010_asterix-nopasswd /etc/sudoers.d/010_asterix-nopasswd", shell=True, stdout=subprocess.PIPE)
+    subprocess.run("/usr/bin/cp Host/Sudoers/010_asterix_admin /etc/sudoers.d/010_asterix_admin", shell=True, stdout=subprocess.PIPE)
+    cmd_run('/usr/bin/chmod 0440 /etc/sudoers.d/010_asterix-nopasswd')
+    cmd_run('/usr/bin/chmod 0440 /etc/sudoers.d/010_asterix_admin')
+subprocess.run("visudo -c", shell=True)
+success("Added sudoers rules.")
 
 
 with spinner('Creating relevant docker volumes...'):
@@ -195,6 +252,69 @@ with spinner("Fixing user permissions..."):
 success('Fixed user permissions.')
 
 
+with spinner('Created known USB drives Database...'):
+    subprocess.run('/usr/bin/python /src/Host/Administration/db_create.py', shell=True, stderr=subprocess.DEVNULL)
+success('Done setting up known USB database.')
+
+
+with spinner('Setting up Administration tools...'):
+    cmd_run('/usr/bin/cp Host/Administration/admin_utility.py /src/Host/Administration/admin_utility.py')
+    cmd_run('/usr/bin/cp Host/Administration/asterix-admin /bin/asterix-admin')
+    cmd_run('/usr/bin/chmod u=rx /bin/asterix-admin')
+    cmd_run('/usr/bin/chmod g=rx /bin/asterix-admin')
+    cmd_run('/usr/bin/chmod o=-r-w-x /bin/asterix-admin')
+success('Administration tools ready.')
+
+
+with spinner('Changing splash screens...'):
+
+    cmd_run('/usr/bin/cp /usr/share/plymouth/themes/pix/splash.png splash.png.backup')
+
+    cmd_run('/usr/bin/cp Images/asterix.png /usr/share/plymouth/themes/pix/splash.png')
+
+success('Changed splash screen.')
+
+
+print("Do you wish to permanently disable the device's wifi and bluetooth ? (Y/n)")
+
+try:
+    choice = str(input('>>> '))[0].lower()
+
+    if choice == 'n':
+        success('Got it !')
+
+    elif choice == 'y':
+        success('Disabling wifi and bluetooth.')
+
+        cmd_run('/usr/bin/cp /etc/modprobe.d/raspi-blacklist.conf /etc/modprobe.d/raspi-blacklist.conf.backup')
+
+        block_rules = """
+        
+echoblacklist brcmfmac
+echoblacklist brcmutil
+echoblacklist hci_uart
+echoblacklist btbcm
+echoblacklist btintel
+echoblacklist rfcom
+echoblacklist btqca
+echoblacklist btsdio
+echoblacklist bluetooth
+        
+"""
+
+        with open ("/etc/modprobe.d/raspi-blacklist.conf", "r+") as mprobe:
+
+            mprobe.writelines(block_rules)
+        
+        success('Blocked bluetooth and wifi.')
+
+except KeyboardInterrupt:
+    success('Skipped.')
+    
+
+success('Host software ready.')
+
+
 with spinner("Building Frontend container. This may take some time..."):
     cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker build -t frontend /src/Frontend"')
     frontend_img = subprocess.Popen('/usr/bin/docker images --filter=reference=frontend --format "{{.ID}}"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
@@ -223,49 +343,6 @@ with spinner('Starting containers...'):
 success("Docker containers started.")
 
 
-with spinner('Adding component data to Admin DB...'):
-    conn = sqlite3.connect('/src/Host/Administration/ASTERIX_ADMIN.db')
-    cur = conn.cursor()
-    info('Database connection opened.             ')
-    sql = 'SELECT sqlite_version();'
-    cur.execute(sql)
-    res = cur.fetchall()
-    info('SQLite Version : ' + res[0][0] + '      ')
-    cur.execute("""CREATE TABLE IF NOT EXISTS containers (c_name TEXT, c_id TEXT, i_id TEXT)""")
-    info('Created containers table')
-    cur.execute("""CREATE TABLE IF NOT EXISTS vms (name TEXT, disk TEXT, hash TEXT)""")
-    info('Created vms table')
-    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""", ("frontend", frontend_ctn, frontend_img))
-    info(f'Inserted frontend, {frontend_ctn}, {frontend_img}')
-    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""", ("backend", backend_ctn, backend_img))
-    info(f'Inserted backend, {backend_ctn}, {backend_img}')
-    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""", ("brain", brain_ctn, brain_img))
-    info(f'Inserted brain, {brain_ctn}, {brain_img}        ')
-    cur.execute("""INSERT INTO vms(name, disk, hash) VALUES (?,?,?)""", ("ACCENTER", "/src/win10_VM/system.vhdx", "5b902ffa10efb18d8066b40cbed89e9a"))
-    warning(f'Inserted ACCENTER row with default values.')
-    cur.execute("""CREATE TABLE IF NOT EXISTS logs (date TEXT, path TEXT, content TEXT)""")
-    info('Created logs table')
-    conn.commit()
-    cur.close()
-    conn.close()
-    info('Database connection closed              ')
-success('Admin DB set up.')
-
-
-with spinner('Created known USB drives Database...'):
-    subprocess.run('/usr/bin/python /src/Host/Administration/db_create.py', shell=True, stderr=subprocess.DEVNULL)
-success('Done setting up known USB database.')
-
-
-with spinner('Setting up Administration tools...'):
-    cmd_run('/usr/bin/cp Host/Administration/admin_utility.py /src/Host/Administration/admin_utility.py')
-    cmd_run('/usr/bin/cp Host/Administration/asterix-admin /bin/asterix-admin')
-    cmd_run('/usr/bin/chmod u=rx /bin/asterix-admin')
-    cmd_run('/usr/bin/chmod g=rx /bin/asterix-admin')
-    cmd_run('/usr/bin/chmod o=-r-w-x /bin/asterix-admin')
-success('Administration tools ready.')
-
-
 info("Seting up AC-Center environment...")
 
 
@@ -282,28 +359,8 @@ with spinner('Preparing Windows 10 VM Environment...'):
 success("Win VM source folder created.")
 
 
-with spinner("Setting up Cron Jobs..."):
-    cmd_run("/usr/bin/cp Host/asterix_jobs /etc/cron.d/asterix_jobs")
-success("Cron Jobs set up.")
-
-
-with spinner('Adding accenter autostart service...'):
-    cmd_run('/usr/bin/cp Host/accenter_start.service /etc/systemd/system/')
-    cmd_run('systemctl daemon-reload')
-    cmd_run('systemctl enable accenter_start.service')
-success('Created mounting service.')
-
-
-with spinner("Adding sudoers rules..."):
-    subprocess.run("/usr/bin/cp Host/Sudoers/010_asterix-nopasswd /etc/sudoers.d/010_asterix-nopasswd", shell=True, stdout=subprocess.PIPE)
-    subprocess.run("/usr/bin/cp Host/Sudoers/010_asterix_admin /etc/sudoers.d/010_asterix_admin", shell=True, stdout=subprocess.PIPE)
-    cmd_run('/usr/bin/chmod 0440 /etc/sudoers.d/010_asterix-nopasswd')
-    cmd_run('/usr/bin/chmod 0440 /etc/sudoers.d/010_asterix_admin')
-subprocess.run("visudo -c", shell=True)
-success("Added sudoers rules.")
-
-
 warning("AC-Center needs to be configured manually, check https://github.com/G4vr0ch3/Asterix/blob/main/AC-Center/README.md")
+
 
 print('Do you wish to start the AC-Center using default values ? (Y/n)')
 try:
@@ -364,115 +421,33 @@ except KeyboardInterrupt:
     success('Skipped.')
 
 
-info('Setup new asterix_admin password :')
-subprocess.call('passwd asterix_admin', shell=True)
-success('Done.')
-
-
-info('Setup new root password :')
-subprocess.call('passwd root', shell=True)
-success('Done.')
-
-
-with spinner('Setting asterix as default user...'):
-
-    cmd_run('/usr/bin/cp /etc/lightdm/lightdm.conf lightdm.conf.backup')
-    
-    with open('lightdm.conf.backup', 'r') as old:
-        
-        origin = old.readlines()
-
-        old.close()
-
-    with open('/etc/lightdm/lightdm.conf', 'w') as new:
-
-        for line in origin:
-
-            if line.startswith('autologin-user='):
-                new_line = 'autologin-user=asterix\n'
-
-                new.write(new_line)
-            
-            else:
-                new.write(line)
-
-        new.close()
-
-success('Asterix is the new default user.')
-
-
-with spinner("Disabling drive auto mount..."):
-
-    cmd_run('/usr/bin/cp /opt/asterix/.config/pcmanfm/LXDE-pi/pcmanfm.conf pcmanfm.conf.backup')
-    
-    with open('pcmanfm.conf.backup', 'r') as old:
-        
-        origin = old.readlines()
-
-        old.close()
-
-    with open('/opt/asterix/.config/pcmanfm/LXDE-pi/pcmanfm.conf', 'w') as new:
-
-        for line in origin:
-
-            if line.startswith('mount_on_startup='):
-                new_line = 'mount_on_startup=0\n'
-
-                new.write(new_line)
-            
-            elif line.startswith('mount_removable='):
-                new_line = 'mount_removable=0\n'
-
-                new.write(new_line)
-
-            elif line.startswith('autorun='):
-                new_line = 'autorun=0\n'
-
-                new.write(new_line)
-
-            else:
-                new.write(line)
-
-        new.close()
-
-success('Disabled drive auto mount.')
-
-
-with spinner('Changing splash screens...'):
-
-    cmd_run('/usr/bin/cp /usr/share/plymouth/themes/pix/splash.png splash.png.backup')
-
-    cmd_run('/usr/bin/cp Images/asterix.png /usr/share/plymouth/themes/pix/splash.png')
-
-success('Changed splash screen.')
-
-
-print("Do you wish to permanently disable the device's wifi and bluetooth ? (Y/n)")
-
-try:
-    choice = str(input('>>> '))[0].lower()
-
-    if choice == 'n':
-        success('Got it !')
-
-    elif choice == 'y':
-        success('Disabling wifi and bluetooth.')
-
-        block_rules = open("Host/modprobe_locks", "r").readlines()
-
-        with open ("/etc/modprobe.d/raspi-blacklist.conf", "r+") as mprobe:
-
-            mprobe.writelines(block_rules)
-        
-        success('Blocked bluetooth and wifi.')
-
-except KeyboardInterrupt:
-    success('Skipped.')
-
-warning('A reboot is required to complete the setup.')
-
-
-success('You can now use Asterix while the setup finishes.')
+with spinner('Adding component data to Admin DB...'):
+    conn = sqlite3.connect('/src/Host/Administration/ASTERIX_ADMIN.db')
+    cur = conn.cursor()
+    info('Database connection opened.             ')
+    sql = 'SELECT sqlite_version();'
+    cur.execute(sql)
+    res = cur.fetchall()
+    info('SQLite Version : ' + res[0][0] + '      ')
+    cur.execute("""CREATE TABLE IF NOT EXISTS containers (c_name TEXT, c_id TEXT, i_id TEXT)""")
+    info('Created containers table')
+    cur.execute("""CREATE TABLE IF NOT EXISTS vms (name TEXT, disk TEXT, hash TEXT)""")
+    info('Created vms table')
+    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""", ("frontend", frontend_ctn, frontend_img))
+    info(f'Inserted frontend, {frontend_ctn}, {frontend_img}')
+    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""", ("backend", backend_ctn, backend_img))
+    info(f'Inserted backend, {backend_ctn}, {backend_img}')
+    cur.execute("""INSERT INTO containers(c_name, c_id, i_id) VALUES (?,?,?)""", ("brain", brain_ctn, brain_img))
+    info(f'Inserted brain, {brain_ctn}, {brain_img}        ')
+    cur.execute("""INSERT INTO vms(name, disk, hash) VALUES (?,?,?)""", ("ACCENTER", "/src/win10_VM/system.vhdx", "5b902ffa10efb18d8066b40cbed89e9a"))
+    warning(f'Inserted ACCENTER row with default values.')
+    cur.execute("""CREATE TABLE IF NOT EXISTS logs (date TEXT, path TEXT, content TEXT)""")
+    info('Created logs table')
+    conn.commit()
+    cur.close()
+    conn.close()
+    info('Database connection closed              ')
+success('Admin DB set up.')
 
 
 with spinner("Backing up VM disk..."):
@@ -487,6 +462,9 @@ with spinner("Backing up VM disk..."):
         fail('No DISK found to backup.')
         exit()
 success('VM Disk backed up.')
+
+
+warning('A reboot is required to complete the setup.')
 
 
 # SETUP END

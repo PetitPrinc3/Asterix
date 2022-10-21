@@ -54,7 +54,7 @@ try:
     if subprocess.Popen('sudo -u root /usr/bin/cp /var/lib/docker/volumes/DataShare/_data/backendMAINlog.txt /opt/asterix/.tmp/', shell = True, stderr = subprocess.DEVNULL, stdout = subprocess.DEVNULL).wait() != 0:log('Failed to export logs backend - main.', logfile); exit()
     log_from_log('/opt/asterix/.tmp/backendMAINlog.txt', logfile)
 
-    if subprocess.Popen("/usr/bin/sudo -u root /bin/bash /src/Host/eject_devices.sh", shell = True).wait() != 0:log('Failed to ehject devices.', logfile); exit()
+    if subprocess.Popen("/usr/bin/sudo -u root /bin/bash /src/Host/Host_Scripts/eject_devices.sh", shell = True).wait() != 0:log('Failed to ehject devices.', logfile); exit()
 
     log("USB Devices ejected.", logfile)
 

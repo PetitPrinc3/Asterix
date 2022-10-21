@@ -1,0 +1,11 @@
+[Unit]
+Description=Finishing Asterix Setup.
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/bin/bash /src/Host/Host_Scripts/setup_finish.sh
+
+[Install]
+WantedBy=multi-user.target
