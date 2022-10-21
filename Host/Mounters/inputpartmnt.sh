@@ -15,14 +15,16 @@ fi
 ACTION=$1
 DEVBASE=$2
 DEVICE="/dev/${DEVBASE}"
-MNTPOINT="/var/lib/docker/volumes/USBInputDevice/_data/USBInputPart"
+MNTBASE="/var/lib/docker/volumes/USBInputDevice/_data/USBInputPart/"
+MNTPOINT=$MNTBASE$DEVBASE
 
 # See if this drive is already mounted, and if so where
 MOUNTED=$(/bin/mount | /bin/grep ${DEVICE} | /usr/bin/awk '{ print $3 }')
 
 do_mount()
 {
-    if [[ -n ${MOUNTED} ]]; then
+    if [[ -n ${MOUNTED} ]]
+    then
         echo "Warning: ${DEVICE} is already mounted at ${MOUNTED}"
         exit 1
     fi
@@ -30,14 +32,6 @@ do_mount()
     # Get info for this drive: $ID_FS_LABEL, $ID_FS_UUID, and $ID_FS_TYPE
     eval $(/sbin/blkid -o udev ${DEVICE})
 
-    # Figure out a mount point to use
-    LABEL=${ID_FS_LABEL}
-    if [[ -z "${LABEL}" ]]; then
-        LABEL=${DEVBASE}
-    elif /bin/grep -q " /media/${LABEL} " /etc/mtab; then
-        # Already in use, make a unique one
-        LABEL+="-${DEVBASE}"
-    fi
     
     echo "Mount point: ${MNTPOINT}"
 
@@ -46,12 +40,8 @@ do_mount()
     # Global mount options
     OPTS="ro,relatime"
 
-    # File system type specific mount options
-    if [[ ${ID_FS_TYPE} == "vfat" ]]; then
-        OPTS+=",users,gid=100,umask=000,shortname=mixed,utf8=1,flush"
-    fi
-
-    if ! /bin/mount -o ${OPTS} ${DEVICE} ${MNTPOINT}; then
+    if ! /bin/mount -o ${OPTS} ${DEVICE} ${MNTPOINT}
+    then
         echo "Error mounting ${DEVICE} (status = $?)"
         /bin/rmdir ${MNTPOINT}
         exit 1
@@ -62,14 +52,29 @@ do_mount()
 
 do_unmount()
 {
-    if [[ -z ${MOUNTED} ]]; then
-        echo "Warning: ${DEVICE} is not mounted"
-    else
-        /bin/umount $MNTPOINT
-        echo "**** Unmounted ${DEVICE}"
-    fi
+    while [[ -d $MNTPOINT ]]
+    do
+        if [[ -z ${MOUNTED} ]]
+        then
+            echo "Warning: ${DEVICE} is not mounted"
+        else
+            /bin/umount $MNTPOINT
+            echo "**** Unmounted ${DEVICE}"
+        fi
 
-    /bin/rmdir $MNTPOINT
+        if ! /bin/rmdir $MNTPOINT
+        then
+            echo "Failed to remove mountpoint"
+        fi
+
+        if [ -z "$(ls -A ${MNTBASE})" ] 
+        then
+            /bin/rmdir $MNTBASE
+        fi
+
+        sleep 1
+
+    done
 }
 
 case "${ACTION}" in
