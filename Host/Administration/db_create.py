@@ -24,7 +24,7 @@ def create():
                 cur.close()
                 conn.close()
                 log('Database connection closed', dblogfile)
-                print('Database connection closed\n')
+                print('Database connection closed')
         except sqlite3.Error as error:
                 print('Database initialization failed')
                 log('Database initialization failed with error : ' + str(error), dblogfile)

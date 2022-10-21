@@ -26,7 +26,7 @@ def create():
     conn.commit()
     cur.close()
     conn.close()
-    print('Database connection closed\n')
+    print('Database connection closed')
 
 
 if __name__ == "__main__":
