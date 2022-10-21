@@ -166,7 +166,7 @@ success("Pyrate collected.")
 
 info('Preparing Host software...')
 cmd_run('/usr/bin/mkdir -p /src/Host/Administration')
-cmd_run('/usr/bin/cp Host/eject_devices.sh /src/Host/eject_devices.sh')
+cmd_run('/usr/bin/cp Host/Host_Scripts/eject_devices.sh /src/Host/Host_Scripts/eject_devices.sh')
 cmd_run('/usr/bin/cp Host/Administration/db_create.py /src/Host/Administration/db_create.py')
 cmd_run('/usr/bin/chmod -R 000 /src/Host')
 
