@@ -351,7 +351,6 @@ try:
 
 
     with spinner('Starting containers...'):
-        cmd_run("/usr/bin/cp Host/docker_runner_scripts/boot.sh /opt/docker_runner/boot.sh")
         cmd_run("/usr/bin/cp Host/docker_runner_scripts/run.sh /opt/docker_runner/run.sh")
         subprocess.run('/usr/bin/su - docker_runner -c "/bin/bash /opt/docker_runner/boot.sh"', shell=True)
         frontend_ctn = subprocess.Popen('/usr/bin/docker ps -aqf "name=frontend"', shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
