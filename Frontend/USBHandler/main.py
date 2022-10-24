@@ -54,7 +54,7 @@ def main():
     log("USB Input detected.","frontMAINlog.txt")
 
     if inp is None : fail('Input detection failed.'); export_log("frontMAINlog.txt"); exit()
-    if inp == "/mnt/DataShare/BadUSBInput": fail("The input drive is not a valid USB drive."); subprocess.call("rm /mnt/DataShare/BadUSBInput", shell=True); fail('This incident will be reported.'); log("BAD USB INPUT IDENTIFIED.","frontMAINlog.txt"); export_log("frontMAINlog.txt"); exit()
+    if inp == "/mnt/DataShare/BadUSBInput": fail("The input drive is not a valid USB drive."); subprocess.call("rm -f /mnt/DataShare/BadUSBInput", shell=True); fail('This incident will be reported.'); log("BAD USB INPUT IDENTIFIED.","frontMAINlog.txt"); export_log("frontMAINlog.txt"); exit()
 
     success('::: USB device detected :::          ')
 

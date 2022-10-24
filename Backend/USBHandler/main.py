@@ -51,7 +51,7 @@ def main():
     outp = ud.inp_wait(["/mnt/USBOutputDevice/USBOutputPart", "/mnt/DataShare/BadUSBOutput"])
 
     if outp is None: fail('Output detection failed.'); log("Output Detection BUG ***", "backendMAINlog.txt") ;export_log("backendMAINlog.txt"); exit()
-    if outp == "/mnt/DataShare/BadUSBOutput": fail("The output drive is not a valid USB drive."); log("BAD OUTPUT DEVICE ***", "backendMAINlog.txt"); subprocess.call("rm /mnt/DataShare/BadUSBOutput", shell=True); fail('This incident will be reported.'); exit()
+    if outp == "/mnt/DataShare/BadUSBOutput": fail("The output drive is not a valid USB drive."); log("BAD OUTPUT DEVICE ***", "backendMAINlog.txt"); subprocess.call("rm -f /mnt/DataShare/BadUSBOutput", shell=True); fail('This incident will be reported.'); exit()
 
     Vid, Pid = uid.get_ids("/dev/" + outp.split("/")[-1])
 

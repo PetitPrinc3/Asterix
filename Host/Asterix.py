@@ -20,7 +20,7 @@ try:
     log("Asterix started.", logfile)
 
 
-    if subprocess.Popen("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/PythonHandler -it brain /bin/sh init_clean.sh", shell = True, stderr = subprocess.PIPE).stderr != b'':log("Failed to clean shared folders.", logfile); exit()
+    if subprocess.Popen("/usr/bin/sudo -u docker_runner /usr/bin/docker exec -w /usr/share/PythonHandler -it brain /bin/sh init_clean.sh", shell = True, stderr = subprocess.PIPE).stderr.read() != b'':log("Failed to clean shared folders.", logfile); exit()
     log("Cleaned shared folders.", logfile)
 
 
