@@ -5,6 +5,7 @@ Description=Start AC-Center on boot
 Type=simple
 User=vm_runner
 Group=vm_runner
+RemainAfterExit=true
 ExecStart=/bin/bash /src/win10_VM/vm_run.sh
 ExecStop=/bin/bash -c "for i in $(ps -ef | grep qemu-system-aarch64 | awk '{print $2}'); do kill $i 2>/dev/null; done"
 

@@ -5,6 +5,7 @@ Description=Start Frontend on boot
 Type=simple
 User=docker_runner
 Group=docker_runner
+RemainAfterExit=true
 ExecStart=/usr/bin/docker start backend
 ExecStop=/usr/bin/docker stop backend
 
