@@ -124,7 +124,7 @@ def ac_run():
                 log(f'File {inp} was successfully transfered to AC-Center', "PywavaAutomation/pywavalog.txt")
             except:
                 fl = True
-                fl(f'File {inp} could not be transfered.')
+                fail(f'File {inp} could not be transfered to {outp}.')
                 log(f'File {inp} could not be transfered.', "PywavaAutomation/pywavalog.txt")
 
 
