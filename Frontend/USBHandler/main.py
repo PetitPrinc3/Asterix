@@ -60,14 +60,60 @@ def main():
 
     log("Mass storage unit detected.","frontMAINlog.txt")
 
+    n_part = len(os.listdir("/mnt/USBInputDevice/USBInputPart"))
+
+    log(f"Found {n_part} partitions.","frontMAINlog.txt")
+
+    if n_part > 1:
+
+        parts = []
+        for path, dirs, files in os.walk("/mnt/USBInputDevice/USBInputPart"):
+            parts.append(dirs)            
+
+        print(' ' + '_'*( len(str(len(parts))) + max(len(part) for part in parts) + 4))
+
+        for part in parts:
+            print('| ' + '0'*(len(str(len(parts))) - len(parts.index(part))) + parts.index(part) + ' | ' + part + ' '*(max(len(part) for part in parts) - len(part)) + ' |')
+
+        print('|_'*len(str(len(parts))) + '_|_' + '_'*max(len(part) for part in parts))
+
+        info(f'Found {n_part} partitions. Select the partition that Asterix should use :')
+
+        while True:
+
+            try:
+                choice = int(input('>>> '))[0]
+
+                if choice >= len(parts):
+                    warning('Choose an existing partition.')
+
+                else:
+                    s_part = parts[choice]
+                    log(f"Selected partition {s_part}.")
+
+            except KeyboardInterrupt:
+
+                fail('Choice failed.')
+                log("Stopped at partition selection.", "frontMAINlog.txt")
+                export_log("frontMAINlog.txt")
+                exit()
+
+            except:
+
+                warning('Choice failed. The choice has to be made by partition index (eg: 0). Try again.')
+        
+    else:
+
+        s_part = os.listdir("/mnt/USBInputDevice/USBInputPart")[0]
+
     tmout = 0
 
     subprocess.call('cp default.json list_result.json', shell=True)
 
     with spinner("Collecting input drive content..."):
         while True:
-            if tmout > 7 or len(os.listdir(inp))>0:
-                f_lst = ul.lst(inp)
+            if tmout > 7 or len(os.listdir(s_part))>0:
+                f_lst = ul.lst(s_part)
                 break
             else:
                 time.sleep(1)
