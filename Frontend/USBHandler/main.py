@@ -104,7 +104,7 @@ def main():
         
     else:
 
-        s_part = "/mnt/USBInputDevice/USBInputPart" + os.listdir("/mnt/USBInputDevice/USBInputPart")[0]
+        s_part = "/mnt/USBInputDevice/USBInputPart/" + os.listdir("/mnt/USBInputDevice/USBInputPart")[0]
 
     tmout = 0
 
