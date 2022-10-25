@@ -38,7 +38,7 @@ do_mount()
     /bin/mkdir -p ${MNTPOINT}
 
     # Global mount options
-    OPTS="rw,relatime"
+    OPTS="rw,relatime,umask=000"
 
     if ! /bin/mount -o ${OPTS} ${DEVICE} ${MNTPOINT}
     then
