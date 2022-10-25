@@ -53,7 +53,54 @@ def main():
     if outp is None: fail('Output detection failed.'); log("Output Detection BUG ***", "backendMAINlog.txt") ;export_log("backendMAINlog.txt"); exit()
     if outp == "/mnt/DataShare/BadUSBOutput": fail("The output drive is not a valid USB drive."); log("BAD OUTPUT DEVICE ***", "backendMAINlog.txt"); subprocess.call("rm -f /mnt/DataShare/BadUSBOutput", shell=True); fail('This incident will be reported.'); exit()
 
-    Vid, Pid = uid.get_ids("/dev/" + outp.split("/")[-1])
+    n_part = len(os.listdir("/mnt/USBOutputDevice/USBOutputPart"))
+
+    log(f"Found {n_part} partitions.","backendMAINlog.txt")
+
+    if n_part > 1:
+
+        parts = []
+        for path, dirs, files in os.walk("/mnt/USBOutputDevice/USBOutputPart"):
+            parts.append(dirs)            
+
+        print(' ' + '_'*( len(str(len(parts))) + max(len(part) for part in parts) + 4))
+
+        for part in parts:
+            print('| ' + '0'*(len(str(len(parts))) - len(parts.index(part))) + parts.index(part) + ' | ' + part + ' '*(max(len(part) for part in parts) - len(part)) + ' |')
+
+        print('|_'*len(str(len(parts))) + '_|_' + '_'*max(len(part) for part in parts))
+
+        info(f'Found {n_part} partitions. Select the partition that Asterix should use :')
+
+        while True:
+
+            try:
+                choice = int(input('>>> '))[0]
+
+                if choice >= len(parts):
+                    warning('Choose an existing partition.')
+
+                else:
+                    s_part = parts[choice]
+                    log(f"Selected partition {s_part}.")
+
+            except KeyboardInterrupt:
+
+                fail('Choice failed.')
+                log("Stopped at partition selection.", "backendMAINlog.txt")
+                export_log("backendMAINlog.txt")
+                exit()
+
+            except:
+
+                warning('Choice failed. The choice has to be made by partition index (eg: 0). Try again.')
+        
+    else:
+
+        s_part = "/mnt/USBInputDevice/USBInputPart/" + os.listdir("/mnt/USBInputDevice/USBInputPart")[0]
+
+
+    Vid, Pid = uid.get_ids("/dev/" + s_part.split("/")[-1])
 
     log(f'Detected USB drive with Vid: {Vid} and Pid: {Pid}.', "backendMAINlog.txt")
 
@@ -93,10 +140,11 @@ def main():
 
     print()
 
+
     with open("trt_result.json", "r") as res:
         f_trt = [f["FileName"] for f in json.load(res)["ind_results"]]
 
-    f_res = cp.xcopy("trt_result.json", f_trt, outp)
+    f_res = cp.xcopy("trt_result.json", f_trt, s_part)
 
     print("\nAvailable Files :")
     tab(f_res)
