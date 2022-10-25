@@ -485,6 +485,7 @@ try:
             exit()
     success('VM Disk backed up.')
 
+    cmd_run('/usr/bin/cp Host/Host_Scripts/setup_finish.sh')
 
     warning('A reboot is required to complete the setup.')
 
