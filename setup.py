@@ -373,8 +373,8 @@ try:
 
 
     with spinner('Preparing Windows 10 VM Environment...'):
-        cmd_run("/usr/bin/chown -R vm_runner:vm_runner /src/win10_VM")
         cmd_run("/usr/bin/cp AC-Center/vm_run.sh /src/win10_VM/vm_run.sh")
+        cmd_run("/usr/bin/chown -R vm_runner:vm_runner /src/win10_VM")
         cmd_run("/usr/bin/chmod -R u=rwx /src/win10_VM")
         cmd_run("/usr/bin/chmod -R g=rwx /src/win10_VM")
         cmd_run("/usr/bin/chmod -R o=-r-x-w /src/win10_VM")
@@ -405,12 +405,6 @@ try:
             client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
             paramiko.util.log_to_file('/dev/null')
-
-            cmd_run('/usr/bin/cp AC-Center/vm_run.sh /src/win10_VM/vm_run.sh')
-            cmd_run('/usr/bin/chown vm_runner:vm_runner /src/win10_VM/vm_run.sh')
-            cmd_run('/usr/bin/chmod u=rx /src/win10_VM/vm_run.sh')
-            cmd_run('/usr/bin/chmod g=rx /src/win10_VM/vm_run.sh')
-            cmd_run('/usr/bin/chmod o=-r-w-x /src/win10_VM/vm_run.sh')
 
             subprocess.run("/usr/bin/sudo -u vm_runner /bin/bash /src/win10_VM/vm_run.sh &", shell=True)
 

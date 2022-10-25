@@ -29,7 +29,7 @@ def inp_wait(path):
 
 
 def rem_wait(path):
-    while True in [os.path.exists(_) for _ in path]:
+    while True in [_ in os.listdir(os.path.join(_.split("/"))) for _ in path]:
         try:
             time.sleep(1)
         except KeyboardInterrupt:
