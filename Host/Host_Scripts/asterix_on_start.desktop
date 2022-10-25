@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Asterix
+Exec=/usr/bin/python3 /opt/asterix/Asterix.py

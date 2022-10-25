@@ -97,7 +97,7 @@ def main():
         
     else:
 
-        s_part = "/mnt/USBInputDevice/USBInputPart/" + os.listdir("/mnt/USBInputDevice/USBInputPart")[0]
+        s_part = "/mnt/USBOutputDevice/USBOutputPart/" + os.listdir("/mnt/USBOutputDevice/USBOutputPart")[0]
 
 
     Vid, Pid = uid.get_ids("/dev/" + s_part.split("/")[-1])

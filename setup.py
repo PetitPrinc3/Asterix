@@ -283,6 +283,12 @@ try:
     success('Administration tools ready.')
 
 
+    with spinner('Setting up auto-start...'):
+        cmd_run('/usr/bin/mkdir -p /opt/asterix/.config/autostart')
+        cmd_run('/usr/bin/cp Host/Host_Scripts/asterix_on_start.desktop /opt/asterix/.config/autostart')
+    success('Auto start set up.')
+
+
     with spinner('Changing splash screens...'):
 
         cmd_run('/usr/bin/cp /usr/share/plymouth/themes/pix/splash.png splash.png.backup')
