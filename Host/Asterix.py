@@ -61,7 +61,7 @@ try:
     info('You can now remove both USB drives.')
 
     with spinner('Waiting for drive removal...'):
-        ud.rem_wait(["/dev/USBInputDisk", "/dev/USBInputPart", "/dev/USBOutputDisk", "/dev/USBOutputPart"])
+        ud.rem_wait()
     success('Done. Thank you for using Asterix <3')
 
     log("USB Devices removed.", logfile)

@@ -5,8 +5,8 @@
 
 
 import os
-import time
 
+from time import sleep
 from datetime import datetime
 from Asterix_libs.prints import *
 
@@ -17,7 +17,7 @@ from Asterix_libs.prints import *
 def inp_wait(path):
     while True not in [os.path.exists(_) for _ in path]:
         try:
-            time.sleep(1)
+            sleep(.1)
         except KeyboardInterrupt:
             print()
             return None
@@ -28,14 +28,23 @@ def inp_wait(path):
 ################################################################################
 
 
-def rem_wait(path):
-    while True in [_ in os.listdir(os.path.join(_.split("/"))) for _ in path]:
+def rem_wait():
+    pres = True
+    while pres:
+        
+        sleep(.1)
+
         try:
-            time.sleep(1)
+            pres = False
+            for _ in os.listdir("/dev"):
+                if _.startswith("USBInputPart") or _.startswith("USBOutputPart"):
+                    pres = True
+
         except KeyboardInterrupt:
-            print()
-            return False
-    fail('::: USB device removed  :::          ')
+            fail('Keyboard Interrupt detected.')
+            exit(1)
+
+    warning('::: USB devices removed  :::          ')
     return True
 
 

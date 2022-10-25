@@ -18,7 +18,7 @@ def inp_wait(path):
     while True not in [os.path.exists(_) for _ in path]:
         try:
             infor('[' + str(datetime.now().strftime("%H:%M:%S")) + '] Waiting for USB Device')
-            time.sleep(1)
+            time.sleep(.1)
         except KeyboardInterrupt:
             print()
             return None
