@@ -239,17 +239,17 @@ try:
 
 
     with spinner('Creating relevant docker volumes...'):
-        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBInputDevice"')
+        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create -o ro --name USBInputDevice"')
         info('USBInputDevice volume created.         ')
-        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"')
+        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create -o rw --name InputFiles"')
         info('InputFiles volume created.             ')
-        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name Sanitized"')
+        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create -o rw --name Sanitized"')
         info('Sanitized volume created.              ')
-        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBOutputDevice"')
+        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create -o rw --name USBOutputDevice"')
         info('USBOutputDevice volume created.        ')
-        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name OutputFiles"')
+        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create -o rw --name OutputFiles"')
         info('OutputFiles volume created.            ')
-        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name DataShare"')
+        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create -o umask=000,rw --name DataShare"')
         info('DataShare volume created.              ')
     success("All relevant docker volumes created.")
 
