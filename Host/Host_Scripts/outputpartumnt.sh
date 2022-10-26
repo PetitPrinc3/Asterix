@@ -8,22 +8,19 @@ MNTBASE="/var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart/"
 MOUNTED=$(/bin/mount | /bin/grep ${MNTBASE} | /usr/bin/awk '{ print $3 }')
 
 
-while [[ -d $MNTPOINT ]]
+while [[ ! -z ${MOUNTED} ]]
 do
-    if [[ -z ${MOUNTED} ]]
-    then
-        echo "Warning: ${DEVICE} is not mounted"
-    else
-        for dev in `ls $MNTBASE`
-        do
-            /bin/umount $MNTBASE$dev
+    for dev in `ls $MNTBASE`
+    do
+        /bin/umount /dev/$dev
         echo "**** Unmounted ${dev}"
-    fi
+        
+        if ! /bin/rmdir $MNTBASE$dev
+        then
+            echo "Failed to remove mountpoint"
+        fi
 
-    if ! /bin/rmdir $MNTPOINT
-    then
-        echo "Failed to remove mountpoint"
-    fi
+    done
 
     if [ -z "$(ls -A ${MNTBASE})" ] 
     then
