@@ -8,7 +8,7 @@ MNTBASE="/var/lib/docker/volumes/USBInputDevice/_data/USBInputPart/"
 MOUNTED=$(/bin/mount | /bin/grep ${MNTBASE} | /usr/bin/awk '{ print $3 }')
 
 
-while [[ ! -z ${MOUNTED} ]]
+while [[ ! -z $MOUNTED ]]
 do
     for dev in `ls $MNTBASE`
     do
