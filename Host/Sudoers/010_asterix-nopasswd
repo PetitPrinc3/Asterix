@@ -6,7 +6,7 @@ asterix ALL=(docker_runner) NOPASSWD: /usr/bin/docker exec -w /usr/share/USBHand
 asterix ALL=(docker_runner) NOPASSWD: /usr/bin/docker exec -w /usr/share/PythonHandler -it brain /bin/sh init_clean.sh
 
 asterix ALL=(root) NOPASSWD: /usr/bin/cp /src/Host/Administration/USB_ID.db /var/lib/docker/volumes/DataShare/_data/USB_ID.db
-asterix ALL=(root) NOPASSWD: /usr/bin/systemctl restart inputpartumount
-asterix ALL=(root) NOPASSWD: /usr/bin/systemctl restart outputpartumount
+asterix ALL=(root) NOPASSWD: /usr/bin/systemctl stop inputpartmount@*.service
+asterix ALL=(root) NOPASSWD: /usr/bin/systemctl stop outputpartmount@*.service
 asterix ALL=(root) NOPASSWD: /usr/bin/python /src/Host/db_create.py
 asterix ALL=(root) NOPASSWD: /usr/bin/cp /var/lib/docker/volumes/DataShare/_data/* /opt/asterix/.tmp/
