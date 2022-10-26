@@ -21,12 +21,12 @@ def cmd_run(cmd):
             warning('Process failed once. Trying again.')
             try:
                 if subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait(timeout=600) != 0:
-                    fail('Process failed. This is critical.')
+                    fail('Process failed. This is critical.                                                  ')
                     print(cmd)
                     fail("Exiting now.")
                     exit(1)
             except subprocess.TimeoutExpired:
-                    fail('Command timed out. This is critical.')
+                    fail('Command timed out. This is critical.                                               ')
                     print(cmd)
                     fail("Exiting now.")
                     exit(1)

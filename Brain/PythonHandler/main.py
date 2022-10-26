@@ -8,11 +8,30 @@ from Asterix_libs.log import *
 
 from PywavaAutomation import pywavaautomation
 
+
+def is_empty(json_file):
+
+    try:
+        with open(json_file, "r") as json_data:
+
+            json_ctnt = json.load(json_data)
+
+            ctnt_len = len(json_ctnt["ind_results"])
+
+            if ctnt_len == 0: return True
+            else: return False
+
+    except:
+        return True
+
+
 reset_log("brainMAINlog.txt")
 reset_log("PywavaAutomation/pywavalog.txt")
 
 
 subprocess.call("/bin/cp /mnt/DataShare/user_inp.json user_inp.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+
+if is_empty('user_inp.json'): fail('NOFILE AVAILABLE.'); export_log("brainMAINlog.txt"); subprocess.call("/bin/cp dirty.json /mnt/DataShare/dirty.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL); subprocess.call("/bin/cp clean.json /mnt/DataShare/clean.json", shell = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL); exit()
 
 ac_res = pywavaautomation.ac_run()
 

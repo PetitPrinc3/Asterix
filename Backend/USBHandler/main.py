@@ -62,7 +62,7 @@ def main():
 
     n_part = len(parts)
 
-    log(f"Found {n_part} partitions. ({parts})","frontMAINlog.txt")
+    log(f"Found {n_part} partitions. ({parts})","backendMAINlog.txt")
 
     if n_part > 1:
 
@@ -91,8 +91,8 @@ def main():
                 except KeyboardInterrupt:
 
                     fail('Choice failed.')
-                    log("Stopped at partition selection.", "frontMAINlog.txt")
-                    export_log("frontMAINlog.txt")
+                    log("Stopped at partition selection.", "backendMAINlog.txt")
+                    export_log("backendMAINlog.txt")
                     exit()
 
                 except:
