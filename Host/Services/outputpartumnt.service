@@ -1,7 +1,0 @@
-[Unit]
-Description=Umount USB Drive on port 1.4
-
-[Service]
-Type=oneshot
-RemainAfterExit=true
-ExecStart=/usr/share/Asterix/Mounters/outppartumnt.sh

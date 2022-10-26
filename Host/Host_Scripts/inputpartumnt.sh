@@ -22,11 +22,11 @@ do
 
     done
 
-    if [ -z "$(ls -A ${MNTBASE})" ] 
-    then
-        /bin/rmdir $MNTBASE
-    fi
-
     sleep 1
 
 done
+
+if [ -z $(ls ${MNTBASE}) ] 
+then
+    /bin/rmdir $MNTBASE
+fi

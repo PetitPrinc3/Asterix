@@ -22,15 +22,15 @@ eval $(/sbin/blkid -o udev ${DEVICE})
 
 echo "Mount point: ${MNTPOINT}"
 
-/bin/mkdir -p ${MNTPOINT}
+/bin/mkdir -p $MNTPOINT
 
 # Global mount options
 OPTS="rw,relatime,umask=000"
 
-if ! /bin/mount -o ${OPTS} ${DEVICE} ${MNTPOINT}
+if ! /bin/mount -o $OPTS $DEVICE $MNTPOINT
 then
     echo "Error mounting ${DEVICE} (status = $?)"
-    /bin/rmdir ${MNTPOINT}
+    /bin/rmdir $MNTPOINT
     exit 1
 fi
 

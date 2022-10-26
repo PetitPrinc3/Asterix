@@ -5,3 +5,4 @@ Description=Mount USB Drive on %i
 Type=oneshot
 RemainAfterExit=true
 ExecStart=/usr/share/Asterix/Mounters/outppartmnt.sh %i
+ExecStop=/usr/share/Asterix/Mounters/outppartumnt.sh
