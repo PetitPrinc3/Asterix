@@ -62,8 +62,9 @@ def log_from_log(local_log, global_log):
 
 
 def export_log(fpath):
+    if not os.path.isfile(fpath): warning('Not a log file.'); return 1
     subprocess.call(f'/bin/mv {fpath} /mnt/DataShare/{os.path.basename(fpath)}', shell=True)
-    subprocess.call(f'/bin/chmod o=rx /mnt/DataShare/{os.path.basename(fpath)}', shell=True)
+    subprocess.call(f'/bin/chmod 755 /mnt/DataShare/{os.path.basename(fpath)}', shell=True)
 
 
 ################################################################################

@@ -27,13 +27,13 @@ RUN mkdir /mnt/USBOutputDevice
 RUN chown -R asterix:asterix /mnt/USBOutputDevice
 RUN chmod -R u=rwx /mnt/USBOutputDevice
 
-RUN mkdir /mnt/OutputFiles
-RUN chown -R asterix:asterix /mnt/OutputFiles
-RUN chmod -R u=rx /mnt/OutputFiles
-
 RUN mkdir /mnt/DataShare
 RUN chown -R asterix:asterix /mnt/DataShare
 RUN chmod -R u=rwx /mnt/DataShare
+
+RUN mkdir /mnt/OutputFiles
+RUN chown -R asterix:asterix /mnt/OutputFiles
+RUN chmod -R u=rx /mnt/OutputFiles
 
 # Switch to Asterix user
 USER asterix
