@@ -4,11 +4,7 @@
 
 MNTBASE="/var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart/"
 
-# See if this drive is already mounted, and if so where
-MOUNTED=$(/bin/mount | /bin/grep ${MNTBASE} | /usr/bin/awk '{ print $3 }')
-
-
-while [[ ! -z $MOUNTED ]]
+while [[ ! -z $(/bin/mount | /bin/grep ${MNTBASE} | /usr/bin/awk '{ print $3 }') ]]
 do
     for dev in `ls $MNTBASE`
     do
