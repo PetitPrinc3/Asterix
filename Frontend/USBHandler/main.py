@@ -72,38 +72,43 @@ def main():
 
     if n_part > 1:
 
-        print(' ' + '_'*(len(str(len(parts))) + max(len(part) for part in parts) + 4))
+        try:
+            print(' ' + '_'*(len(str(len(parts))) + max(len(part) for part in parts) + 4))
 
-        for part in parts:
-            print('| ' + '0'*(len(str(len(parts))) - len(str(parts.index(part)))) + str(parts.index(part)) + ' | ' + part + ' '*(max(len(part) for part in parts) - len(part)) + ' |')
+            for part in parts:
+                print('| ' + '0'*(len(str(len(parts))) - len(str(parts.index(part)))) + str(parts.index(part)) + ' | ' + part + ' '*(max([len(part) for part in parts]) - len(part)) + ' |')
 
-        print('|_'*len(str(len(parts))) + '_|_' + '_'*max(len(part) for part in parts))
+            print('|_'*len(str(len(parts))) + '_|_' + '_'*max(len(part) for part in parts))
 
-        info(f'Found {n_part} partitions. Select the partition that Asterix should use :')
+            info(f'Found {n_part} partitions. Select the partition that Asterix should use :')
 
-        while True:
+            while True:
 
-            try:
-                choice = int(input('>>> '))[0]
+                try:
+                    choice = int(input('>>> '))[0]
 
-                if choice >= len(parts):
-                    warning('Choose an existing partition.')
+                    if choice >= len(parts):
+                        warning('Choose an existing partition.')
 
-                else:
-                    s_part = "/mnt/USBInputDevice/USBInputPart/" + parts[choice]
-                    log(f"Selected partition {s_part}.")
+                    else:
+                        s_part = "/mnt/USBInputDevice/USBInputPart/" + parts[choice]
+                        log(f"Selected partition {s_part}.")
 
-            except KeyboardInterrupt:
+                except KeyboardInterrupt:
 
-                fail('Choice failed.')
-                log("Stopped at partition selection.", "frontMAINlog.txt")
-                export_log("frontMAINlog.txt")
-                exit()
+                    fail('Choice failed.')
+                    log("Stopped at partition selection.", "frontMAINlog.txt")
+                    export_log("frontMAINlog.txt")
+                    exit()
 
-            except:
+                except:
 
-                warning('Choice failed. The choice has to be made by partition index (eg: 0). Try again.')
-        
+                    warning('Choice failed. The choice has to be made by partition index (eg: 0). Try again.')
+
+        except:
+
+            print(parts, n_part)
+
     else:
 
         s_part = "/mnt/USBInputDevice/USBInputPart/" + os.listdir("/mnt/USBInputDevice/USBInputPart")[0]
