@@ -75,7 +75,7 @@ def main():
         print(' ' + '_'*(len(str(len(parts))) + max(len(part) for part in parts) + 4))
 
         for part in parts:
-            print('| ' + '0'*(len(str(len(parts))) - len(parts.index(part))) + parts.index(part) + ' | ' + part + ' '*(max(len(part) for part in parts) - len(part)) + ' |')
+            print('| ' + '0'*(len(str(len(parts))) - len(str(parts.index(part)))) + parts.index(part) + ' | ' + part + ' '*(max(len(part) for part in parts) - len(part)) + ' |')
 
         print('|_'*len(str(len(parts))) + '_|_' + '_'*max(len(part) for part in parts))
 
