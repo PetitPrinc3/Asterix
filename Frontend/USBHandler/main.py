@@ -63,8 +63,10 @@ def main():
     time.sleep(1)
 
     parts = []
-    for path, dirs, files in os.walk("/mnt/USBInputDevice/USBInputPart"):
-        parts.append(dirs)  
+    for _ in os.listdir("/mnt/USBInputDevice/USBInputPart"):
+        
+        if os.path.isdir(_):
+            parts.append(_)  
 
     n_part = len(parts)
 
@@ -73,7 +75,7 @@ def main():
     if n_part > 1:
 
         try:
-            print(' ' + '_'*(len(str(len(parts))) + max(len(part) for part in parts) + 4))
+            print(' ' + '_'*(len(str(len(parts))) + max([len(part) for part in parts]) + 4))
 
             for part in parts:
                 print('| ' + '0'*(len(str(len(parts))) - len(str(parts.index(part)))) + str(parts.index(part)) + ' | ' + part + ' '*(max([len(part) for part in parts]) - len(part)) + ' |')
