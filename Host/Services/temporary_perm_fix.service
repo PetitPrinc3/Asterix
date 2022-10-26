@@ -1,0 +1,12 @@
+[Unit]
+Description=FIX PERMISSIONS ON DATASHARE
+
+[Service]
+Type=simple
+User=root
+Group=root
+RemainAfterExit=False
+ExecStart=/usr/bin/chmod -R 777 /var/lib/docker/volumes/DataShare/_data/
+
+[Install]
+WantedBy=multi-user.target

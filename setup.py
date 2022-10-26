@@ -225,11 +225,13 @@ try:
         cmd_run('/usr/bin/cp Host/Services/inputpartumnt.service /etc/systemd/system/')
         cmd_run('/usr/bin/cp Host/Services/outputpartmnt@.service /etc/systemd/system/')
         cmd_run('/usr/bin/cp Host/Services/outputpartumnt.service /etc/systemd/system/')
+        cmd_run('/usr/bin/cp Host/Services/temporary_perm_fix.service /etc/systemd/system/')
         cmd_run('systemctl daemon-reload')
         cmd_run('systemctl enable accenter_start.service')
         cmd_run('systemctl enable frontend_start.service')
         cmd_run('systemctl enable backend_start.service')
         cmd_run('systemctl enable brain_start.service')
+        cmd_run('systemctl enable temporary_perm_fix.service')
     success('Created systemd service.')
 
 
@@ -243,17 +245,17 @@ try:
 
 
     with spinner('Creating relevant docker volumes...'):
-        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create -o ro --name USBInputDevice"')
+        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBInputDevice"')
         info('USBInputDevice volume created.         ')
-        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create -o rw --name InputFiles"')
+        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name InputFiles"')
         info('InputFiles volume created.             ')
-        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create -o rw --name Sanitized"')
+        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name Sanitized"')
         info('Sanitized volume created.              ')
-        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create -o rw --name USBOutputDevice"')
+        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name USBOutputDevice"')
         info('USBOutputDevice volume created.        ')
-        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create -o rw --name OutputFiles"')
+        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name OutputFiles"')
         info('OutputFiles volume created.            ')
-        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create -o umask=000,rw --name DataShare"')
+        cmd_run('/usr/bin/su - docker_runner -c "/usr/bin/docker volume create --name DataShare"')
         info('DataShare volume created.              ')
     success("All relevant docker volumes created.")
 
@@ -269,6 +271,7 @@ try:
         cmd_run('/usr/bin/chmod -R u=rwx /opt/docker_runner')
         cmd_run('/usr/bin/chmod -R g=rwx /opt/docker_runner')
         cmd_run('/usr/bin/chmod -R o=-r-w-x /opt/docker_runner')
+        cmd_run('systemctl start temporary_perm_fix.service')
 
     success('Fixed user permissions.')
 
