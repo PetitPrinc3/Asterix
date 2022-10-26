@@ -4,4 +4,4 @@ Description=Mount USB Drive on %i
 [Service]
 Type=oneshot
 RemainAfterExit=true
-ExecStart=/usr/share/Asterix/Mounters/inputpartmnt.sh %i
+ExecStart=/usr/share/Asterix/Mounters/outppartmnt.sh %i

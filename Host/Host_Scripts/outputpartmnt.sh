@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# This script is called from our systemd unit file to mount a USB drive.
+# This script is called from our systemd unit file to mount or unmount a USB drive.
 
 DEVBASE=$1
 DEVICE="/dev/${DEVBASE}"
-MNTBASE="/var/lib/docker/volumes/USBInputDevice/_data/USBInputPart/"
+MNTBASE="/var/lib/docker/volumes/USBOutputDevice/_data/USBOutputPart/"
 MNTPOINT=$MNTBASE$DEVBASE
 
 # See if this drive is already mounted, and if so where
@@ -25,7 +25,7 @@ echo "Mount point: ${MNTPOINT}"
 /bin/mkdir -p ${MNTPOINT}
 
 # Global mount options
-OPTS="ro,relatime"
+OPTS="rw,relatime,umask=000"
 
 if ! /bin/mount -o ${OPTS} ${DEVICE} ${MNTPOINT}
 then
