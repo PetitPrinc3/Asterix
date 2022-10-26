@@ -62,17 +62,17 @@ def main():
 
     time.sleep(1)
 
-    n_part = len(os.listdir("/mnt/USBInputDevice/USBInputPart"))
+    parts = []
+    for path, dirs, files in os.walk("/mnt/USBInputDevice/USBInputPart"):
+        parts.append(dirs)  
 
-    log(f"Found {n_part} partitions.","frontMAINlog.txt")
+    n_part = len(parts)
+
+    log(f"Found {n_part} partitions. ({parts})","frontMAINlog.txt")
 
     if n_part > 1:
 
-        parts = []
-        for path, dirs, files in os.walk("/mnt/USBInputDevice/USBInputPart"):
-            parts.append(dirs)            
-
-        print(' ' + '_'*( len(str(len(parts))) + max(len(part) for part in parts) + 4))
+        print(' ' + '_'*(len(str(len(parts))) + max(len(part) for part in parts) + 4))
 
         for part in parts:
             print('| ' + '0'*(len(str(len(parts))) - len(parts.index(part))) + parts.index(part) + ' | ' + part + ' '*(max(len(part) for part in parts) - len(part)) + ' |')
@@ -90,7 +90,7 @@ def main():
                     warning('Choose an existing partition.')
 
                 else:
-                    s_part = parts[choice]
+                    s_part = "/mnt/USBInputDevice/USBInputPart/" + parts[choice]
                     log(f"Selected partition {s_part}.")
 
             except KeyboardInterrupt:
