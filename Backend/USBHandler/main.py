@@ -53,48 +53,56 @@ def main():
     if outp is None: fail('Output detection failed.'); log("Output Detection BUG ***", "backendMAINlog.txt") ;export_log("backendMAINlog.txt"); exit()
     if outp == "/mnt/DataShare/BadUSBOutput": fail("The output drive is not a valid USB drive."); log("BAD OUTPUT DEVICE ***", "backendMAINlog.txt"); subprocess.call("rm -f /mnt/DataShare/BadUSBOutput", shell=True); fail('This incident will be reported.'); exit()
 
-    n_part = len(os.listdir("/mnt/USBOutputDevice/USBOutputPart"))
+    parts = []
+    
+    for _ in os.listdir("/mnt/USBOutputDevice/USBOutputPart"):
+        
+        if os.path.isdir(_):
+            parts.append(_)  
 
-    log(f"Found {n_part} partitions.","backendMAINlog.txt")
+    n_part = len(parts)
+
+    log(f"Found {n_part} partitions. ({parts})","frontMAINlog.txt")
 
     if n_part > 1:
 
-        parts = []
-        for path, dirs, files in os.walk("/mnt/USBOutputDevice/USBOutputPart"):
-            parts.append(dirs)            
+        try:
+            print(' ' + '_'*(len(str(len(parts))) + max([len(part) for part in parts]) + 4))
 
-        print(' ' + '_'*( len(str(len(parts))) + max(len(part) for part in parts) + 4))
+            for part in parts:
+                print('| ' + '0'*(len(str(len(parts))) - len(str(parts.index(part)))) + str(parts.index(part)) + ' | ' + part + ' '*(max([len(part) for part in parts]) - len(part)) + ' |')
 
-        for part in parts:
-            print('| ' + '0'*(len(str(len(parts))) - len(parts.index(part))) + parts.index(part) + ' | ' + part + ' '*(max(len(part) for part in parts) - len(part)) + ' |')
+            print('|_'*len(str(len(parts))) + '_|_' + '_'*max(len(part) for part in parts))
 
-        print('|_'*len(str(len(parts))) + '_|_' + '_'*max(len(part) for part in parts))
+            info(f'Found {n_part} partitions. Select the partition that Asterix should use :')
 
-        info(f'Found {n_part} partitions. Select the partition that Asterix should use :')
+            while True:
 
-        while True:
+                try:
+                    choice = int(input('>>> '))[0]
 
-            try:
-                choice = int(input('>>> '))[0]
+                    if choice >= len(parts):
+                        warning('Choose an existing partition.')
 
-                if choice >= len(parts):
-                    warning('Choose an existing partition.')
+                    else:
+                        s_part = "/mnt/USBOutputDevice/USBOutputPart/" + parts[choice]
+                        log(f"Selected partition {s_part}.")
 
-                else:
-                    s_part = parts[choice]
-                    log(f"Selected partition {s_part}.")
+                except KeyboardInterrupt:
 
-            except KeyboardInterrupt:
+                    fail('Choice failed.')
+                    log("Stopped at partition selection.", "frontMAINlog.txt")
+                    export_log("frontMAINlog.txt")
+                    exit()
 
-                fail('Choice failed.')
-                log("Stopped at partition selection.", "backendMAINlog.txt")
-                export_log("backendMAINlog.txt")
-                exit()
+                except:
 
-            except:
+                    warning('Choice failed. The choice has to be made by partition index (eg: 0). Try again.')
 
-                warning('Choice failed. The choice has to be made by partition index (eg: 0). Try again.')
-        
+        except:
+
+            print(parts, n_part)
+
     else:
 
         s_part = "/mnt/USBOutputDevice/USBOutputPart/" + os.listdir("/mnt/USBOutputDevice/USBOutputPart")[0]
