@@ -60,6 +60,8 @@ def main():
 
     log("Mass storage unit detected.","frontMAINlog.txt")
 
+    time.sleep(1)
+
     n_part = len(os.listdir("/mnt/USBInputDevice/USBInputPart"))
 
     log(f"Found {n_part} partitions.","frontMAINlog.txt")
@@ -122,7 +124,8 @@ def main():
 
     info('Fetched ' + str(len(f_lst)) + ' files.')
     
-    tab(f_lst)
+    t_lst = [_[33:] for _ in f_lst]
+    tab(t_lst)
     
     log("The following files were found : " + str(f_lst),"frontMAINlog.txt")
 
@@ -150,7 +153,8 @@ def main():
     
     print("\nSelected Files :")
     
-    tab(f_trt)
+    t_lst = [_[33:] for _ in f_trt]
+    tab(t_lst)
     
     f_res = cp.xcopy("list_result.json", f_trt, "/mnt/InputFiles/")
 
@@ -206,9 +210,10 @@ def main():
         js = json.dumps(f_data, indent=4)
         usr_fl.write(js)
 
-
     print("\nAvailable Files :")
-    tab(f_res)
+
+    t_lst = [_[16:] for _ in f_res]
+    tab(t_lst)
 
     export_log("frontMAINlog.txt")
 

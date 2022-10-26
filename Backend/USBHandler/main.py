@@ -147,7 +147,9 @@ def main():
     f_res = cp.xcopy("trt_result.json", f_trt, s_part)
 
     print("\nAvailable Files :")
-    tab(f_res)
+    
+    t_lst = [_[35:] for _ in f_res]
+    tab(t_lst)
 
     log(f'Final copied files : {f_res}', "backendMAINlog.txt")
 
