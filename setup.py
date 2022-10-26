@@ -467,19 +467,26 @@ try:
 
 
     with spinner("Backing up VM disk..."):
-        if os.path.exists("/src/win10_VM/system.vhdx"):
-            cmd_run('/usr/bin/mkdir -p /src/win10_VM/Backup')
-            cmd_run('/usr/bin/chown -R asterix_admin:asterix_admin /src/win10_VM/Backup')
-            cmd_run('/usr/bin/chmod -R u=rx /src/win10_VM/Backup')
-            cmd_run('/usr/bin/chmod -R g=rx /src/win10_VM/Backup')
-            cmd_run('/usr/bin/chmod -R o=-r-w-x /src/win10_VM/Backup')
-            cmd_run('/usr/bin/cp /src/win10_VM/system.vhdx /src/win10_VM/Backup/System_Backup.vhdx')
-        else:
-            fail('No DISK found to backup.')
-            exit()
-    success('VM Disk backed up.')
+
+        try:
+            if os.path.exists("/src/win10_VM/system.vhdx"):
+                cmd_run('/usr/bin/mkdir -p /src/win10_VM/Backup')
+                cmd_run('/usr/bin/chown -R asterix_admin:asterix_admin /src/win10_VM/Backup')
+                cmd_run('/usr/bin/chmod -R u=rx /src/win10_VM/Backup')
+                cmd_run('/usr/bin/chmod -R g=rx /src/win10_VM/Backup')
+                cmd_run('/usr/bin/chmod -R o=-r-w-x /src/win10_VM/Backup')
+                cmd_run('/usr/bin/cp /src/win10_VM/system.vhdx /src/win10_VM/Backup/System_Backup.vhdx')
+                success('VM Disk backed up.')
+
+            else:
+                fail('No DISK found to backup.')
+                
+        except KeyboardInterrupt:
+            warning('Backup skipped.')
+
 
     cmd_run('/usr/bin/cp Host/Host_Scripts/setup_finish.sh /src/Host/Host_Scripts')
+
 
     warning('A reboot is required to complete the setup.')
 
