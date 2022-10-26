@@ -406,7 +406,7 @@ try:
 
             paramiko.util.log_to_file('/dev/null')
 
-            subprocess.run("/usr/bin/sudo -u vm_runner /bin/bash /src/win10_VM/vm_run.sh &", shell=True)
+            subprocess.run("/usr/bin/systemctl restart accenter_start", shell=True)
 
             with spinner('Restarting VM...'):
 
