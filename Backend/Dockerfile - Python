@@ -5,6 +5,7 @@ FROM alpine:latest
 RUN useradd asterix
 
 # Installing software dependencies
+RUN apt update
 RUN apt install -y python3
 RUN apt install -y udev
 
