@@ -57,7 +57,7 @@ def main():
     
     for _ in os.listdir("/mnt/USBOutputDevice/USBOutputPart"):
         
-        if os.path.isdir(_):
+        if os.path.isdir(f"/mnt/USBOutputDevice/USBOutputPart/{_}"):
             parts.append(_)  
 
     n_part = len(parts)
