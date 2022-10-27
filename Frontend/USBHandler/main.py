@@ -87,7 +87,7 @@ def main():
             while True:
 
                 try:
-                    choice = int(str(input('>>> '))[0])
+                    choice = int(input('>>> '))
 
                     if choice >= len(parts):
                         warning('Choose an existing partition.')
@@ -95,6 +95,7 @@ def main():
                     else:
                         s_part = "/mnt/USBInputDevice/USBInputPart/" + parts[choice]
                         log(f"Selected partition {s_part}.", "frontMAINlog.txt")
+                        break
 
                 except KeyboardInterrupt:
 
