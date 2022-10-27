@@ -32,16 +32,6 @@ password = 'ac-center'
 
 def ac_run():
 
-    try:
-        with open("/mnt/DataShare/user_inp.json user_inp.json", "r") as uinp:
-            js_inp = json.load(uinp)
-
-            if len(js_inp["ind_results"]) == 0:
-                return [], []
-
-    except:
-        return [], []
-
     start = datetime.now()
 
     client = paramiko.SSHClient()

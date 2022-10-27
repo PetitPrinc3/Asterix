@@ -90,7 +90,8 @@ def main():
 
             print('|_' + "_"*(len(str(len(parts)))) + '_|_' + '_'*max(len(part) for part in parts) + '_|')
 
-            info(f'Found {n_part} partitions. Select the partition that Asterix should use :')
+            info(f'Found {n_part} partitions.')
+            print('Select the partition that Asterix should use :')
 
             while True:
 
