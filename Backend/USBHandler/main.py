@@ -46,6 +46,22 @@ def main():
 
     subprocess.call('/bin/cp /mnt/DataShare/trt_result.json trt_result.json', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+    try:
+        with open("trt_result.json", "r") as res:
+            js_res = json.load(res)
+            if len(js_res["ind_result"]) == 0:
+                warning('Nothing to export.')
+                log('Nothing to export', "backendMAINlog.txt")
+                export_log("backendMAINlog.txt")
+                return 1
+    
+    except:
+        warning('Nothing to export.')
+        log('Nothing to export', "backendMAINlog.txt")
+        export_log("backendMAINlog.txt")
+        return 1
+
+
     if not uid.db_test("/mnt/DataShare/USB_ID.db"): log("DB Test failed.", "backendMAINlog.txt"); exit()
 
     outp = ud.inp_wait(["/mnt/USBOutputDevice/USBOutputPart", "/mnt/DataShare/BadUSBOutput"])
