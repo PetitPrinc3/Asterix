@@ -83,19 +83,19 @@ def main():
     if n_part > 1:
 
         try:
-            print(' ' + '_'*(len(str(len(parts))) + max([len(part) for part in parts]) + 4))
+            print(' ' + '_'*(len(str(len(parts))) + max([len(part) for part in parts]) + 5))
 
             for part in parts:
                 print('| ' + '0'*(len(str(len(parts))) - len(str(parts.index(part)))) + str(parts.index(part)) + ' | ' + part + ' '*(max([len(part) for part in parts]) - len(part)) + ' |')
 
-            print('|_'*len(str(len(parts))) + '_|_' + '_'*max(len(part) for part in parts))
+            print('|_'*(len(str(len(parts))) + 1) + '_|_' + '_'*max(len(part) for part in parts) + '_|')
 
             info(f'Found {n_part} partitions. Select the partition that Asterix should use :')
 
             while True:
 
                 try:
-                    choice = int(input('>>> '))[0]
+                    choice = int(str(input('>>> '))[0])
 
                     if choice >= len(parts):
                         warning('Choose an existing partition.')
