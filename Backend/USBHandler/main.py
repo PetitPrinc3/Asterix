@@ -49,7 +49,7 @@ def main():
     try:
         with open("trt_result.json", "r") as res:
             js_res = json.load(res)
-            if len(js_res["ind_result"]) == 0:
+            if len(js_res["ind_results"]) == 0:
                 warning('Nothing to export.')
                 log('Nothing to export', "backendMAINlog.txt")
                 export_log("backendMAINlog.txt")
