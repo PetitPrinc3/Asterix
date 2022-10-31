@@ -121,7 +121,8 @@ WantedBy=multi-user.target
 
 """
             nserv.write(serv)
-        cmd_run("""/usr/bin/sed -i 's/running_vms = subprocess.Popen("ps -ef | grep qemu-system-aarch64".*/running_vms = subprocess.Popen("virsh list | grep win10", shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode("utf-8").strip().split("\\n")/' Host/Administration/admin_utility.py""")
+
+        cmd_run("""running_vms = subprocess.Popen("virsh list | grep win10", shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode("utf-8").strip().split("\\n")""")
 
         cmd_run('/usr/bin/mv Host/UDEV/00-backend.rules Host/UDEV/00-backend.rules.old')
 
