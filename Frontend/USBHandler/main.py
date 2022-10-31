@@ -70,6 +70,7 @@ def main():
 
     n_part = len(parts)
 
+    info(f'Found {n_part} partitions.')
     log(f"Found {n_part} partitions. ({parts})","frontMAINlog.txt")
 
     if n_part > 1:
@@ -82,7 +83,6 @@ def main():
 
             print('|_' + '_'*(len(str(len(parts)))) + '_|_' + '_'*max(len(part) for part in parts) + '_|')
 
-            info(f'Found {n_part} partitions.')
             print('Select the partition that Asterix should use :')
 
             while True:
