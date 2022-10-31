@@ -102,7 +102,7 @@ def runs_(transport, jsonfile, c):
         while not channel.recv_ready():
             pass
 
-        channel.recv(15).decode('utf-8')
+        channel.recv(10).decode('utf-8')
 
         while True:
 
