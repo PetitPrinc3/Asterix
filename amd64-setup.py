@@ -102,6 +102,7 @@ try:
 
 
     with spinner('Converting software for AMD64...'):
+        cmd_run('/usr/bin/mv Host/Services/accenter_start.serviceHost/Services/accenter_start.service.old')
         with open("Host/Services/accenter_start.service", "w") as nserv:
             serv = """
 [Unit]
@@ -123,6 +124,7 @@ WantedBy=multi-user.target
         
         cmd_run("""/usr/bin/sed -i 's/running_vms = subprocess.Popen("ps -ef | grep qemu-system-aarch64".*/running_vms = subprocess.Popen("virsh list | grep win10", shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode("utf-8").strip().split("\n")' Host/Administration/admin_utility.py""")
 
+        cmd_run('/usr/bin/mv Host/UDEV/00-backend.rules Host/UDEV/00-backend.rules.old')
 
         with open("Host/UDEV/00-backend.rules", "w") as nrule:
 
@@ -134,6 +136,7 @@ ACTION=="add", ATTRS{devpath}=="2.2", KERNEL=="net*", RUN+="/bin/bash -c '/usr/b
 ACTION=="remove", ATTRS{devpath}=="2.2", RUN+="/usr/bin/systemctl stop outputpartmnt@*.service"
 """)
 
+        cmd_run('/usr/bin/mv Host/UDEV/00-backend.rules Host/UDEV/00-backend.rules.old')
 
         with open("Host/UDEV/00-frontend.rules", "w") as nrule:
 
@@ -144,6 +147,18 @@ ACTION=="add", ATTRS{devpath}=="2.1", KERNEL=="net*", RUN+="/bin/bash -c '/usr/b
 
 ACTION=="remove", ATTRS{devpath}=="2.1", RUN+="/usr/bin/systemctl stop inputpartmnt@*.service"
 """)
+
+        rp_lines = open("Brain/PywavaAutomation/runs_pywava.py", "r").readlines()
+
+        with open("Brain/PywavaAutomation/runs_pywava.py", "w") as rp:
+
+            for line in rp_lines:
+                
+                if line.startswith("channel.exec_command"):
+                    l = line.split(" -f")
+                    line = f'{l[0]}k -f{l[1]}'
+
+                rp.write(line)
 
     success("Software converted to AMD64")
 
