@@ -102,7 +102,7 @@ try:
 
 
     with spinner('Converting software for AMD64...'):
-        cmd_run('/usr/bin/mv Host/Services/accenter_start.serviceHost/Services/accenter_start.service.old')
+        cmd_run('/usr/bin/mv Host/Services/accenter_start.service Host/Services/accenter_start.service.old')
         with open("Host/Services/accenter_start.service", "w") as nserv:
             serv = """
 [Unit]
@@ -113,30 +113,31 @@ Type=simple
 User=vm_runner
 Group=vm_runner
 RemainAfterExit=true
-ExecStart=/bin/bash /src/win10_VM/vm_run.sh
-ExecStop=/bin/bash -c "for i in $(ps -ef | grep qemu-system-aarch64 | awk '{print $2}'); do kill $i 2>/dev/null; done"
+ExecStart=/usr/bin/virsh --connect qemu:///system start win10
+ExecStop=/usr/bin/virsh shutdown win10
 
 [Install]
 WantedBy=multi-user.target
 
 """
             nserv.write(serv)
-        
-        cmd_run("""/usr/bin/sed -i 's/running_vms = subprocess.Popen("ps -ef | grep qemu-system-aarch64".*/running_vms = subprocess.Popen("virsh list | grep win10", shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode("utf-8").strip().split("\n")' Host/Administration/admin_utility.py""")
+        cmd_run("""/usr/bin/sed -i 's/running_vms = subprocess.Popen("ps -ef | grep qemu-system-aarch64".*/running_vms = subprocess.Popen("virsh list | grep win10", shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode("utf-8").strip().split("\\n")/' Host/Administration/admin_utility.py""")
 
         cmd_run('/usr/bin/mv Host/UDEV/00-backend.rules Host/UDEV/00-backend.rules.old')
 
         with open("Host/UDEV/00-backend.rules", "w") as nrule:
 
-            nrule.write("""
+            n = """
 ACTION=="add", KERNEL=="sd[a-z][0-9]", ATTRS{devpath}=="2.2", ENV{DEVTYPE}=="partition", SYMLINK+="USBOutputPart%k", RUN+="/usr/bin/systemctl restart outputpartmnt@%k.service"
 ACTION=="add", ATTRS{devpath}=="2.2", KERNEL=="hid*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/DataShare/_data/BadUSBOutput'", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-2.2/authorized'"
 ACTION=="add", ATTRS{devpath}=="2.2", KERNEL=="net*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/DataShare/_data/BadUSBInput'", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-2.2/authorized'"
 
 ACTION=="remove", ATTRS{devpath}=="2.2", RUN+="/usr/bin/systemctl stop outputpartmnt@*.service"
-""")
+"""
 
-        cmd_run('/usr/bin/mv Host/UDEV/00-backend.rules Host/UDEV/00-backend.rules.old')
+            nrule.write(n)
+
+        cmd_run('/usr/bin/mv Host/UDEV/00-frontend.rules Host/UDEV/00-frontend.rules.old')
 
         with open("Host/UDEV/00-frontend.rules", "w") as nrule:
 
@@ -148,13 +149,13 @@ ACTION=="add", ATTRS{devpath}=="2.1", KERNEL=="net*", RUN+="/bin/bash -c '/usr/b
 ACTION=="remove", ATTRS{devpath}=="2.1", RUN+="/usr/bin/systemctl stop inputpartmnt@*.service"
 """)
 
-        rp_lines = open("Brain/PywavaAutomation/runs_pywava.py", "r").readlines()
+        rp_lines = open("Brain/PythonHandler/PywavaAutomation/runs_pywava.py", "r").readlines()
 
-        with open("Brain/PywavaAutomation/runs_pywava.py", "w") as rp:
+        with open("Brain/PythonHandler/PywavaAutomation/runs_pywava.py", "w") as rp:
 
             for line in rp_lines:
-                
-                if line.startswith("channel.exec_command"):
+
+                if "channel.exec_command" in line:
                     l = line.split(" -f")
                     line = f'{l[0]}k -f{l[1]}'
 
@@ -169,7 +170,7 @@ ACTION=="remove", ATTRS{devpath}=="2.1", RUN+="/usr/bin/systemctl stop inputpart
         cmd_run("/usr/sbin/usermod -aG docker docker_runner")
         if subprocess.Popen('id vm_runner', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
             cmd_run("/usr/sbin/useradd -m -d /opt/vm_runner vm_runner")
-            cmd_run("/usr/sbin/usermod -G kvm vm_runner")
+            cmd_run("/usr/sbin/usermod -G libvirt vm_runner")
         if subprocess.Popen('id asterix', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
             cmd_run("/usr/sbin/useradd -m -d /opt/asterix asterix")
         if subprocess.Popen('id asterix_admin', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
@@ -482,7 +483,7 @@ ACTION=="remove", ATTRS{devpath}=="2.1", RUN+="/usr/bin/systemctl stop inputpart
     # SETUP END
     success("Exhausted")
 
-except:
+except Exception as e:
     fail("Somtehing bad happened.")
     print("""
 
@@ -495,4 +496,6 @@ except:
 /                  \ 
 
 """)
+
+    print(e)
     exit()
