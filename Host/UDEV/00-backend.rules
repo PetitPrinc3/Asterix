@@ -1,5 +1,5 @@
 ACTION=="add", KERNEL=="sd[a-z][0-9]", ATTRS{devpath}=="1.4", ENV{DEVTYPE}=="partition", SYMLINK+="USBOutputPart%k", RUN+="/usr/bin/systemctl restart outputpartmnt@%k.service"
 ACTION=="add", ATTRS{devpath}=="1.4", KERNEL=="hid*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/DataShare/_data/BadUSBOutput'", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-1.4/authorized'"
-ACTION=="add", ATTRS{devpath}=="1.4", KERNEL=="net*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/DataShare/_data/BadUSBInput'", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-1.3/authorized'"
+ACTION=="add", ATTRS{devpath}=="1.4", KERNEL=="net*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/DataShare/_data/BadUSBInput'", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-1.4/authorized'"
 
 ACTION=="remove", ATTRS{devpath}=="1.4", RUN+="/usr/bin/systemctl stop outputpartmnt@*.service"

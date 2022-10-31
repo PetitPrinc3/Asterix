@@ -101,6 +101,53 @@ try:
     success("Source folders created.")
 
 
+    with spinner('Converting software for AMD64...'):
+        with open("Host/Services/accenter_start.service", "w") as nserv:
+            serv = """
+[Unit]
+Description=Start AC-Center on boot
+
+[Service]
+Type=simple
+User=vm_runner
+Group=vm_runner
+RemainAfterExit=true
+ExecStart=/bin/bash /src/win10_VM/vm_run.sh
+ExecStop=/bin/bash -c "for i in $(ps -ef | grep qemu-system-aarch64 | awk '{print $2}'); do kill $i 2>/dev/null; done"
+
+[Install]
+WantedBy=multi-user.target
+
+"""
+            nserv.write(serv)
+        
+        cmd_run("""/usr/bin/sed -i 's/running_vms = subprocess.Popen("ps -ef | grep qemu-system-aarch64".*/running_vms = subprocess.Popen("virsh list | grep win10", shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.read().decode("utf-8").strip().split("\n")' Host/Administration/admin_utility.py""")
+
+
+        with open("Host/UDEV/00-backend.rules", "w") as nrule:
+
+            nrule.write("""
+ACTION=="add", KERNEL=="sd[a-z][0-9]", ATTRS{devpath}=="2.2", ENV{DEVTYPE}=="partition", SYMLINK+="USBOutputPart%k", RUN+="/usr/bin/systemctl restart outputpartmnt@%k.service"
+ACTION=="add", ATTRS{devpath}=="2.2", KERNEL=="hid*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/DataShare/_data/BadUSBOutput'", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-2.2/authorized'"
+ACTION=="add", ATTRS{devpath}=="2.2", KERNEL=="net*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/DataShare/_data/BadUSBInput'", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-2.2/authorized'"
+
+ACTION=="remove", ATTRS{devpath}=="2.2", RUN+="/usr/bin/systemctl stop outputpartmnt@*.service"
+""")
+
+
+        with open("Host/UDEV/00-frontend.rules", "w") as nrule:
+
+            nrule.write("""
+ACTION=="add", KERNEL=="sd[a-z][0-9]", ATTRS{devpath}=="2.1", ENV{DEVTYPE}=="partition", SYMLINK+="USBInputPart%k", RUN+="/usr/bin/systemctl start inputpartmnt@%k.service"
+ACTION=="add", ATTRS{devpath}=="2.1", KERNEL=="hid*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/DataShare/_data/BadUSBInput'", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-2.1/authorized'"
+ACTION=="add", ATTRS{devpath}=="2.1", KERNEL=="net*", RUN+="/bin/bash -c '/usr/bin/echo 0 > /var/lib/docker/volumes/DataShare/_data/BadUSBInput'", RUN+="/bin/bash -c '/usr/bin/echo 0 > /sys/bus/usb/devices/1-2.1/authorized'"
+
+ACTION=="remove", ATTRS{devpath}=="2.1", RUN+="/usr/bin/systemctl stop inputpartmnt@*.service"
+""")
+
+    success("Software converted to AMD64")
+
+
     with spinner('Creating software users'):
         if subprocess.Popen('id docker_runner', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait() != 0:
             cmd_run("/usr/sbin/useradd -m -d /opt/docker_runner docker_runner")
