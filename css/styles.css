@@ -27,10 +27,3 @@ body::-webkit-scrollbar {
 	display: none;
 	/*Chrome*/
 }
-
-p {
-	color: white;
-	text-align: center;
-	font-size: 2.5ch;
-	margin: 0 auto;
-}

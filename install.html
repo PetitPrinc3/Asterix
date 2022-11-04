@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Asterix - INSTALLATION</title>
+	<meta charset="UTF-8">
+	<link rel="icon" href="assets/images/asterix.png">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/install.css">
+	<link rel="stylesheet" type="text/css" href="css/navigation.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,900;1,100&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+	<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+	<div class="install">
+		<div class="navigation sticky" id="navigation">
+			<nav>
+			  <ul class="menuItems" id="menuItems">
+				<li><a href='/Asterix' data-item='Home'>Home</a></li>
+				<li><a href='/Asterix#About' data-item='About'>About</a></li>
+				<li><a href='#' data-item='Docs'>Docs</a></li>
+				<li><a href='#' data-item='Installation'>Installation</a></li>
+				<li><a href='/Asterix/support' data-item='Support'>Support</a></li>
+			  </ul>
+			</nav>
+		</div>
+        <h1>Asterix Installation</h1>
+        <p>
+            To install Asterix, first get a copy of the latest release <a href="https://github.com/G4vr0ch3/Asterix/releases" target="_blank" rel="noopener noreferrer">here</a>.
+            <br>We would recommand that you start with the configuration of the Analysis Center Virtual Machine. To get an example of configuration, refer to the <a href="/Asterix/docs#ac">documentation</a>.
+        </p>
+        
+        <p>
+            Unzip the release to extract the source code: <br>
+            <i>~$ unzip Asterix-{RELEASE TAG}.zip</i>
+        </p>
+
+        <p>
+            Select the appropriate setup file (> v0.0.3-ALPHA) and run it using python: <br>
+            <i>~/Asterix-{RELEASE TAG} $ python setup.py</i>
+        </p>
+
+        <p>
+            Follow the displayed instructions, select your options. <br>
+            You're done ! Reboot and run the software as the <i>asterix</i> user: <br>
+            <i>~$ python Asterix.py</i>
+        </p>
+
+        <h2>
+            Thank you for using Asterix ❤️
+        </h2>
+
+	</div>
+
+</body>
+
+</html>
