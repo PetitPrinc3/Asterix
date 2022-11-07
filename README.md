@@ -26,7 +26,7 @@ You will also find functionnalities that have not been implemented but were part
 | :-: | :-: | :-: | :-: |
 | Frontend | :green_circle: | 100% | Done. |
 | Backend | :green_circle: | 100% | Done. |
-| [AC-Center (ARM)]([https://github.com/G4vr0ch3/Asterix/tree/main/AC-Center#ac-center-for-arm-devices](https://github.com/G4vr0ch3/Asterix/wiki/Analysis-Center#ac-center-for-arm-devices)) | :green_circle: | 100% | Hardening |
+| [AC-Center (ARM)](https://github.com/G4vr0ch3/Asterix/wiki/Analysis-Center#ac-center-for-arm-devices) | :green_circle: | 100% | Hardening |
 | [AC-Center (x64)](https://github.com/G4vr0ch3/Asterix/wiki/Analysis-Center#ac-center-for-x64-x86-devices) | :green_circle: | 100% | Hardening |
 | Brain | :green_circle: | 100% | Done. |
 | Host | :yellow_circle: | 90% | Hardening/GUI. |
