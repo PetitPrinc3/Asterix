@@ -2,6 +2,8 @@
 
 > Automated Sanitizing Terminal with Embedded Relevant Information eXtraction
 
+> [Checkout the website !](https://g4vr0ch3.github.io/Asterix)
+
 ## What is this repo ?
 
 <img src="Images/asterix.png" align="right" style="float: right;" width="400rem">
@@ -24,13 +26,13 @@ You will also find functionnalities that have not been implemented but were part
 | :-: | :-: | :-: | :-: |
 | Frontend | :green_circle: | 100% | Done. |
 | Backend | :green_circle: | 100% | Done. |
-| [AC-Center (ARM)](https://github.com/G4vr0ch3/Asterix/tree/main/AC-Center#ac-center-for-arm-devices) | :green_circle: | 100% | Hardening |
-| AC-Center (x64) | :green_circle: | 100% | Hardening |
+| [AC-Center (ARM)]([https://github.com/G4vr0ch3/Asterix/tree/main/AC-Center#ac-center-for-arm-devices](https://github.com/G4vr0ch3/Asterix/wiki/Analysis-Center#ac-center-for-arm-devices)) | :green_circle: | 100% | Hardening |
+| [AC-Center (x64)](https://github.com/G4vr0ch3/Asterix/wiki/Analysis-Center#ac-center-for-x64-x86-devices) | :green_circle: | 100% | Hardening |
 | Brain | :green_circle: | 100% | Done. |
 | Host | :yellow_circle: | 90% | Hardening/GUI. |
 | Installer | :yellow_circle: | 95% | AMD64 |
 | Hardware | :orange_circle: | 75% | Case. Moving to LattePanda 3 ? |
-| [Website](https://g4vr0ch3.github.io/Asterix) | :orange_circle: | 30% | Under construction |
+| [Website](https://g4vr0ch3.github.io/Asterix) | :orange_circle: | 70% | Under construction |
 
 
 ## Installation
