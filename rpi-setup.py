@@ -269,7 +269,7 @@ try:
         cmd_run('/usr/bin/chmod -R u=rwx /opt/docker_runner')
         cmd_run('/usr/bin/chmod -R g=rwx /opt/docker_runner')
         cmd_run('/usr/bin/chmod -R o=-r-w-x /opt/docker_runner')
-        cmd_run('systemctl start temporary_perm_fix.service')
+#        cmd_run('systemctl start temporary_perm_fix.service')
 
     success('Fixed user permissions.')
 
