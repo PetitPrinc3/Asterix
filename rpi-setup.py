@@ -223,13 +223,13 @@ try:
         cmd_run('/usr/bin/cp Host/Services/accenter_start.service /etc/systemd/system/')
         cmd_run('/usr/bin/cp Host/Services/inputpartmnt@.service /etc/systemd/system/')
         cmd_run('/usr/bin/cp Host/Services/outputpartmnt@.service /etc/systemd/system/')
-#        cmd_run('/usr/bin/cp Host/Services/temporary_perm_fix.service /etc/systemd/system/')
+        cmd_run('/usr/bin/cp Host/Services/temporary_perm_fix.service /etc/systemd/system/')
         cmd_run('systemctl daemon-reload')
         cmd_run('systemctl enable accenter_start.service')
         cmd_run('systemctl enable frontend_start.service')
         cmd_run('systemctl enable backend_start.service')
         cmd_run('systemctl enable brain_start.service')
-#        cmd_run('systemctl enable temporary_perm_fix.service')
+        cmd_run('systemctl enable temporary_perm_fix.service')
     success('Created systemd service.')
 
 
@@ -269,7 +269,7 @@ try:
         cmd_run('/usr/bin/chmod -R u=rwx /opt/docker_runner')
         cmd_run('/usr/bin/chmod -R g=rwx /opt/docker_runner')
         cmd_run('/usr/bin/chmod -R o=-r-w-x /opt/docker_runner')
-#        cmd_run('systemctl start temporary_perm_fix.service')
+        cmd_run('systemctl start temporary_perm_fix.service')
 
     success('Fixed user permissions.')
 
